@@ -1,0 +1,8 @@
+{
+  "name": "protagonist",
+  "version": "0.0.0",
+  "description": "API Blueprint Parser",
+  "main": "./build/Release/protagonist",
+  "private": true,
+  "gypfile": true
+}

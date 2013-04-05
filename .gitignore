@@ -12,3 +12,8 @@ logs
 results
 
 npm-debug.log
+
+build/
+
+# temporary
+snowcrash/
