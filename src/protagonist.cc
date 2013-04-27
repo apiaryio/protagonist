@@ -5,7 +5,7 @@
 using namespace v8;
 using namespace protagonist;
 
-void Init(Handle<Object> exports, Handle<Object> module) {
+void Init(Handle<Object> exports) {
 
     // Blueprint object
     Blueprint::Init(exports);
