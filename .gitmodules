@@ -1,0 +1,3 @@
+[submodule "snowcrash"]
+	path = snowcrash
+	url = git@github.com:apiaryio/snowcrash.git

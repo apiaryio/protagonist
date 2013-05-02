@@ -2,7 +2,13 @@
   "name": "protagonist",
   "version": "0.0.0",
   "description": "API Blueprint Parser",
+  "author": "Apiary.io <support@apiary.io>",
   "main": "./build/Release/protagonist",
-  "private": true,
-  "gypfile": true
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apiaryio/protagonist.git"
+  },  
+  "engines": {
+    "node": ">=0.8.15"
+  }
 }
