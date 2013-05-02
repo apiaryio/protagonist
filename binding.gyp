@@ -6,7 +6,7 @@
     {
       "target_name": "protagonist",
       "include_dirs": [
-        "../snowcrash/src"
+        "./snowcrash/src"
       ],
       "sources": [
         "src/protagonist.h",
@@ -14,17 +14,9 @@
         "src/parse.cc",
         "src/blueprint.cc"
       ],
-      "cflags_cc": [
-        "-Wc++11-extensions"
-      ],
-      "xcode_settings": {
-        "OTHER_CPLUSPLUSFLAGS": [
-          "-Wc++11-extensions"
-        ]
-      },
       "dependencies": [
-        "../snowcrash/snowcrash.gyp:libsnowcrash",
-        "../snowcrash/snowcrash.gyp:sundown"
+        "./snowcrash/snowcrash.gyp:libsnowcrash",
+        "./snowcrash/snowcrash.gyp:sundown"
       ]
     }
   ]

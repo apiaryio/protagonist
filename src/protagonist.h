@@ -32,4 +32,4 @@ namespace protagonist {
     //
     extern v8::Handle<v8::Value> Parse(const v8::Arguments& args);
 
-};
+}
