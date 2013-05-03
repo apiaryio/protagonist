@@ -3,7 +3,7 @@
 
 Protagonist is a Node.js wrapper for the [Snow Crash](https://github.com/apiaryio/snowcrash) library.
 
-Full API Blueprint documentation can be found on the [API Blueprint site](http://apiblueprint.org).
+API Blueprint is REST API documentation language. Full API Blueprint documentation can be found on the [API Blueprint site](http://apiblueprint.org).
 
 ## Install
 The best way to install Protagonist is by using its [NPM package](https://npmjs.org/package/protagonist).
@@ -12,18 +12,17 @@ The best way to install Protagonist is by using its [NPM package](https://npmjs.
 
 ## Getting started
 
-	```js
-	var protagonist = require('protagonist');
-	var blueprint = "# My API"
-	protagonist.parse(blueprint, function(error, ast) {
-		if (error) {
-    		console.log(error);
-		    return;
-  		}
+```js
+var protagonist = require('protagonist');
+protagonist.parse('# My API', function(error, ast) {
+	if (error) {
+   		console.log(error);
+	    return;
+  	}
   
-	  console.log(ast);
-	}
-	```
+	console.log(ast);
+}
+```
 
 ## Hacking
 You are welcome to contribute. Use following steps to build & test Protagonist.
@@ -47,8 +46,10 @@ Protagonist uses [node-gyp](https://github.com/TooTallNate/node-gyp) build tool.
     	$ node-gyp build
 
 ### Test
+Inside protagonist repository run:
 
-	$ TODO
+	$ npm install
+	$ npm test
 
 ## License
-See LICENSE file.
+See [LICENSE](https://github.com/apiaryio/protagonist/blob/master/LICENSE) file.

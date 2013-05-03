@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - "0.10"
+  - "0.8"
+script: "npm install && npm test"
+before_install:
+  - git submodule update --init --recursive
+branches:
+  only:
+    - master
+notifications:
+  recipients:
+    - z@apiary.io
+  email:
+    on_success: change
+    on_failure: always
