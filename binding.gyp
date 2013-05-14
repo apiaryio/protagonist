@@ -9,10 +9,12 @@
         "./snowcrash/src"
       ],
       "sources": [
-        "src/protagonist.h",
-        "src/protagonist.cc",
+        "src/annotation.cc",
+        "src/blueprint.cc",
         "src/parse.cc",
-        "src/blueprint.cc"
+        "src/protagonist.cc",
+        "src/protagonist.h",
+        "src/result.cc"
       ],
       "dependencies": [
         "./snowcrash/snowcrash.gyp:libsnowcrash",

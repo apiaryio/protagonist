@@ -14,13 +14,13 @@ The best way to install Protagonist is by using its [NPM package](https://npmjs.
 
 ```js
 var protagonist = require('protagonist');
-protagonist.parse('# My API', function(error, ast) {
+protagonist.parse('# My API', function(error, result) {
 	if (error) {
    		console.log(error);
 	    return;
   	}
   
-	console.log(ast);
+	console.log(result.ast);
 }
 ```
 
@@ -38,6 +38,7 @@ Protagonist uses [node-gyp](https://github.com/TooTallNate/node-gyp) build tool.
 
 2. If needed, install node-gyp:
 
+		$ cd ..
 		$ npm install -g node-gyp
     
 3. Build:

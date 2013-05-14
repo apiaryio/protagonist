@@ -32,23 +32,28 @@ Handle<Value> protagonist::Parse(const Arguments& args) {
 
     // Parse the source data
     snowcrash::Result result;
-    snowcrash::Blueprint blueprintAst;
-    snowcrash::parse(*sourceData, result, blueprintAst);
+    snowcrash::Blueprint ast;
+    snowcrash::parse(*sourceData, result, ast);
 
     // Prepare result
     const unsigned argc = 2;
     Local<Value> argv[argc];
 
     // Error Object
-    argv[0] = Local<Value>::New(Null());
+    if (result.error.code == snowcrash::Error::OK) {
 
-    // Blueprint AST
-    argv[1] = Blueprint::WrapBlueprint(blueprintAst);;
+        argv[0] = Local<Value>::New(Null());
+    }
+    else {
+
+        argv[0] = SourceAnnotation::WrapSourceAnnotation(result.error);
+    }
+
+    argv[1] = Result::WrapResult(result, ast);    
 
     // Callback
     Local<Function> callback = Local<Function>::Cast(args[1]);
     callback->Call(Context::GetCurrent()->Global(), argc, argv);
-    
 
     return scope.Close(Undefined());
 }    

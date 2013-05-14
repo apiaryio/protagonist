@@ -163,4 +163,3 @@ Local<Object> Blueprint::WrapBlueprint(const snowcrash::Blueprint& blueprint)
 
     return blueprintWrap;
 }
-
