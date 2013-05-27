@@ -48,18 +48,34 @@ _description_
   it 'parses resource', ->
     source = """
 # /resource
-A
+Resource description
 
-# GET
-B
++ Headers
+
+        X-Resource-Header: Metaverse
+
+## GET
+Method description
+
++ Headers
+
+        X-Method-Header: Pizza delivery
 
 + Response 200 (text/plain)
-  C
+  
+  Response description
+
+  + Headers
+
+            X-Response-Header: Fighter
 
   + Body
 
-            Hello World
+            Y.T.
 
+  + Schema
+
+            Kourier
 """
     protagonist.parse source, (err, result) ->
       assert.isNull err
@@ -78,7 +94,14 @@ B
       assert.isDefined resource.uri
       assert.strictEqual resource.uri, '/resource'
       assert.isDefined resource.description
-      assert.strictEqual resource.description, 'A\n\n'
+      assert.strictEqual resource.description, 'Resource description\n\n'
+      assert.isDefined resource.headers
+      assert.strictEqual resource.headers.length, 1
+      assert.isDefined resource.headers[0].name
+      assert.strictEqual resource.headers[0].name, 'X-Resource-Header'
+      assert.isDefined resource.headers[0].value
+      assert.strictEqual resource.headers[0].value, 'Metaverse'
+
       assert.isDefined resource.methods
       assert.strictEqual resource.methods.length, 1
       assert.isDefined resource.methods[0]
@@ -87,7 +110,14 @@ B
       assert.isDefined method.method
       assert.strictEqual method.method, 'GET'
       assert.isDefined method.description
-      assert.strictEqual method.description, 'B\n\n'
+      assert.strictEqual method.description, 'Method description\n\n'
+      assert.isDefined method.headers
+      assert.strictEqual method.headers.length, 1
+      assert.isDefined method.headers[0].name
+      assert.strictEqual method.headers[0].name, 'X-Method-Header'
+      assert.isDefined method.headers[0].value
+      assert.strictEqual method.headers[0].value, 'Pizza delivery'
+
       assert.isDefined method.requests
       assert.strictEqual method.requests.length, 0
       assert.isDefined method.responses
@@ -98,16 +128,30 @@ B
       assert.isDefined response.name
       assert.strictEqual response.name, '200'
       assert.isDefined response.description
-      assert.strictEqual response.description, 'C'
-      assert.isDefined response.body
-      assert.strictEqual response.body, 'Hello World\n'
+      assert.strictEqual response.description, 'Response description\n'
 
-  it 'fails to parse response without status code', ->
+      assert.isDefined response.headers
+      assert.strictEqual response.headers.length, 2
+      assert.isDefined response.headers[0].name
+      assert.strictEqual response.headers[0].name, 'Content-Type'
+      assert.isDefined response.headers[0].value
+      assert.strictEqual response.headers[0].value, 'text/plain'
+      assert.isDefined response.headers[1].name
+      assert.strictEqual response.headers[1].name, 'X-Response-Header'
+      assert.isDefined response.headers[1].value
+      assert.strictEqual response.headers[1].value, 'Fighter'
+
+      assert.isDefined response.body
+      assert.strictEqual response.body, 'Y.T.\n'
+      assert.isDefined response.schema
+      assert.strictEqual response.schema, 'Kourier\n'
+
+  it 'fails to parse blueprint with tabs', ->
     source = """
 # /resource
 # GET
 + Response 
-  C
+\tC
 """
     protagonist.parse source, (err, result) ->
 
@@ -116,10 +160,6 @@ B
       assert err.message.length != 0
       assert err.code != 0
       assert.isDefined err.location
-      assert err.location.length, 1
-      assert err.location[0].index, 18
-      assert err.location[0].length, 16
-      assert.isNull result.ast
 
   it 'parses blueprint with warnings', ->
     source = """
@@ -146,3 +186,5 @@ Group description
       assert.isDefined result.warnings[1].location
 
       assert.isDefined result.ast
+
+

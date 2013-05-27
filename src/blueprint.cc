@@ -45,6 +45,30 @@ Handle<Value> Blueprint::NewInstance()
     return scope.Close(instance);
 }
 
+static Local<Object> WrapHeader(const snowcrash::Header& header)
+{
+    Local<Object> headerObject = Object::New();
+
+    headerObject->Set(String::NewSymbol("name"), String::New(header.first.c_str()));
+    headerObject->Set(String::NewSymbol("value"), String::New(header.second.c_str()));
+
+    return headerObject;
+}
+
+static Local<Object> WrapHeaders(const snowcrash::Collection<snowcrash::Header>::type& headers) 
+{
+    Local<Object> headersObject = Array::New(headers.size());
+    size_t i = 0;
+    for (snowcrash::Collection<snowcrash::Header>::const_iterator it = headers.begin(); 
+         it != headers.end();
+         ++it, ++i) {
+
+        headersObject->Set(i, WrapHeader(*it));
+    }
+
+    return headersObject;
+}
+
 static Local<Object> WrapPayload(const snowcrash::Payload& payload) 
 {
     Local<Object> payloadObject = Object::New();
@@ -52,9 +76,14 @@ static Local<Object> WrapPayload(const snowcrash::Payload& payload)
     payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Name.c_str()), String::New(payload.name.c_str()));
     payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Description.c_str()), String::New(payload.description.c_str()));
 
-    // TODO: Parameters, Headers, Schema
-    
+    // TODO: Parameters
+
+    // Headers
+    Local<Object> headers = WrapHeaders(payload.headers);
+    payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Headers.c_str()), headers);
+
     payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Body.c_str()), String::New(payload.body.c_str()));
+    payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Schema.c_str()), String::New(payload.schema.c_str()));    
 
     return payloadObject;
 }
@@ -66,7 +95,11 @@ static Local<Object> WrapMethod(const snowcrash::Method& method)
     methodObject->Set(String::NewSymbol(snowcrash::SerializeKey::Method.c_str()), String::New(method.method.c_str()));
     methodObject->Set(String::NewSymbol(snowcrash::SerializeKey::Description.c_str()), String::New(method.description.c_str()));
 
-    // TODO: Parameters, Headers
+    // TODO: Parameters
+
+    // Headers
+    Local<Object> headers = WrapHeaders(method.headers);
+    methodObject->Set(String::NewSymbol(snowcrash::SerializeKey::Headers.c_str()), headers);
 
     // Requests
     Local<Object> requests = Array::New(method.requests.size());
@@ -100,7 +133,11 @@ static Local<Object> WrapResource(const snowcrash::Resource& resource)
     resourceObject->Set(String::NewSymbol(snowcrash::SerializeKey::URI.c_str()), String::New(resource.uri.c_str()));
     resourceObject->Set(String::NewSymbol(snowcrash::SerializeKey::Description.c_str()), String::New(resource.description.c_str()));
 
-    // TODO: Parameters, Headers
+    // TODO: Parameters
+
+    // Headers
+    Local<Object> headers = WrapHeaders(resource.headers);
+    resourceObject->Set(String::NewSymbol(snowcrash::SerializeKey::Headers.c_str()), headers);
 
     // Methods
     Local<Object> methods = Array::New(resource.methods.size());
