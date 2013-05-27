@@ -9,8 +9,10 @@ branches:
   only:
     - master
 notifications:
-  recipients:
-    - z@apiary.io
   email:
+    recipients:
+      - z@apiary.io  
     on_success: change
     on_failure: always
+  hipchat:
+    - secure: "ZRKSctculEtR03uTxeUjWxQ8lDeC3v7hJJrmPS7JDGPBlzpzlJau1NHu3Zex\nkKWmKHH29t6otZ5tAWF3THDdUssk5VbIRMCpoEEVMJeHuBZijje7nwk2JZR/\ncPwNsIZ4keaAxujh9BBWC0i+PbkrTRxhrzIHTntawInL33ZQP9Q="
