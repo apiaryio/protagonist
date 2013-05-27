@@ -53,4 +53,4 @@ Inside protagonist repository run:
 	$ npm test
 
 ## License
-See [LICENSE](https://github.com/apiaryio/protagonist/blob/master/LICENSE) file.
+MIT License. See [LICENSE](https://github.com/apiaryio/protagonist/blob/master/LICENSE) file.
