@@ -33,7 +33,7 @@ Handle<Value> protagonist::Parse(const Arguments& args) {
     // Parse the source data
     snowcrash::Result result;
     snowcrash::Blueprint ast;
-    snowcrash::parse(*sourceData, result, ast);
+    snowcrash::parse(*sourceData, 0, result, ast);
 
     // Prepare result
     const unsigned argc = 2;
