@@ -187,4 +187,37 @@ Group description
 
       assert.isDefined result.ast
 
+  it 'parses blueprint metadata', ->
+    source = """
+A: 1
+B: 2
+C: 3
 
+# API Name
+"""
+    protagonist.parse source, (err, result) ->
+
+      assert.isNull err
+
+      assert.isDefined result.warnings
+      assert.strictEqual result.warnings.length, 0
+      
+      assert.isDefined result.ast.metadata
+      assert.strictEqual result.ast.metadata.length, 3
+
+      metadata = result.ast.metadata
+
+      assert.isDefined metadata[0].name
+      assert.strictEqual metadata[0].name, 'A'
+      assert.isDefined metadata[0].value
+      assert.strictEqual metadata[0].value, '1'
+
+      assert.isDefined metadata[1].name
+      assert.strictEqual metadata[1].name, 'B'
+      assert.isDefined metadata[1].value
+      assert.strictEqual metadata[1].value, '2'
+
+      assert.isDefined metadata[2].name
+      assert.strictEqual metadata[2].name, 'C'
+      assert.isDefined metadata[2].value
+      assert.strictEqual metadata[2].value, '3'

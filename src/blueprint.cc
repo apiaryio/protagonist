@@ -45,14 +45,28 @@ Handle<Value> Blueprint::NewInstance()
     return scope.Close(instance);
 }
 
-static Local<Object> WrapHeader(const snowcrash::Header& header)
+static Local<Object> WrapKeyValuePair(const snowcrash::KeyValuePair& kvpair)
 {
-    Local<Object> headerObject = Object::New();
+    Local<Object> keyValueObject = Object::New();
 
-    headerObject->Set(String::NewSymbol("name"), String::New(header.first.c_str()));
-    headerObject->Set(String::NewSymbol("value"), String::New(header.second.c_str()));
+    keyValueObject->Set(String::NewSymbol("name"), String::New(kvpair.first.c_str()));
+    keyValueObject->Set(String::NewSymbol("value"), String::New(kvpair.second.c_str()));
 
-    return headerObject;
+    return keyValueObject;
+}
+
+static Local<Object> WrapMetadata(const snowcrash::Collection<snowcrash::Metadata>::type& metadataCollection) 
+{
+    Local<Object> metadataCollectionObject = Array::New(metadataCollection.size());
+    size_t i = 0;
+    for (snowcrash::Collection<snowcrash::Metadata>::const_iterator it = metadataCollection.begin(); 
+         it != metadataCollection.end();
+         ++it, ++i) {
+
+        metadataCollectionObject->Set(i, WrapKeyValuePair(*it));
+    }
+
+    return metadataCollectionObject;
 }
 
 static Local<Object> WrapHeaders(const snowcrash::Collection<snowcrash::Header>::type& headers) 
@@ -63,7 +77,7 @@ static Local<Object> WrapHeaders(const snowcrash::Collection<snowcrash::Header>:
          it != headers.end();
          ++it, ++i) {
 
-        headersObject->Set(i, WrapHeader(*it));
+        headersObject->Set(i, WrapKeyValuePair(*it));
     }
 
     return headersObject;
@@ -179,7 +193,9 @@ Local<Object> Blueprint::WrapBlueprint(const snowcrash::Blueprint& blueprint)
 
     // Wrap snowcrash Blueprint AST
 
-    // TODO: Metadata
+    // Metadata
+    Local<Object> metadata = WrapMetadata(blueprint.metadata);
+    blueprintWrap->Set(String::NewSymbol(snowcrash::SerializeKey::Metadata.c_str()), metadata);    
 
     // Blueprint Name
     blueprintWrap->Set(String::NewSymbol(snowcrash::SerializeKey::Name.c_str()), String::New(blueprint.name.c_str()));
