@@ -221,3 +221,19 @@ C: 3
       assert.strictEqual metadata[2].name, 'C'
       assert.isDefined metadata[2].value
       assert.strictEqual metadata[2].value, '3'
+
+  it 'accepts options', ->
+    source = """
+**description**
+
+"""
+    options =
+      requireBlueprintName: true
+
+    protagonist.parse source, options, (err, result) ->
+
+      assert.isDefined err
+      assert.isNotNull err
+      assert err.message.length != 0
+      assert err.code != 0
+      assert.isDefined err.location
