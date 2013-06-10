@@ -127,7 +127,7 @@ Method description
       assert.isDefined resource.object.headers[0].name
       assert.strictEqual resource.object.headers[0].name, 'Content-Type'
       assert.isDefined resource.object.headers[0].value
-      assert.strictEqual resource.object.headers[0].value, '(text/plain)'
+      assert.strictEqual resource.object.headers[0].value, 'text/plain'
 
       assert.isDefined resource.methods
       assert.strictEqual resource.methods.length, 2
@@ -193,8 +193,7 @@ Method description
       assert.isDefined response.headers[0].name
       assert.strictEqual response.headers[0].name, 'Content-Type'
       assert.isDefined response.headers[0].value
-      assert.strictEqual response.headers[0].value, '(text/plain)'
-
+      assert.strictEqual response.headers[0].value, 'text/plain'
 
   it 'fails to parse blueprint with tabs', ->
     source = """
