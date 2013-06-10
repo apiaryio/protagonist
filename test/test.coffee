@@ -47,14 +47,18 @@ _description_
 
   it 'parses resource', ->
     source = """
-# /resource
+# My Resource [/resource]
 Resource description
 
 + Headers
 
         X-Resource-Header: Metaverse
 
-## GET
++ Resource Object (text/plain)
+  
+        Hello World
+
+## Retrieve Resource [GET]
 Method description
 
 + Headers
@@ -76,7 +80,15 @@ Method description
   + Schema
 
             Kourier
+
+## Delete Resource [DELETE]
+
++ Response 200
+
+    [Resource][]
+
 """
+
     protagonist.parse source, (err, result) ->
       assert.isNull err
 
@@ -91,8 +103,10 @@ Method description
       assert.isDefined resourceGroup.resources[0]
 
       resource = resourceGroup.resources[0]
-      assert.isDefined resource.uri
-      assert.strictEqual resource.uri, '/resource'
+      assert.isDefined resource.uriTemplate
+      assert.strictEqual resource.uriTemplate, '/resource'
+      assert.isDefined resource.name
+      assert.strictEqual resource.name, 'My Resource'
       assert.isDefined resource.description
       assert.strictEqual resource.description, 'Resource description\n\n'
       assert.isDefined resource.headers
@@ -102,13 +116,28 @@ Method description
       assert.isDefined resource.headers[0].value
       assert.strictEqual resource.headers[0].value, 'Metaverse'
 
+      assert.isDefined resource.object
+      assert.strictEqual resource.object.name, 'Resource'
+      assert.isDefined resource.object.description
+      assert.strictEqual resource.object.description.length, 0
+      assert.isDefined resource.object.body
+      assert.strictEqual resource.object.body, 'Hello World\n'
+      assert.isDefined resource.object.headers
+      assert.strictEqual resource.object.headers.length, 1
+      assert.isDefined resource.object.headers[0].name
+      assert.strictEqual resource.object.headers[0].name, 'Content-Type'
+      assert.isDefined resource.object.headers[0].value
+      assert.strictEqual resource.object.headers[0].value, '(text/plain)'
+
       assert.isDefined resource.methods
-      assert.strictEqual resource.methods.length, 1
+      assert.strictEqual resource.methods.length, 2
       assert.isDefined resource.methods[0]
 
       method = resource.methods[0]
       assert.isDefined method.method
       assert.strictEqual method.method, 'GET'
+      assert.isDefined method.name
+      assert.strictEqual method.name, 'Retrieve Resource'
       assert.isDefined method.description
       assert.strictEqual method.description, 'Method description\n\n'
       assert.isDefined method.headers
@@ -145,6 +174,27 @@ Method description
       assert.strictEqual response.body, 'Y.T.\n'
       assert.isDefined response.schema
       assert.strictEqual response.schema, 'Kourier\n'
+
+      method = resource.methods[1]
+      assert.isDefined method.method
+      assert.strictEqual method.method, 'DELETE'
+
+      assert.isDefined method.responses[0]
+
+      response = method.responses[0]
+      assert.isDefined response.name
+      assert.strictEqual response.name, '200'
+      assert.isDefined response.description
+      assert.strictEqual response.description.length, 0
+      assert.isDefined response.body
+      assert.strictEqual response.body, 'Hello World\n'
+      assert.isDefined response.headers
+      assert.strictEqual response.headers.length, 1
+      assert.isDefined response.headers[0].name
+      assert.strictEqual response.headers[0].name, 'Content-Type'
+      assert.isDefined response.headers[0].value
+      assert.strictEqual response.headers[0].value, '(text/plain)'
+
 
   it 'fails to parse blueprint with tabs', ->
     source = """
