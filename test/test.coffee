@@ -41,7 +41,7 @@ _description_
 
       resourceGroup = result.ast.resourceGroups[0]
       assert.isDefined resourceGroup.name
-      assert.strictEqual resourceGroup.name, 'Group Name'
+      assert.strictEqual resourceGroup.name, 'Name'
       assert.isDefined resourceGroup.description
       assert.strictEqual resourceGroup.description, '_description_\n'
 
@@ -224,15 +224,11 @@ Group description
       assert.isNull err
 
       assert.isDefined result.warnings
-      assert result.warnings.length, 2
-      
+      assert.strictEqual result.warnings.length, 1
+
       assert.isDefined result.warnings[0].message
       assert.isDefined result.warnings[0].code
       assert.isDefined result.warnings[0].location
-
-      assert.isDefined result.warnings[1].message
-      assert.isDefined result.warnings[1].code
-      assert.isDefined result.warnings[1].location
 
       assert.isDefined result.ast
 
