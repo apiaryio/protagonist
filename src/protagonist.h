@@ -2,6 +2,7 @@
 #include <v8.h>
 #include "Blueprint.h"
 #include "ParserCore.h"
+#include "SourceAnnotation.h"
 
 namespace protagonist {
 
