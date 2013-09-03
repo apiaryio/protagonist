@@ -133,27 +133,27 @@ Method description
       assert.strictEqual resource.actions.length, 2
       assert.isDefined resource.actions[0]
 
-      method = resource.actions[0]
-      assert.isDefined method.method
-      assert.strictEqual method.method, 'GET'
-      assert.isDefined method.name
-      assert.strictEqual method.name, 'Retrieve Resource'
-      assert.isDefined method.description
-      assert.strictEqual method.description, 'Method description\n\n'
-      assert.isDefined method.headers
-      assert.strictEqual method.headers.length, 1
-      assert.isDefined method.headers[0].name
-      assert.strictEqual method.headers[0].name, 'X-Method-Header'
-      assert.isDefined method.headers[0].value
-      assert.strictEqual method.headers[0].value, 'Pizza delivery'
+      action = resource.actions[0]
+      assert.isDefined action.method
+      assert.strictEqual action.method, 'GET'
+      assert.isDefined action.name
+      assert.strictEqual action.name, 'Retrieve Resource'
+      assert.isDefined action.description
+      assert.strictEqual action.description, 'Method description\n\n'
+      assert.isDefined action.headers
+      assert.strictEqual action.headers.length, 1
+      assert.isDefined action.headers[0].name
+      assert.strictEqual action.headers[0].name, 'X-Method-Header'
+      assert.isDefined action.headers[0].value
+      assert.strictEqual action.headers[0].value, 'Pizza delivery'
 
-      assert.isDefined method.requests
-      assert.strictEqual method.requests.length, 0
-      assert.isDefined method.responses
-      assert.strictEqual method.responses.length, 1
-      assert.isDefined method.responses[0]
+      assert.isDefined action.requests
+      assert.strictEqual action.requests.length, 0
+      assert.isDefined action.responses
+      assert.strictEqual action.responses.length, 1
+      assert.isDefined action.responses[0]
 
-      response = method.responses[0]
+      response = action.responses[0]
       assert.isDefined response.name
       assert.strictEqual response.name, '200'
       assert.isDefined response.description
@@ -175,13 +175,13 @@ Method description
       assert.isDefined response.schema
       assert.strictEqual response.schema, 'Kourier\n'
 
-      method = resource.actions[1]
-      assert.isDefined method.method
-      assert.strictEqual method.method, 'DELETE'
+      action = resource.actions[1]
+      assert.isDefined action.method
+      assert.strictEqual action.method, 'DELETE'
 
-      assert.isDefined method.responses[0]
+      assert.isDefined action.responses[0]
 
-      response = method.responses[0]
+      response = action.responses[0]
       assert.isDefined response.name
       assert.strictEqual response.name, '200'
       assert.isDefined response.description
