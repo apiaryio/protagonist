@@ -26,6 +26,7 @@ protagonist.parse('# My API', function(error, result) {
 }
 ```
 
+Refer to [Snow Crash JSON serialization](https://github.com/apiaryio/snowcrash/wiki/API-Blueprint-AST-Media-Types#json-serialization) for details about the AST output structure.
 
 ## Hacking Protagonist
 You are welcome to contribute. Use following steps to build & test Protagonist.
