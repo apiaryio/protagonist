@@ -102,43 +102,43 @@ static Local<Object> WrapPayload(const snowcrash::Payload& payload)
     return payloadObject;
 }
 
-static Local<Object> WrapMethod(const snowcrash::Method& method) 
+static Local<Object> WrapMethod(const snowcrash::Action& action) 
 {
-    Local<Object> methodObject = Object::New();
+    Local<Object> actionObject = Object::New();
 
-    methodObject->Set(String::NewSymbol(snowcrash::SerializeKey::Method.c_str()), String::New(method.method.c_str()));
-    methodObject->Set(String::NewSymbol(snowcrash::SerializeKey::Name.c_str()), String::New(method.name.c_str()));
-    methodObject->Set(String::NewSymbol(snowcrash::SerializeKey::Description.c_str()), String::New(method.description.c_str()));
+    actionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Method.c_str()), String::New(action.method.c_str()));
+    actionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Name.c_str()), String::New(action.name.c_str()));
+    actionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Description.c_str()), String::New(action.description.c_str()));
 
     // TODO: Parameters
 
     // Headers
-    Local<Object> headers = WrapHeaders(method.headers);
-    methodObject->Set(String::NewSymbol(snowcrash::SerializeKey::Headers.c_str()), headers);
+    Local<Object> headers = WrapHeaders(action.headers);
+    actionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Headers.c_str()), headers);
 
     // Requests
-    Local<Object> requests = Array::New(method.requests.size());
+    Local<Object> requests = Array::New(action.transactions.front().requests.size());
     size_t i = 0;
-    for (snowcrash::Collection<snowcrash::Request>::const_iterator it = method.requests.begin(); 
-         it != method.requests.end();
+    for (snowcrash::Collection<snowcrash::Request>::const_iterator it = action.transactions.front().requests.begin(); 
+         it != action.transactions.front().requests.end();
          ++it, ++i) {
 
         requests->Set(i, WrapPayload(*it));
     }
-    methodObject->Set(String::NewSymbol(snowcrash::SerializeKey::Requests.c_str()), requests);
+    actionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Requests.c_str()), requests);
 
     // Responses
-    Local<Object> responses = Array::New(method.responses.size());
+    Local<Object> responses = Array::New(action.transactions.front().responses.size());
     i = 0;
-    for (snowcrash::Collection<snowcrash::Response>::const_iterator it = method.responses.begin(); 
-         it != method.responses.end();
+    for (snowcrash::Collection<snowcrash::Response>::const_iterator it = action.transactions.front().responses.begin(); 
+         it != action.transactions.front().responses.end();
          ++it, ++i) {
 
         responses->Set(i, WrapPayload(*it));
     }
-    methodObject->Set(String::NewSymbol(snowcrash::SerializeKey::Responses.c_str()), responses);
+    actionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Responses.c_str()), responses);
 
-    return methodObject;
+    return actionObject;
 }
 
 static Local<Object> WrapResource(const snowcrash::Resource& resource) 
@@ -155,20 +155,20 @@ static Local<Object> WrapResource(const snowcrash::Resource& resource)
     Local<Object> headers = WrapHeaders(resource.headers);
     resourceObject->Set(String::NewSymbol(snowcrash::SerializeKey::Headers.c_str()), headers);
 
-    // Object
-    Local<Object> object = WrapPayload(resource.object);
-    resourceObject->Set(String::NewSymbol(snowcrash::SerializeKey::Object.c_str()), object);
+    // Model
+    Local<Object> model = WrapPayload(resource.model);
+    resourceObject->Set(String::NewSymbol(snowcrash::SerializeKey::Model.c_str()), model);
 
-    // Methods
-    Local<Object> methods = Array::New(resource.methods.size());
+    // Actions
+    Local<Object> actions = Array::New(resource.actions.size());
     size_t i = 0;
-    for (snowcrash::Collection<snowcrash::Method>::const_iterator it = resource.methods.begin(); 
-         it != resource.methods.end();
+    for (snowcrash::Collection<snowcrash::Action>::const_iterator it = resource.actions.begin(); 
+         it != resource.actions.end();
          ++it, ++i) {
 
-        methods->Set(i, WrapMethod(*it));
+        actions->Set(i, WrapMethod(*it));
     }
-    resourceObject->Set(String::NewSymbol(snowcrash::SerializeKey::Methods.c_str()), methods);
+    resourceObject->Set(String::NewSymbol(snowcrash::SerializeKey::Actions.c_str()), actions);
 
     return resourceObject;
 }
@@ -193,11 +193,10 @@ static Local<Object> WrapResourceGroup(const snowcrash::ResourceGroup& group)
     return groupObject;
 }
 
+/** Wrap snowcrash Blueprint AST */
 Local<Object> Blueprint::WrapBlueprint(const snowcrash::Blueprint& blueprint)
 {
     Local<Object> blueprintWrap = constructor->NewInstance();
-
-    // Wrap snowcrash Blueprint AST
 
     // Metadata
     Local<Object> metadata = WrapMetadata(blueprint.metadata);

@@ -1,5 +1,5 @@
-{assert} = require 'chai'
 protagonist = require '../build/Release/protagonist'
+{assert} = require 'chai'
 
 describe "API Blueprint parser", ->
   it 'parses API name', ->
@@ -116,24 +116,24 @@ Method description
       assert.isDefined resource.headers[0].value
       assert.strictEqual resource.headers[0].value, 'Metaverse'
 
-      assert.isDefined resource.object
-      assert.strictEqual resource.object.name, 'Resource'
-      assert.isDefined resource.object.description
-      assert.strictEqual resource.object.description.length, 0
-      assert.isDefined resource.object.body
-      assert.strictEqual resource.object.body, 'Hello World\n'
-      assert.isDefined resource.object.headers
-      assert.strictEqual resource.object.headers.length, 1
-      assert.isDefined resource.object.headers[0].name
-      assert.strictEqual resource.object.headers[0].name, 'Content-Type'
-      assert.isDefined resource.object.headers[0].value
-      assert.strictEqual resource.object.headers[0].value, 'text/plain'
+      assert.isDefined resource.model
+      assert.strictEqual resource.model.name, 'Resource'
+      assert.isDefined resource.model.description
+      assert.strictEqual resource.model.description.length, 0
+      assert.isDefined resource.model.body
+      assert.strictEqual resource.model.body, 'Hello World\n'
+      assert.isDefined resource.model.headers
+      assert.strictEqual resource.model.headers.length, 1
+      assert.isDefined resource.model.headers[0].name
+      assert.strictEqual resource.model.headers[0].name, 'Content-Type'
+      assert.isDefined resource.model.headers[0].value
+      assert.strictEqual resource.model.headers[0].value, 'text/plain'
 
-      assert.isDefined resource.methods
-      assert.strictEqual resource.methods.length, 2
-      assert.isDefined resource.methods[0]
+      assert.isDefined resource.actions
+      assert.strictEqual resource.actions.length, 2
+      assert.isDefined resource.actions[0]
 
-      method = resource.methods[0]
+      method = resource.actions[0]
       assert.isDefined method.method
       assert.strictEqual method.method, 'GET'
       assert.isDefined method.name
@@ -175,7 +175,7 @@ Method description
       assert.isDefined response.schema
       assert.strictEqual response.schema, 'Kourier\n'
 
-      method = resource.methods[1]
+      method = resource.actions[1]
       assert.isDefined method.method
       assert.strictEqual method.method, 'DELETE'
 

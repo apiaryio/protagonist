@@ -6,6 +6,7 @@
   #
   'variables': {
     'target_arch%': 'ia32',
+    'libsnowcrash_type%': 'static_library'
   },
   'target_defaults': {
     'default_configuration': 'Release',
@@ -115,7 +116,7 @@
         ],
       }],
       [ 'OS in "linux freebsd openbsd solaris"', {
-        'cflags': [ '-pthread', ],
+        'cflags': [ '-pthread', '-fPIC' ],
         'ldflags': [ '-pthread' ],
       }],
       [ 'OS in "linux freebsd openbsd solaris android"', {
