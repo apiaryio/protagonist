@@ -110,11 +110,11 @@ Method description
       assert.isDefined resource.description
       assert.strictEqual resource.description, 'Resource description\n\n'
       assert.isDefined resource.headers
-      assert.strictEqual resource.headers.length, 1
-      assert.isDefined resource.headers[0].name
-      assert.strictEqual resource.headers[0].name, 'X-Resource-Header'
-      assert.isDefined resource.headers[0].value
-      assert.strictEqual resource.headers[0].value, 'Metaverse'
+
+      assert.strictEqual Object.keys(resource.headers).length, 1
+      assert.isDefined resource.headers['X-Resource-Header']
+      assert.isDefined resource.headers['X-Resource-Header'].value
+      assert.strictEqual resource.headers['X-Resource-Header'].value, 'Metaverse'
 
       assert.isDefined resource.model
       assert.strictEqual resource.model.name, 'Resource'
@@ -123,11 +123,10 @@ Method description
       assert.isDefined resource.model.body
       assert.strictEqual resource.model.body, 'Hello World\n'
       assert.isDefined resource.model.headers
-      assert.strictEqual resource.model.headers.length, 1
-      assert.isDefined resource.model.headers[0].name
-      assert.strictEqual resource.model.headers[0].name, 'Content-Type'
-      assert.isDefined resource.model.headers[0].value
-      assert.strictEqual resource.model.headers[0].value, 'text/plain'
+      assert.strictEqual Object.keys(resource.model.headers).length, 1
+      assert.isDefined resource.model.headers['Content-Type']
+      assert.isDefined resource.model.headers['Content-Type'].value
+      assert.strictEqual resource.model.headers['Content-Type'].value, 'text/plain'
 
       assert.isDefined resource.actions
       assert.strictEqual resource.actions.length, 2
@@ -141,34 +140,37 @@ Method description
       assert.isDefined action.description
       assert.strictEqual action.description, 'Method description\n\n'
       assert.isDefined action.headers
-      assert.strictEqual action.headers.length, 1
-      assert.isDefined action.headers[0].name
-      assert.strictEqual action.headers[0].name, 'X-Method-Header'
-      assert.isDefined action.headers[0].value
-      assert.strictEqual action.headers[0].value, 'Pizza delivery'
+      assert.strictEqual Object.keys(action.headers).length, 1
+      assert.isDefined action.headers['X-Method-Header']
+      assert.isDefined action.headers['X-Method-Header'].value
+      assert.strictEqual action.headers['X-Method-Header'].value, 'Pizza delivery'
 
-      assert.isDefined action.requests
-      assert.strictEqual action.requests.length, 0
-      assert.isDefined action.responses
-      assert.strictEqual action.responses.length, 1
-      assert.isDefined action.responses[0]
+      assert.isDefined action.transactions
+      assert.strictEqual action.transactions.length, 1
+      assert.isDefined action.transactions[0]
 
-      response = action.responses[0]
+      transaction = action.transactions[0]
+      assert.isDefined transaction.requests
+      assert.strictEqual transaction.requests.length, 0
+      assert.isDefined transaction.responses
+      assert.strictEqual transaction.responses.length, 1
+      assert.isDefined transaction.responses[0]
+
+      response = transaction.responses[0]
       assert.isDefined response.name
       assert.strictEqual response.name, '200'
       assert.isDefined response.description
       assert.strictEqual response.description, 'Response description\n'
 
       assert.isDefined response.headers
-      assert.strictEqual response.headers.length, 2
-      assert.isDefined response.headers[0].name
-      assert.strictEqual response.headers[0].name, 'Content-Type'
-      assert.isDefined response.headers[0].value
-      assert.strictEqual response.headers[0].value, 'text/plain'
-      assert.isDefined response.headers[1].name
-      assert.strictEqual response.headers[1].name, 'X-Response-Header'
-      assert.isDefined response.headers[1].value
-      assert.strictEqual response.headers[1].value, 'Fighter'
+      assert.strictEqual Object.keys(response.headers).length, 2
+
+      assert.isDefined response.headers['Content-Type']
+      assert.isDefined response.headers['Content-Type'].value
+      assert.strictEqual response.headers['Content-Type'].value, 'text/plain'
+      assert.isDefined response.headers['X-Response-Header']
+      assert.isDefined response.headers['X-Response-Header'].value
+      assert.strictEqual response.headers['X-Response-Header'].value, 'Fighter'
 
       assert.isDefined response.body
       assert.strictEqual response.body, 'Y.T.\n'
@@ -179,9 +181,13 @@ Method description
       assert.isDefined action.method
       assert.strictEqual action.method, 'DELETE'
 
-      assert.isDefined action.responses[0]
+      assert.isDefined action.transactions
+      assert.strictEqual action.transactions.length, 1
+      assert.isDefined action.transactions[0]
 
-      response = action.responses[0]
+      transaction = action.transactions[0]
+      assert.isDefined transaction.responses[0]
+      response = transaction.responses[0]
       assert.isDefined response.name
       assert.strictEqual response.name, '200'
       assert.isDefined response.description
@@ -189,11 +195,11 @@ Method description
       assert.isDefined response.body
       assert.strictEqual response.body, 'Hello World\n'
       assert.isDefined response.headers
-      assert.strictEqual response.headers.length, 1
-      assert.isDefined response.headers[0].name
-      assert.strictEqual response.headers[0].name, 'Content-Type'
-      assert.isDefined response.headers[0].value
-      assert.strictEqual response.headers[0].value, 'text/plain'
+
+      assert.strictEqual Object.keys(response.headers).length, 1
+      assert.isDefined response.headers['Content-Type']
+      assert.isDefined response.headers['Content-Type'].value
+      assert.strictEqual response.headers['Content-Type'].value, 'text/plain'
 
   it 'fails to parse blueprint with tabs', ->
     source = """
@@ -248,24 +254,21 @@ C: 3
       assert.strictEqual result.warnings.length, 0
       
       assert.isDefined result.ast.metadata
-      assert.strictEqual result.ast.metadata.length, 3
+      assert.strictEqual Object.keys(result.ast.metadata).length, 3
 
       metadata = result.ast.metadata
 
-      assert.isDefined metadata[0].name
-      assert.strictEqual metadata[0].name, 'A'
-      assert.isDefined metadata[0].value
-      assert.strictEqual metadata[0].value, '1'
+      assert.isDefined metadata.A
+      assert.isDefined metadata.A.value
+      assert.strictEqual metadata.A.value, '1'
 
-      assert.isDefined metadata[1].name
-      assert.strictEqual metadata[1].name, 'B'
-      assert.isDefined metadata[1].value
-      assert.strictEqual metadata[1].value, '2'
+      assert.isDefined metadata.B
+      assert.isDefined metadata.B.value
+      assert.strictEqual metadata.B.value, '2'
 
-      assert.isDefined metadata[2].name
-      assert.strictEqual metadata[2].name, 'C'
-      assert.isDefined metadata[2].value
-      assert.strictEqual metadata[2].value, '3'
+      assert.isDefined metadata.C
+      assert.isDefined metadata.C.value
+      assert.strictEqual metadata.C.value, '3'
 
   it 'accepts options', ->
     source = """
