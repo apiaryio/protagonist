@@ -62,6 +62,7 @@ static Local<Object> WrapMetadata(const snowcrash::Collection<snowcrash::Metadat
     return metadataCollectionObject;
 }
 
+/** Wrap Parameters */
 static Local<Object> WrapParameters(const snowcrash::Collection<snowcrash::Parameter>::type& parameters) 
 {
     Local<Object> parametersCollectionObject = Object::New();
@@ -71,19 +72,32 @@ static Local<Object> WrapParameters(const snowcrash::Collection<snowcrash::Param
 
         Local<Object> parameterObject = Object::New();
 
-        // TODO:
-        // "parameters": {
-        //   "<parameter>": {
-        //     "description": "<description>",
-        //     "type": "<type>",
-        //     "required": "<required parameter flag>",
-        //     "default": "<default value>",
-        //     "example": "<example value>",
-        //     "values": [
-        //       "<element>"
-        //     ]
-        //   }
-        // },
+        // Description
+        parameterObject->Set(String::NewSymbol(snowcrash::SerializeKey::Description.c_str()), String::New(it->description.c_str()));
+
+        // Type
+        parameterObject->Set(String::NewSymbol(snowcrash::SerializeKey::Type.c_str()), String::New(it->type.c_str()));
+
+        // Use flag
+        parameterObject->Set(String::NewSymbol(snowcrash::SerializeKey::Required.c_str()), Boolean::New(it->use != snowcrash::OptionalParameterUse));        
+
+        // Default value
+        parameterObject->Set(String::NewSymbol(snowcrash::SerializeKey::Default.c_str()), String::New(it->defaultValue.c_str()));
+
+        // Example value
+        parameterObject->Set(String::NewSymbol(snowcrash::SerializeKey::Example.c_str()), String::New(it->exampleValue.c_str()));
+
+        // Values
+        Local<Object> valuesCollection = Array::New(it->values.size());
+        size_t i = 0;
+        for (snowcrash::Collection<snowcrash::Value>::const_iterator val_it = it->values.begin(); 
+             val_it != it->values.end();
+            ++val_it, ++i) {
+
+            valuesCollection->Set(i, String::New(val_it->c_str()));
+        } 
+        parameterObject->Set(String::NewSymbol(snowcrash::SerializeKey::Values.c_str()), valuesCollection);
+
 
         parametersCollectionObject->Set(String::NewSymbol(it->name.c_str()), parameterObject);
     }
@@ -132,14 +146,14 @@ static Local<Object> WrapPayload(const snowcrash::Payload& payload)
     return payloadObject;
 }
 
-/** Wrap Transaction */
-static Local<Object> WrapTransactions(const snowcrash::Collection<snowcrash::Transaction>::type& transactions) 
+/** Wrap Transaction Examples */
+static Local<Object> WrapTransactions(const snowcrash::Collection<snowcrash::TransactionExample>::type& examples) 
 {
-    Local<Object> transactionCollectionObject = Array::New(transactions.size());
+    Local<Object> transactionCollectionObject = Array::New(examples.size());
 
     size_t i = 0;
-    for (snowcrash::Collection<snowcrash::Transaction>::const_iterator it = transactions.begin(); 
-         it != transactions.end();
+    for (snowcrash::Collection<snowcrash::TransactionExample>::const_iterator it = examples.begin(); 
+         it != examples.end();
          ++it, ++i) {
 
         Local<Object> transactionObject = Object::New();
@@ -193,17 +207,13 @@ static Local<Object> WrapAction(const snowcrash::Action& action)
     // HTTP Request Method
     actionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Method.c_str()), String::New(action.method.c_str()));
 
-    // Parameters
-    Local<Object> parameters = WrapParameters(action.parameters);
-    actionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Parameters.c_str()), parameters);   
-
     // Headers
     Local<Object> headers = WrapHeaders(action.headers);
     actionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Headers.c_str()), headers);
 
-    // Transactions
-    Local<Object> transactions = WrapTransactions(action.transactions);
-    actionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Transactions.c_str()), transactions);
+    // Transaction Examples
+    Local<Object> examples = WrapTransactions(action.examples);
+    actionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Examples.c_str()), examples);
 
     return actionObject;
 }

@@ -145,18 +145,18 @@ Method description
       assert.isDefined action.headers['X-Method-Header'].value
       assert.strictEqual action.headers['X-Method-Header'].value, 'Pizza delivery'
 
-      assert.isDefined action.transactions
-      assert.strictEqual action.transactions.length, 1
-      assert.isDefined action.transactions[0]
+      assert.isDefined action.examples
+      assert.strictEqual action.examples.length, 1
+      assert.isDefined action.examples[0]
 
-      transaction = action.transactions[0]
-      assert.isDefined transaction.requests
-      assert.strictEqual transaction.requests.length, 0
-      assert.isDefined transaction.responses
-      assert.strictEqual transaction.responses.length, 1
-      assert.isDefined transaction.responses[0]
+      example = action.examples[0]
+      assert.isDefined example.requests
+      assert.strictEqual example.requests.length, 0
+      assert.isDefined example.responses
+      assert.strictEqual example.responses.length, 1
+      assert.isDefined example.responses[0]
 
-      response = transaction.responses[0]
+      response = example.responses[0]
       assert.isDefined response.name
       assert.strictEqual response.name, '200'
       assert.isDefined response.description
@@ -181,13 +181,13 @@ Method description
       assert.isDefined action.method
       assert.strictEqual action.method, 'DELETE'
 
-      assert.isDefined action.transactions
-      assert.strictEqual action.transactions.length, 1
-      assert.isDefined action.transactions[0]
+      assert.isDefined action.examples
+      assert.strictEqual action.examples.length, 1
+      assert.isDefined action.examples[0]
 
-      transaction = action.transactions[0]
-      assert.isDefined transaction.responses[0]
-      response = transaction.responses[0]
+      example = action.examples[0]
+      assert.isDefined example.responses[0]
+      response = example.responses[0]
       assert.isDefined response.name
       assert.strictEqual response.name, '200'
       assert.isDefined response.description
@@ -285,3 +285,61 @@ C: 3
       assert err.message.length != 0
       assert err.code != 0
       assert.isDefined err.location
+
+  it 'parses parameters', ->
+    source = """
+# /machine{?limit}
+
++ Parameters
+    + limit = `20` (optional, number, `42`) ... This is a limit
+      + Values:
+          + `20`
+          + `42`
+          + `53`
+
+## GET
+
++ Response 204
+"""
+    protagonist.parse source, (err, result) ->
+      assert.isNull err
+
+      assert.strictEqual result.ast.resourceGroups.length, 1
+      assert.strictEqual result.ast.resourceGroups[0].resources.length, 1
+
+      resource = result.ast.resourceGroups[0].resources[0]
+      assert.strictEqual resource.uriTemplate, "/machine{?limit}"
+
+      assert.isDefined resource.parameters
+      assert.strictEqual Object.keys(resource.parameters).length, 1
+
+      assert.isDefined resource.parameters.limit
+
+      assert.isDefined resource.parameters.limit.description
+      assert.strictEqual resource.parameters.limit.description, "This is a limit"
+
+      assert.isDefined resource.parameters.limit.type
+      assert.strictEqual resource.parameters.limit.type, "number"
+
+      assert.isDefined resource.parameters.limit.required
+      assert.strictEqual resource.parameters.limit.required, false
+
+      assert.isDefined resource.parameters.limit.default
+      assert.strictEqual resource.parameters.limit.default, "20"
+
+      assert.isDefined resource.parameters.limit.example
+      assert.strictEqual resource.parameters.limit.example, "42"
+
+      assert.isDefined resource.parameters.limit.values
+      assert.strictEqual resource.parameters.limit.values.length, 3
+
+      values = resource.parameters.limit.values
+      
+      assert.isDefined values[0]
+      assert.strictEqual values[0], "20"
+
+      assert.isDefined values[1]
+      assert.strictEqual values[1], "42"
+
+      assert.isDefined values[2]
+      assert.strictEqual values[2], "53"
