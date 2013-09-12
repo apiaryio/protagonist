@@ -207,6 +207,10 @@ static Local<Object> WrapAction(const snowcrash::Action& action)
     // HTTP Request Method
     actionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Method.c_str()), String::New(action.method.c_str()));
 
+    // Parameters
+    Local<Object> parameters = WrapParameters(action.parameters);
+    actionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Parameters.c_str()), parameters); 
+
     // Headers
     Local<Object> headers = WrapHeaders(action.headers);
     actionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Headers.c_str()), headers);

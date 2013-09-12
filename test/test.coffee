@@ -286,13 +286,13 @@ C: 3
       assert err.code != 0
       assert.isDefined err.location
 
-  it 'parses parameters', ->
+  it 'parses resource parameters', ->
     source = """
 # /machine{?limit}
 
 + Parameters
     + limit = `20` (optional, number, `42`) ... This is a limit
-      + Values:
+      + Values
           + `20`
           + `42`
           + `53`
@@ -343,3 +343,47 @@ C: 3
 
       assert.isDefined values[2]
       assert.strictEqual values[2], "53"
+
+  it 'parses action parameters', ->
+    source = """
+# GET /coupons/{id}
+
++ Parameters
+    + id (number, `1001`) ... Id of coupon
+
++ Response 204
+"""
+
+    protagonist.parse source, (err, result) ->
+      assert.isNull err
+
+      assert.strictEqual result.ast.resourceGroups.length, 1
+      assert.strictEqual result.ast.resourceGroups[0].resources.length, 1
+      assert.strictEqual result.ast.resourceGroups[0].resources[0].actions.length, 1 
+
+      action = result.ast.resourceGroups[0].resources[0].actions[0]
+      assert.strictEqual action.method, "GET"
+
+      assert.isDefined action.parameters
+      assert.strictEqual Object.keys(action.parameters).length, 1
+
+      assert.isDefined action.parameters.id
+
+      assert.isDefined action.parameters.id.description
+      assert.strictEqual action.parameters.id.description, "Id of coupon"
+
+      assert.isDefined action.parameters.id.type
+      assert.strictEqual action.parameters.id.type, "number"
+
+      assert.isDefined action.parameters.id.required
+      assert.strictEqual action.parameters.id.required, true
+
+      assert.isDefined action.parameters.id.default
+      assert.strictEqual action.parameters.id.default, ""
+
+      assert.isDefined action.parameters.id.example
+      assert.strictEqual action.parameters.id.example, "1001"
+
+      assert.isDefined action.parameters.id.values
+      assert.strictEqual action.parameters.id.values.length, 0
+
