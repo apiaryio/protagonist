@@ -41,7 +41,7 @@ Handle<Value> SourceAnnotation::NewInstance()
     return scope.Close(instance);
 }
 
-static Local<Object> WrapSourceDataRange(const snowcrash::SourceDataRange& range) 
+static Local<Object> WrapSourceCharactersRange(const snowcrash::SourceCharacterRange& range) 
 {
     Local<Object> rangeObject = Object::New();
 
@@ -59,11 +59,11 @@ Local<Object> SourceAnnotation::WrapSourceAnnotation(const snowcrash::SourceAnno
 
     Local<Object> location = Array::New(annotation.location.size());
     size_t i = 0;
-    for (snowcrash::SourceDataBlock::const_iterator it = annotation.location.begin(); 
+    for (snowcrash::SourceCharacterBlock::const_iterator it = annotation.location.begin(); 
          it != annotation.location.end();
          ++it, ++i) {
 
-        location->Set(i, WrapSourceDataRange(*it));
+        location->Set(i, WrapSourceCharactersRange(*it));
     }
 
     annotationWrap->Set(String::NewSymbol("location"), location);    
