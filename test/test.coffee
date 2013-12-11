@@ -1,3 +1,6 @@
+SegfaultHandler = require 'segfault-handler'
+SegfaultHandler.registerHandler()
+
 protagonist = require '../build/Release/protagonist'
 {assert} = require 'chai'
 

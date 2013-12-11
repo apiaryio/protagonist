@@ -4,7 +4,7 @@
 
 var fs = require('fs');
 var path = require('path');
-var protagonist =require('../build/Release/protagonist');
+var protagonist = require('../build/Release/protagonist');
 //var protagonist = require('protagonist');
 
 // Process arguments

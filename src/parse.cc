@@ -12,6 +12,27 @@ using namespace protagonist;
 //static const std::string RenderDescriptionsOptionKey = "renderDescriptions";
 static const std::string RequireBlueprintNameOptionKey = "requireBlueprintName";
 
+// Async Parse
+void AsyncParse(uv_work_t* request);
+
+// Async Parse Handler
+void AsyncParseAfter(uv_work_t* request);
+
+// Threadpooling libuv baton
+struct Baton {
+
+    // Callback
+    Persistent<Function> callback;
+
+    // Input
+    snowcrash::BlueprintParserOptions options;
+    snowcrash::SourceData sourceData;    
+
+    // Output
+    snowcrash::Result result;
+    snowcrash::Blueprint ast;
+};
+
 Handle<Value> protagonist::Parse(const Arguments& args) {
     HandleScope scope;
 
@@ -69,28 +90,58 @@ Handle<Value> protagonist::Parse(const Arguments& args) {
         } 
     }
 
+    // Get Callback
+    Local<Function> callback = (args.Length() == 3) ?  Local<Function>::Cast(args[2]) : Local<Function>::Cast(args[1]);
+
+    // Prepare threadpool baton
+    Baton* baton = ::new Baton();
+    baton->options = options;
+    baton->sourceData = *sourceData;
+    baton->callback = Persistent<Function>::New(callback);
+
+    // This creates the work request struct.
+    uv_work_t *request = ::new uv_work_t();
+    request->data = baton;
+
+    // Schedule the work request
+    int status = uv_queue_work(uv_default_loop(), 
+                                request, 
+                                AsyncParse,
+                                (uv_after_work_cb)AsyncParseAfter);
+    assert(status == 0);
+    return scope.Close(Undefined());
+}    
+
+void AsyncParse(uv_work_t* request) {
+    Baton* baton = static_cast<Baton*>(request->data);
+
     // Parse the source data
-    snowcrash::Result result;
-    snowcrash::Blueprint ast;
-    snowcrash::parse(*sourceData, options, result, ast);
+    snowcrash::parse(baton->sourceData, baton->options, baton->result, baton->ast);
+}
+
+void AsyncParseAfter(uv_work_t* request) {
+    HandleScope scope;
+    Baton* baton = static_cast<Baton*>(request->data);
 
     // Prepare result
     const unsigned argc = 2;
     Local<Value> argv[argc];
 
     // Error Object
-    if (result.error.code == snowcrash::Error::OK)
+    if (baton->result.error.code == snowcrash::Error::OK)
         argv[0] = Local<Value>::New(Null());
-
     else
-        argv[0] = SourceAnnotation::WrapSourceAnnotation(result.error);
+        argv[0] = SourceAnnotation::WrapSourceAnnotation(baton->result.error);
 
+    argv[1] = Result::WrapResult(baton->result, baton->ast);      
 
-    argv[1] = Result::WrapResult(result, ast);    
+    TryCatch try_catch;
+    baton->callback->Call(Context::GetCurrent()->Global(), argc, argv);
+    if (try_catch.HasCaught()) {
+        node::FatalException(try_catch);
+    }
 
-    // Callback
-    Local<Function> callback = (args.Length() == 3) ?  Local<Function>::Cast(args[2]) : Local<Function>::Cast(args[1]);
-    callback->Call(Context::GetCurrent()->Global(), argc, argv);
-
-    return scope.Close(Undefined());
-}    
+    baton->callback.Dispose();
+    delete baton;
+    delete request;
+}
