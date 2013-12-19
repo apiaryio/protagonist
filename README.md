@@ -23,7 +23,7 @@ protagonist.parse('# My API', function(error, result) {
   	}
   
 	console.log(result.ast);
-}
+});
 ```
 
 Refer to [Snow Crash JSON serialization](https://github.com/apiaryio/snowcrash/wiki/API-Blueprint-AST-Media-Types#json-serialization) for details about the AST output structure.
