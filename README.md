@@ -1,6 +1,7 @@
+![logo](https://raw.github.com/apiaryio/api-blueprint/gh-pages/assets/logo_apiblueprint.png) 
+
 # Protagonist [![Build Status](https://travis-ci.org/apiaryio/protagonist.png?branch=master)](https://travis-ci.org/apiaryio/protagonist)
 ### API Blueprint Parser for Node.js
-
 Protagonist is a Node.js wrapper for the [Snow Crash](https://github.com/apiaryio/snowcrash) library.
 
 API Blueprint is Web API documentation language. You can find API Blueprint documentation on the [API Blueprint site](http://apiblueprint.org).
@@ -26,7 +27,7 @@ protagonist.parse('# My API', function(error, result) {
 });
 ```
 
-Refer to [Snow Crash JSON serialization](https://github.com/apiaryio/snowcrash/wiki/API-Blueprint-AST-Media-Types#json-serialization) for details about the AST output structure.
+Refer to [API Blueprint AST Serialization Media Types](https://github.com/apiaryio/api-blueprint-ast) JSON serialization for details on the AST output structure under the `ast` key.
 
 ## Hacking Protagonist
 You are welcome to contribute. Use following steps to build & test Protagonist.
@@ -65,8 +66,6 @@ $ npm test
 	
 ### Contribute
 Fork & Pull Request. 
-
-Make sure to follow the [API Blueprint Developers discussion group](https://groups.google.com/forum/#!forum/apiblueprint-dev). Also check the Protagonist [issues page](https://github.com/apiaryio/protagonist/issues?state=open).
 
 ## License
 MIT License. See the [LICENSE](https://github.com/apiaryio/protagonist/blob/master/LICENSE) file.
