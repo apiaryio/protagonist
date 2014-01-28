@@ -7,6 +7,10 @@ var path = require('path');
 var protagonist = require('../build/Release/protagonist');
 //var protagonist = require('protagonist');
 
+// Add Segfault handler
+var segfaultHandler = require('segfault-handler');
+segfaultHandler.registerHandler();
+
 // Process arguments
 var args = process.argv.slice(2);
 if (typeof args == 'undefined' || args.length !== 1) {
