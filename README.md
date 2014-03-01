@@ -27,8 +27,6 @@ protagonist.parse('# My API', function(error, result) {
 });
 ```
 
-Refer to [API Blueprint AST Serialization Media Types](https://github.com/apiaryio/api-blueprint-ast) JSON serialization for details on the AST output structure under the `ast` key.
-
 ## Hacking Protagonist
 You are welcome to contribute. Use following steps to build & test Protagonist.
 
