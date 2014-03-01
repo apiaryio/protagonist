@@ -292,9 +292,6 @@ Local<Object> Blueprint::WrapBlueprint(const snowcrash::Blueprint& blueprint)
 {
     Local<Object> blueprintWrap = constructor->NewInstance();
 
-    // Version 
-    blueprintWrap->Set(String::NewSymbol(snowcrash::SerializeKey::ASTVersion.c_str()), String::New(AST_VERSION));
-
     // Metadata
     Local<Object> metadata = WrapMetadata(blueprint.metadata);
     blueprintWrap->Set(String::NewSymbol(snowcrash::SerializeKey::Metadata.c_str()), metadata);    
