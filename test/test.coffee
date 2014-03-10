@@ -2,23 +2,28 @@ SegfaultHandler = require 'segfault-handler'
 SegfaultHandler.registerHandler()
 
 protagonist = require '../build/Release/protagonist'
-{assert} = require 'chai'
+
+chai = require 'chai'
+chai.Assertion.includeStack = true; 
+assert = chai.assert
 
 describe "API Blueprint parser", ->
-  it 'parses API name', ->
+  
+  it 'parses API name', (done) ->
     protagonist.parse '# My API', (err, result) ->
-
       assert.isNull err
+
       assert.isDefined result
       assert.strictEqual result.ast.name, 'My API'
 
-  it 'parses API description', ->
+      done()
+
+  it 'parses API description', (done) ->
     source = """
 **description**
 
 """
     protagonist.parse source, (err, result) ->
-      
       assert.isNull err
 
       assert.isDefined result
@@ -26,16 +31,15 @@ describe "API Blueprint parser", ->
       assert.isDefined result.ast.description
       assert.strictEqual result.ast.description, '**description**\n'
 
-  it 'parses resource group', ->
-    source = """
----
+      done()
 
+  it 'parses resource group', (done) ->
+    source = """
 # Group Name
 _description_
 
 """
     protagonist.parse source, (err, result) ->
-
       assert.isNull err
 
       assert.isDefined result.ast.resourceGroups
@@ -48,25 +52,19 @@ _description_
       assert.isDefined resourceGroup.description
       assert.strictEqual resourceGroup.description, '_description_\n'
 
-  it 'parses resource', ->
+      done()
+
+  it 'parses resource', (done) ->
     source = """
 # My Resource [/resource]
 Resource description
 
-+ Headers
-
-        X-Resource-Header: Metaverse
-
-+ Resource Object (text/plain)
++ Model (text/plain)
   
         Hello World
 
 ## Retrieve Resource [GET]
 Method description
-
-+ Headers
-
-        X-Method-Header: Pizza delivery
 
 + Response 200 (text/plain)
   
@@ -88,7 +86,7 @@ Method description
 
 + Response 200
 
-    [Resource][]
+    [My Resource][]
 
 """
 
@@ -114,13 +112,10 @@ Method description
       assert.strictEqual resource.description, 'Resource description\n\n'
       assert.isDefined resource.headers
 
-      assert.strictEqual Object.keys(resource.headers).length, 1
-      assert.isDefined resource.headers['X-Resource-Header']
-      assert.isDefined resource.headers['X-Resource-Header'].value
-      assert.strictEqual resource.headers['X-Resource-Header'].value, 'Metaverse'
+      assert.strictEqual Object.keys(resource.headers).length, 0
 
       assert.isDefined resource.model
-      assert.strictEqual resource.model.name, 'Resource'
+      assert.strictEqual resource.model.name, 'My Resource'
       assert.isDefined resource.model.description
       assert.strictEqual resource.model.description.length, 0
       assert.isDefined resource.model.body
@@ -143,10 +138,7 @@ Method description
       assert.isDefined action.description
       assert.strictEqual action.description, 'Method description\n\n'
       assert.isDefined action.headers
-      assert.strictEqual Object.keys(action.headers).length, 1
-      assert.isDefined action.headers['X-Method-Header']
-      assert.isDefined action.headers['X-Method-Header'].value
-      assert.strictEqual action.headers['X-Method-Header'].value, 'Pizza delivery'
+      assert.strictEqual Object.keys(action.headers).length, 0
 
       assert.isDefined action.examples
       assert.strictEqual action.examples.length, 1
@@ -204,7 +196,9 @@ Method description
       assert.isDefined response.headers['Content-Type'].value
       assert.strictEqual response.headers['Content-Type'].value, 'text/plain'
 
-  it 'fails to parse blueprint with tabs', ->
+      done()
+
+  it 'fails to parse blueprint with tabs', (done) ->
     source = """
 # /resource
 # GET
@@ -219,7 +213,9 @@ Method description
       assert err.code != 0
       assert.isDefined err.location
 
-  it 'parses blueprint with warnings', ->
+      done()
+
+  it 'parses blueprint with warnings', (done) ->
     source = """
 API description
 
@@ -229,7 +225,6 @@ Group description
 
 """
     protagonist.parse source, (err, result) ->
-
       assert.isNull err
 
       assert.isDefined result.warnings
@@ -241,7 +236,9 @@ Group description
 
       assert.isDefined result.ast
 
-  it 'parses blueprint metadata', ->
+      done()
+
+  it 'parses blueprint metadata', (done) ->
     source = """
 A: 1
 B: 2
@@ -250,7 +247,6 @@ C: 3
 # API Name
 """
     protagonist.parse source, (err, result) ->
-
       assert.isNull err
 
       assert.isDefined result.warnings
@@ -273,7 +269,9 @@ C: 3
       assert.isDefined metadata.C.value
       assert.strictEqual metadata.C.value, '3'
 
-  it 'accepts options', ->
+      done()
+
+  it 'accepts options', (done) ->
     source = """
 **description**
 
@@ -289,7 +287,9 @@ C: 3
       assert err.code != 0
       assert.isDefined err.location
 
-  it 'parses resource parameters', ->
+      done()
+
+  it 'parses resource parameters', (done) ->
     source = """
 # /machine{?limit}
 
@@ -304,6 +304,7 @@ C: 3
 
 + Response 204
 """
+
     protagonist.parse source, (err, result) ->
       assert.isNull err
 
@@ -347,7 +348,9 @@ C: 3
       assert.isDefined values[2]
       assert.strictEqual values[2], "53"
 
-  it 'parses action parameters', ->
+      done()
+
+  it 'parses action parameters', (done) ->
     source = """
 # GET /coupons/{id}
 
@@ -390,3 +393,61 @@ C: 3
       assert.isDefined action.parameters.id.values
       assert.strictEqual action.parameters.id.values.length, 0
 
+      done()
+
+  it 'parses multiple transactions', (done) ->
+    source = """
+# /resource
+## GET
+
++ request A
+
+        A
+
++ response 200
+
+        200-A
+
++ request B
+
+        B
+
++ response 200
+
+        200-B
+
+"""
+
+    protagonist.parse source, (err, result) ->
+      assert.isNull err
+
+      assert.strictEqual result.ast.resourceGroups.length, 1
+      assert.strictEqual result.ast.resourceGroups[0].resources.length, 1
+      assert.strictEqual result.ast.resourceGroups[0].resources[0].actions.length, 1
+      assert.strictEqual result.ast.resourceGroups[0].resources[0].actions[0].examples.length, 2
+
+      example = result.ast.resourceGroups[0].resources[0].actions[0].examples[0]
+      assert.strictEqual example.requests.length, 1
+      assert.strictEqual example.responses.length, 1
+
+      request = example.requests[0]
+      assert.strictEqual request.name, 'A'
+      assert.strictEqual request.body, 'A\n'      
+
+      response = example.responses[0]
+      assert.strictEqual response.name, '200'
+      assert.strictEqual response.body, '200-A\n'      
+
+      example = result.ast.resourceGroups[0].resources[0].actions[0].examples[1]   
+      assert.strictEqual example.requests.length, 1
+      assert.strictEqual example.responses.length, 1
+
+      request = example.requests[0]
+      assert.strictEqual request.name, 'B'
+      assert.strictEqual request.body, 'B\n'
+
+      response = example.responses[0]
+      assert.strictEqual response.name, '200'
+      assert.strictEqual response.body, '200-B\n'
+
+      done()
