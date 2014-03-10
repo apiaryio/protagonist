@@ -1,6 +1,6 @@
 {
   "name": "protagonist",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "API Blueprint Parser",
   "author": "Apiary.io <support@apiary.io>",
   "main": "./build/Release/protagonist",
@@ -12,14 +12,14 @@
     "node": ">=0.8.15"
   },
   "devDependencies": {
-    "coffee-script": "1.4.0",
-    "mocha": "1.15.1",
-    "async": "",
-    "chai": "1.8.1",
+    "coffee-script": "~1.6.0",
+    "mocha": "~1.17.1",
+    "async": "~0.2.10",
+    "chai": "~1.9.0",
     "segfault-handler": "git://github.com/ddopson/node-segfault-handler.git#master"
   },
   "scripts": {
-    "test": "mocha --ui tdd --reporter spec --compilers coffee:coffee-script test/test.coffee"
+    "test": "make test"
   },
   "license": "MIT"
 }
