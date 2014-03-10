@@ -2,7 +2,10 @@ SegfaultHandler = require 'segfault-handler'
 SegfaultHandler.registerHandler()
 
 protagonist = require '../build/Release/protagonist'
-{assert} = require 'chai'
+
+chai = require 'chai'
+chai.Assertion.includeStack = true; 
+assert = chai.assert
 
 describe "API Blueprint parser", ->
   
@@ -389,5 +392,62 @@ C: 3
 
       assert.isDefined action.parameters.id.values
       assert.strictEqual action.parameters.id.values.length, 0
+
+      done()
+
+  it 'parses multiple transactions', (done) ->
+    source = """
+# /resource
+## GET
+
++ request A
+
+        A
+
++ response 200
+
+        200-A
+
++ request B
+
+        B
+
++ response 200
+
+        200-B
+
+"""
+
+    protagonist.parse source, (err, result) ->
+      assert.isNull err
+
+      assert.strictEqual result.ast.resourceGroups.length, 1
+      assert.strictEqual result.ast.resourceGroups[0].resources.length, 1
+      assert.strictEqual result.ast.resourceGroups[0].resources[0].actions.length, 1
+      assert.strictEqual result.ast.resourceGroups[0].resources[0].actions[0].examples.length, 2
+
+      example = result.ast.resourceGroups[0].resources[0].actions[0].examples[0]
+      assert.strictEqual example.requests.length, 1
+      assert.strictEqual example.responses.length, 1
+
+      request = example.requests[0]
+      assert.strictEqual request.name, 'A'
+      assert.strictEqual request.body, 'A\n'      
+
+      response = example.responses[0]
+      assert.strictEqual response.name, '200'
+      assert.strictEqual response.body, '200-A\n'      
+
+      example = result.ast.resourceGroups[0].resources[0].actions[0].examples[1]   
+      assert.strictEqual example.requests.length, 1
+      assert.strictEqual example.responses.length, 1
+
+      request = example.requests[0]
+      assert.strictEqual request.name, 'B'
+      assert.strictEqual request.body, 'B\n'
+
+      response = example.responses[0]
+      assert.strictEqual response.name, '200'
+      assert.strictEqual response.body, '200-B\n'
 
       done()
