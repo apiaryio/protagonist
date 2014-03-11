@@ -1,7 +1,7 @@
 {
   "ast": {
-    "_version": "1.0",
-    "metadata": {},
+    "_version": "2.0",
+    "metadata": [],
     "name": "",
     "description": "",
     "resourceGroups": [
@@ -14,15 +14,13 @@
             "description": "",
             "uriTemplate": "/messages/{id}",
             "model": {},
-            "parameters": {},
-            "headers": {},
+            "parameters": [],
             "actions": [
               {
                 "name": "Retrieve Message",
                 "description": "",
                 "method": "GET",
-                "parameters": {},
-                "headers": {},
+                "parameters": [],
                 "examples": [
                   {
                     "name": "",
@@ -32,11 +30,12 @@
                       {
                         "name": "200",
                         "description": "",
-                        "headers": {
-                          "Content-Type": {
+                        "headers": [
+                          {
+                            "name": "Content-Type",
                             "value": "text/plain"
                           }
-                        },
+                        ],
                         "body": "Hello World!\n",
                         "schema": ""
                       }
@@ -48,8 +47,7 @@
                 "name": "Delete Message",
                 "description": "",
                 "method": "DELETE",
-                "parameters": {},
-                "headers": {},
+                "parameters": [],
                 "examples": [
                   {
                     "name": "",
@@ -59,7 +57,7 @@
                       {
                         "name": "204",
                         "description": "",
-                        "headers": {},
+                        "headers": [],
                         "body": "",
                         "schema": ""
                       }

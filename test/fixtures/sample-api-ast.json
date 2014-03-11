@@ -1,0 +1,97 @@
+{
+  "_version": "2.0",
+  "metadata": [
+    {
+      "name": "FORMAT",
+      "value": "1A"
+    }
+  ],
+  "name": "",
+  "description": "",
+  "resourceGroups": [
+    {
+      "name": "Messages",
+      "description": "",
+      "resources": [
+        {
+          "name": "Message",
+          "description": "",
+          "uriTemplate": "/messages/{id}",
+          "model": {},
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Id of a message",
+              "type": "",
+              "required": true,
+              "default": "",
+              "example": "",
+              "values": [
+                {
+                  "value": "1"
+                },
+                {
+                  "value": "2"
+                },
+                {
+                  "value": "3"
+                }
+              ]
+            }
+          ],
+          "actions": [
+            {
+              "name": "Retrieve Message",
+              "description": "",
+              "method": "GET",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "text/plain"
+                        }
+                      ],
+                      "body": "Hello World!\n",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Delete Message",
+              "description": "",
+              "method": "DELETE",
+              "parameters": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "204",
+                      "description": "",
+                      "headers": [],
+                      "body": "",
+                      "schema": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
