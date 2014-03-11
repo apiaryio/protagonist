@@ -18,14 +18,100 @@ $ npm install protagonist
 ```js
 var protagonist = require('protagonist');
 protagonist.parse('# My API', function(error, result) {
-	if (error) {
-   		console.log(error);
-	    return;
-  	}
+    if (error) {
+        console.log(error);
+        return;
+    }
   
-	console.log(result.ast);
+    console.log(result.ast);
 });
 ```
+
+### Parsing Result
+
+Parsing this blueprint: 
+
+```
+# GET /1
++ response
+```
+
+will produce the following object (`result` variable):
+
+```json
+{
+  "ast": {
+    "_version": "2.0",
+    "metadata": [],
+    "name": "",
+    "description": "",
+    "resourceGroups": [
+      {
+        "name": "",
+        "description": "",
+        "resources": [
+          {
+            "name": "",
+            "description": "",
+            "uriTemplate": "/1",
+            "model": {},
+            "parameters": [],
+            "actions": [
+              {
+                "name": "",
+                "description": "",
+                "method": "GET",
+                "parameters": [],
+                "examples": [
+                  {
+                    "name": "",
+                    "description": "",
+                    "requests": [],
+                    "responses": [
+                      {
+                        "name": "200",
+                        "description": "",
+                        "headers": [],
+                        "body": "",
+                        "schema": ""
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "warnings": [
+    {
+      "code": 6,
+      "message": "missing response HTTP status code, assuming 'Response 200'",
+      "location": [
+        {
+          "index": 12,
+          "length": 9
+        }
+      ]
+    }
+  ]
+}
+```
+
+#### Keys Description
+
++ `ast` ... This is the abstract syntax tree (AST) of the parsed blueprint. 
+
+    The structure under this key is **1:1** with the [AST Blueprint serialization JSON media type v2.0](https://github.com/apiaryio/api-blueprint-ast#json-serialization) – `vnd.apiblueprint.ast.raw+json; version=2.0`.
+
++ `warnings` ... Array of the parser warnings as occurred during the parsing
+    + `code` ...  Warning [group](https://github.com/apiaryio/snowcrash/blob/master/src/SourceAnnotation.h#L128) code
+    + `message` ... Warning message
+    + `location` ... Array of (possibly non-continuous) locations in the source blueprint
+        + `index` ... Zero-based index of the character where the warning occurs
+        + `lenght` ... Number of the characters from index where the warning occurs
 
 ## Hacking Protagonist
 You are welcome to contribute. Use following steps to build & test Protagonist.
@@ -35,24 +121,24 @@ Protagonist uses [node-gyp](https://github.com/TooTallNate/node-gyp) build tool.
 
 1. If needed, install node-gyp:
 
-	```sh
-	$ npm install -g node-gyp
-	```
+    ```sh
+    $ npm install -g node-gyp
+    ```
 
 2. Clone the repo + fetch the submodules:
 
-	```sh
-	$ git clone git://github.com/apiaryio/protagonist.git
-	$ cd protagonist
-	$ git submodule update --init --recursive
-	```
+    ```sh
+    $ git clone git://github.com/apiaryio/protagonist.git
+    $ cd protagonist
+    $ git submodule update --init --recursive
+    ```
     
 3. Build:
-	
-	```sh
-	$ node-gyp configure
-	$ node-gyp build	
-	```
+    
+    ```sh
+    $ node-gyp configure
+    $ node-gyp build    
+    ```
 
 ### Test
 Inside the protagonist repository run:
@@ -61,7 +147,7 @@ Inside the protagonist repository run:
 $ npm install
 $ npm test
 ```
-	
+    
 ### Contribute
 Fork & Pull Request. 
 
