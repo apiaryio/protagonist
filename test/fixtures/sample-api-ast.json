@@ -1,6 +1,11 @@
 {
   "_version": "2.0",
-  "metadata": [],
+  "metadata": [
+    {
+      "name": "FORMAT",
+      "value": "1A"
+    }
+  ],
   "name": "",
   "description": "",
   "resourceGroups": [
@@ -13,7 +18,27 @@
           "description": "",
           "uriTemplate": "/messages/{id}",
           "model": {},
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Id of a message",
+              "type": "",
+              "required": true,
+              "default": "",
+              "example": "",
+              "values": [
+                {
+                  "value": "1"
+                },
+                {
+                  "value": "2"
+                },
+                {
+                  "value": "3"
+                }
+              ]
+            }
+          ],
           "actions": [
             {
               "name": "Retrieve Message",

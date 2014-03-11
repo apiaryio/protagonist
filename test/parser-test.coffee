@@ -2,10 +2,7 @@ SegfaultHandler = require 'segfault-handler'
 SegfaultHandler.registerHandler()
 
 protagonist = require '../build/Release/protagonist'
-
-chai = require 'chai'
-chai.Assertion.includeStack = true 
-assert = chai.assert
+{assert} = require 'chai'
 
 describe "API Blueprint parser", ->
   
@@ -110,9 +107,6 @@ Method description
       assert.strictEqual resource.name, 'My Resource'
       assert.isDefined resource.description
       assert.strictEqual resource.description, 'Resource description\n\n'
-      assert.isDefined resource.headers
-
-      assert.strictEqual Object.keys(resource.headers).length, 0
 
       assert.isDefined resource.model
       assert.strictEqual resource.model.name, 'My Resource'
@@ -121,10 +115,9 @@ Method description
       assert.isDefined resource.model.body
       assert.strictEqual resource.model.body, 'Hello World\n'
       assert.isDefined resource.model.headers
-      assert.strictEqual Object.keys(resource.model.headers).length, 1
-      assert.isDefined resource.model.headers['Content-Type']
-      assert.isDefined resource.model.headers['Content-Type'].value
-      assert.strictEqual resource.model.headers['Content-Type'].value, 'text/plain'
+      assert.strictEqual resource.model.headers.length, 1
+      assert.strictEqual resource.model.headers[0].name, 'Content-Type'
+      assert.strictEqual resource.model.headers[0].value, 'text/plain'
 
       assert.isDefined resource.actions
       assert.strictEqual resource.actions.length, 2
@@ -137,8 +130,6 @@ Method description
       assert.strictEqual action.name, 'Retrieve Resource'
       assert.isDefined action.description
       assert.strictEqual action.description, 'Method description\n\n'
-      assert.isDefined action.headers
-      assert.strictEqual Object.keys(action.headers).length, 0
 
       assert.isDefined action.examples
       assert.strictEqual action.examples.length, 1
@@ -158,18 +149,15 @@ Method description
       assert.strictEqual response.description, 'Response description\n'
 
       assert.isDefined response.headers
-      assert.strictEqual Object.keys(response.headers).length, 2
+      assert.strictEqual response.headers.length, 2
 
-      assert.isDefined response.headers['Content-Type']
-      assert.isDefined response.headers['Content-Type'].value
-      assert.strictEqual response.headers['Content-Type'].value, 'text/plain'
-      assert.isDefined response.headers['X-Response-Header']
-      assert.isDefined response.headers['X-Response-Header'].value
-      assert.strictEqual response.headers['X-Response-Header'].value, 'Fighter'
+      assert.strictEqual response.headers[0].name, 'Content-Type'
+      assert.strictEqual response.headers[0].value, 'text/plain'
 
-      assert.isDefined response.body
+      assert.strictEqual response.headers[1].name, 'X-Response-Header'
+      assert.strictEqual response.headers[1].value, 'Fighter'
+
       assert.strictEqual response.body, 'Y.T.\n'
-      assert.isDefined response.schema
       assert.strictEqual response.schema, 'Kourier\n'
 
       action = resource.actions[1]
@@ -191,10 +179,9 @@ Method description
       assert.strictEqual response.body, 'Hello World\n'
       assert.isDefined response.headers
 
-      assert.strictEqual Object.keys(response.headers).length, 1
-      assert.isDefined response.headers['Content-Type']
-      assert.isDefined response.headers['Content-Type'].value
-      assert.strictEqual response.headers['Content-Type'].value, 'text/plain'
+      assert.strictEqual response.headers.length, 1
+      assert.strictEqual response.headers[0].name, 'Content-Type'
+      assert.strictEqual response.headers[0].value, 'text/plain'
 
       done()
 
@@ -253,21 +240,18 @@ C: 3
       assert.strictEqual result.warnings.length, 0
       
       assert.isDefined result.ast.metadata
-      assert.strictEqual Object.keys(result.ast.metadata).length, 3
+      assert.strictEqual result.ast.metadata.length, 3
 
       metadata = result.ast.metadata
 
-      assert.isDefined metadata.A
-      assert.isDefined metadata.A.value
-      assert.strictEqual metadata.A.value, '1'
+      assert.strictEqual metadata[0].name, 'A'
+      assert.strictEqual metadata[0].value, '1'
 
-      assert.isDefined metadata.B
-      assert.isDefined metadata.B.value
-      assert.strictEqual metadata.B.value, '2'
+      assert.strictEqual metadata[1].name, 'B'
+      assert.strictEqual metadata[1].value, '2'
 
-      assert.isDefined metadata.C
-      assert.isDefined metadata.C.value
-      assert.strictEqual metadata.C.value, '3'
+      assert.strictEqual metadata[2].name, 'C'
+      assert.strictEqual metadata[2].value, '3'
 
       done()
 
@@ -313,40 +297,22 @@ C: 3
 
       resource = result.ast.resourceGroups[0].resources[0]
       assert.strictEqual resource.uriTemplate, "/machine{?limit}"
-
       assert.isDefined resource.parameters
-      assert.strictEqual Object.keys(resource.parameters).length, 1
+      assert.strictEqual resource.parameters.length, 1
 
-      assert.isDefined resource.parameters.limit
+      parameter = resource.parameters[0]
+      assert.strictEqual parameter.name, 'limit'
+      assert.strictEqual parameter.description, 'This is a limit'
+      assert.strictEqual parameter.type, 'number'
+      assert.strictEqual parameter.required, false
+      assert.strictEqual parameter.default, '20'
+      assert.strictEqual parameter.example, '42'
+      assert.strictEqual parameter.values.length, 3
 
-      assert.isDefined resource.parameters.limit.description
-      assert.strictEqual resource.parameters.limit.description, "This is a limit"
-
-      assert.isDefined resource.parameters.limit.type
-      assert.strictEqual resource.parameters.limit.type, "number"
-
-      assert.isDefined resource.parameters.limit.required
-      assert.strictEqual resource.parameters.limit.required, false
-
-      assert.isDefined resource.parameters.limit.default
-      assert.strictEqual resource.parameters.limit.default, "20"
-
-      assert.isDefined resource.parameters.limit.example
-      assert.strictEqual resource.parameters.limit.example, "42"
-
-      assert.isDefined resource.parameters.limit.values
-      assert.strictEqual resource.parameters.limit.values.length, 3
-
-      values = resource.parameters.limit.values
-      
-      assert.isDefined values[0]
-      assert.strictEqual values[0], "20"
-
-      assert.isDefined values[1]
-      assert.strictEqual values[1], "42"
-
-      assert.isDefined values[2]
-      assert.strictEqual values[2], "53"
+      values = parameter.values
+      assert.strictEqual values[0].value, '20'
+      assert.strictEqual values[1].value, '42'
+      assert.strictEqual values[2].value, '53'
 
       done()
 
@@ -368,30 +334,17 @@ C: 3
       assert.strictEqual result.ast.resourceGroups[0].resources[0].actions.length, 1 
 
       action = result.ast.resourceGroups[0].resources[0].actions[0]
-      assert.strictEqual action.method, "GET"
-
-      assert.isDefined action.parameters
-      assert.strictEqual Object.keys(action.parameters).length, 1
-
-      assert.isDefined action.parameters.id
-
-      assert.isDefined action.parameters.id.description
-      assert.strictEqual action.parameters.id.description, "Id of coupon"
-
-      assert.isDefined action.parameters.id.type
-      assert.strictEqual action.parameters.id.type, "number"
-
-      assert.isDefined action.parameters.id.required
-      assert.strictEqual action.parameters.id.required, true
-
-      assert.isDefined action.parameters.id.default
-      assert.strictEqual action.parameters.id.default, ""
-
-      assert.isDefined action.parameters.id.example
-      assert.strictEqual action.parameters.id.example, "1001"
-
-      assert.isDefined action.parameters.id.values
-      assert.strictEqual action.parameters.id.values.length, 0
+      assert.strictEqual action.method, "GET"  
+      assert.strictEqual action.parameters.length, 1
+      
+      parameter = action.parameters[0]
+      assert.strictEqual parameter.name, 'id'
+      assert.strictEqual parameter.description, 'Id of coupon'
+      assert.strictEqual parameter.type, 'number'
+      assert.strictEqual parameter.required, true
+      assert.strictEqual parameter.default, ''
+      assert.strictEqual parameter.example, '1001'
+      assert.strictEqual parameter.values.length, 0
 
       done()
 
