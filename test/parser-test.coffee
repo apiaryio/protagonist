@@ -4,7 +4,7 @@ SegfaultHandler.registerHandler()
 protagonist = require '../build/Release/protagonist'
 
 chai = require 'chai'
-chai.Assertion.includeStack = true; 
+chai.Assertion.includeStack = true 
 assert = chai.assert
 
 describe "API Blueprint parser", ->
