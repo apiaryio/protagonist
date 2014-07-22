@@ -40,7 +40,7 @@ Handle<Value> Result::NewInstance()
     return scope.Close(instance);
 }
 
-v8::Local<v8::Object> Result::WrapResult(const snowcrash::Result& result,
+v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& result,
                                          const snowcrash::Blueprint& blueprint)
 {
     Local<Object> resultWrap = constructor->NewInstance();

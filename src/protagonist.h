@@ -1,7 +1,6 @@
 #include <node.h>
 #include <v8.h>
 #include "Blueprint.h"
-#include "ParserCore.h"
 #include "SourceAnnotation.h"
 
 namespace protagonist {
@@ -57,7 +56,7 @@ namespace protagonist {
 
         // Wraps snowcrash::Warnings and snowcrash:Blueprint into result object
         // Note: snowcrash::Result::Error is being sent separately as Error object
-        static v8::Local<v8::Object> WrapResult(const snowcrash::Result& result,
+        static v8::Local<v8::Object> WrapResult(const snowcrash::Report& result,
                                                 const snowcrash::Blueprint& blueprint);
 
     private:

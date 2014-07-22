@@ -26,10 +26,10 @@ struct Baton {
 
     // Input
     snowcrash::BlueprintParserOptions options;
-    snowcrash::SourceData sourceData;    
+    mdp::ByteBuffer sourceData;
 
     // Output
-    snowcrash::Result result;
+    snowcrash::Report result;
     snowcrash::Blueprint ast;
 };
 
