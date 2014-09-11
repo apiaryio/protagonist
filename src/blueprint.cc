@@ -50,6 +50,7 @@ static Local<Object> WrapMetadata(const snowcrash::Collection<snowcrash::Metadat
 {
     Local<Object> metadataCollectionArray = Array::New(metadataCollection.size());
     size_t i = 0;
+
     for (snowcrash::Collection<snowcrash::Metadata>::const_iterator it = metadataCollection.begin(); 
          it != metadataCollection.end();
          ++it, ++i) {
@@ -69,10 +70,11 @@ static Local<Object> WrapMetadata(const snowcrash::Collection<snowcrash::Metadat
 }
 
 /** Wrap Parameters */
-static Local<Object> WrapParameters(const snowcrash::Collection<snowcrash::Parameter>::type& parameters) 
+static Local<Object> WrapParameters(const snowcrash::Parameters& parameters)
 {
     Local<Object> parametersCollectionArray = Array::New(parameters.size());
     size_t i = 0;
+
     for (snowcrash::Collection<snowcrash::Parameter>::const_iterator it = parameters.begin(); 
          it != parameters.end();
          ++it, ++i) {
@@ -100,6 +102,7 @@ static Local<Object> WrapParameters(const snowcrash::Collection<snowcrash::Param
         // Values
         Local<Object> valuesCollectionArray = Array::New(it->values.size());
         size_t j = 0;
+
         for (snowcrash::Collection<snowcrash::Value>::const_iterator val_it = it->values.begin(); 
              val_it != it->values.end();
             ++val_it, ++j) {
@@ -111,6 +114,7 @@ static Local<Object> WrapParameters(const snowcrash::Collection<snowcrash::Param
 
             valuesCollectionArray->Set(j, valueObject);
         } 
+
         parameterObject->Set(String::NewSymbol(snowcrash::SerializeKey::Values.c_str()), valuesCollectionArray);
 
         parametersCollectionArray->Set(i, parameterObject);
@@ -120,10 +124,11 @@ static Local<Object> WrapParameters(const snowcrash::Collection<snowcrash::Param
 }
 
 /** Wrap Headers */
-static Local<Object> WrapHeaders(const snowcrash::Collection<snowcrash::Header>::type& headers) 
+static Local<Object> WrapHeaders(const snowcrash::Headers& headers)
 {
     Local<Object> headersCollectionArray = Array::New(headers.size());
     size_t i = 0;
+
     for (snowcrash::Collection<snowcrash::Header>::const_iterator it = headers.begin(); 
          it != headers.end();
          ++it, ++i) {
@@ -167,11 +172,12 @@ static Local<Object> WrapPayload(const snowcrash::Payload& payload)
 }
 
 /** Wrap Transaction Examples */
-static Local<Object> WrapTransactions(const snowcrash::Collection<snowcrash::TransactionExample>::type& examples) 
+static Local<Object> WrapTransactions(const snowcrash::TransactionExamples& examples)
 {
     Local<Object> transactionCollectionObject = Array::New(examples.size());
 
     size_t i = 0;
+
     for (snowcrash::Collection<snowcrash::TransactionExample>::const_iterator it = examples.begin(); 
          it != examples.end();
          ++it, ++i) {
@@ -187,23 +193,27 @@ static Local<Object> WrapTransactions(const snowcrash::Collection<snowcrash::Tra
         // Requests
         Local<Object> requests = Array::New(it->requests.size());
         size_t j = 0;
+
         for (snowcrash::Collection<snowcrash::Request>::const_iterator request_it = it->requests.begin(); 
              request_it != it->requests.end();
              ++request_it, ++j) {
 
             requests->Set(j, WrapPayload(*request_it));
         }
+
         transactionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Requests.c_str()), requests);
 
         // Responses
         Local<Object> responses = Array::New(it->responses.size());
         j = 0;
+
         for (snowcrash::Collection<snowcrash::Response>::const_iterator response_it = it->responses.begin(); 
              response_it != it->responses.end();
              ++response_it, ++j) {
 
             responses->Set(j, WrapPayload(*response_it));
         }
+
         transactionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Responses.c_str()), responses);       
 
         // Insert transaction into collection
@@ -263,12 +273,14 @@ static Local<Object> WrapResource(const snowcrash::Resource& resource)
     // Actions
     Local<Object> actions = Array::New(resource.actions.size());
     size_t i = 0;
+
     for (snowcrash::Collection<snowcrash::Action>::const_iterator it = resource.actions.begin(); 
          it != resource.actions.end();
          ++it, ++i) {
 
         actions->Set(i, WrapAction(*it));
     }
+
     resourceObject->Set(String::NewSymbol(snowcrash::SerializeKey::Actions.c_str()), actions);
 
     return resourceObject;
@@ -288,12 +300,14 @@ static Local<Object> WrapResourceGroup(const snowcrash::ResourceGroup& group)
     // Resources
     Local<Object> resources = Array::New(group.resources.size());
     size_t i = 0;
+
     for (snowcrash::Collection<snowcrash::Resource>::const_iterator it = group.resources.begin(); 
          it != group.resources.end();
          ++it, ++i) {
 
         resources->Set(i, WrapResource(*it));
     }
+
     groupObject->Set(String::NewSymbol(snowcrash::SerializeKey::Resources.c_str()), resources);    
 
     return groupObject;
@@ -320,12 +334,14 @@ Local<Object> Blueprint::WrapBlueprint(const snowcrash::Blueprint& blueprint)
     // Resource Groups
     Local<Object> groups = Array::New(blueprint.resourceGroups.size());
     size_t i = 0;
+
     for (snowcrash::Collection<snowcrash::ResourceGroup>::const_iterator it = blueprint.resourceGroups.begin(); 
          it != blueprint.resourceGroups.end();
          ++it, ++i) {
 
         groups->Set(i, WrapResourceGroup(*it));
     }
+
     blueprintWrap->Set(String::NewSymbol(snowcrash::SerializeKey::ResourceGroups.c_str()), groups);
 
     return blueprintWrap;

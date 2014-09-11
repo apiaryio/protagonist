@@ -14,6 +14,7 @@
       "sources": [
         "src/annotation.cc",
         "src/blueprint.cc",
+        "src/sourcemap.cc",
         "src/parse.cc",
         "src/protagonist.cc",
         "src/protagonist.h",

@@ -41,12 +41,14 @@ Handle<Value> Result::NewInstance()
 }
 
 v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
-                                         const snowcrash::Blueprint& blueprint)
+                                         const snowcrash::Blueprint& blueprint,
+                                         const snowcrash::SourceMap<snowcrash::Blueprint>& sourcemap)
 {
     Local<Object> resultWrap = constructor->NewInstance();
 
     static const char* AstKey = "ast";
     static const char* WarningsKey = "warnings";
+    static const char* SourcemapKey = "sourcemap";
 
     if (report.error.code == snowcrash::Error::OK)
         resultWrap->Set(String::NewSymbol(AstKey), Blueprint::WrapBlueprint(blueprint));
@@ -64,5 +66,11 @@ v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
     }
 
     resultWrap->Set(String::NewSymbol(WarningsKey), warnings);
+
+    if (report.error.code == snowcrash::Error::OK)
+        resultWrap->Set(String::NewSymbol(SourcemapKey), Sourcemap::WrapBlueprint(sourcemap));
+    else
+        resultWrap->Set(String::NewSymbol(SourcemapKey), Local<Value>::New(Null()));
+
     return resultWrap;
 }
