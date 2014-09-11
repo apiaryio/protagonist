@@ -17,6 +17,7 @@ $ npm install protagonist
 
 ```js
 var protagonist = require('protagonist');
+
 protagonist.parse('# My API', function(error, result) {
     if (error) {
         console.log(error);
