@@ -54,9 +54,9 @@ namespace protagonist {
         static void Init(v8::Handle<v8::Object> target);
         static v8::Handle<v8::Value> NewInstance(); 
 
-        // Wraps snowcrash::Warnings and snowcrash:Blueprint into result object
+        // Wraps snowcrash::Warnings and snowcrash:Blueprint into report object
         // Note: snowcrash::Result::Error is being sent separately as Error object
-        static v8::Local<v8::Object> WrapResult(const snowcrash::Report& result,
+        static v8::Local<v8::Object> WrapResult(const snowcrash::Report& report,
                                                 const snowcrash::Blueprint& blueprint);
 
     private:
