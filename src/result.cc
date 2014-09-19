@@ -40,26 +40,29 @@ Handle<Value> Result::NewInstance()
     return scope.Close(instance);
 }
 
-v8::Local<v8::Object> Result::WrapResult(const snowcrash::Result& result,
+v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
                                          const snowcrash::Blueprint& blueprint)
 {
     Local<Object> resultWrap = constructor->NewInstance();
 
     static const char* AstKey = "ast";
-    if (result.error.code == snowcrash::Error::OK)
+    static const char* WarningsKey = "warnings";
+
+    if (report.error.code == snowcrash::Error::OK)
         resultWrap->Set(String::NewSymbol(AstKey), Blueprint::WrapBlueprint(blueprint));
     else 
         resultWrap->Set(String::NewSymbol(AstKey), Local<Value>::New(Null()));
 
-    Local<Object> warnings = Array::New(result.warnings.size());
+    Local<Object> warnings = Array::New(report.warnings.size());
     size_t i = 0;
-    for (snowcrash::Warnings::const_iterator it = result.warnings.begin(); 
-         it != result.warnings.end();
+
+    for (snowcrash::Warnings::const_iterator it = report.warnings.begin();
+         it != report.warnings.end();
          ++it, ++i) {
 
         warnings->Set(i, SourceAnnotation::WrapSourceAnnotation(*it));
     }
 
-    resultWrap->Set(String::NewSymbol("warnings"), warnings);    
+    resultWrap->Set(String::NewSymbol(WarningsKey), warnings);
     return resultWrap;
 }

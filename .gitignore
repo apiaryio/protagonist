@@ -17,3 +17,7 @@ build/
 node_modules/
 
 .vagrant/
+
+.cproject
+.project
+.settings

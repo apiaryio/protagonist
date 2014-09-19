@@ -6,7 +6,10 @@
     {
       "target_name": "protagonist",
       "include_dirs": [
-        "./snowcrash/src"
+        "./snowcrash/src",
+        "./snowcrash/ext/markdown-parser/src",
+        "./snowcrash/ext/markdown-parser/ext/sundown/src",
+        "./snowcrash/ext/markdown-parser/ext/sundown/html",
       ],
       "sources": [
         "src/annotation.cc",
@@ -18,7 +21,8 @@
       ],
       "dependencies": [
         "./snowcrash/snowcrash.gyp:libsnowcrash",
-        "./snowcrash/snowcrash.gyp:sundown"
+        "./snowcrash/snowcrash.gyp:libmarkdownparser",
+        "./snowcrash/snowcrash.gyp:libsundown"
       ]
     }
   ]

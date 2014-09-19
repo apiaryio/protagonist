@@ -26,10 +26,10 @@ struct Baton {
 
     // Input
     snowcrash::BlueprintParserOptions options;
-    snowcrash::SourceData sourceData;    
+    mdp::ByteBuffer sourceData;
 
     // Output
-    snowcrash::Result result;
+    snowcrash::Report report;
     snowcrash::Blueprint ast;
 };
 
@@ -116,24 +116,24 @@ void AsyncParse(uv_work_t* request) {
     Baton* baton = static_cast<Baton*>(request->data);
 
     // Parse the source data
-    snowcrash::parse(baton->sourceData, baton->options, baton->result, baton->ast);
+    snowcrash::parse(baton->sourceData, baton->options, baton->report, baton->ast);
 }
 
 void AsyncParseAfter(uv_work_t* request) {
     HandleScope scope;
     Baton* baton = static_cast<Baton*>(request->data);
 
-    // Prepare result
+    // Prepare report
     const unsigned argc = 2;
     Local<Value> argv[argc];
 
     // Error Object
-    if (baton->result.error.code == snowcrash::Error::OK)
+    if (baton->report.error.code == snowcrash::Error::OK)
         argv[0] = Local<Value>::New(Null());
     else
-        argv[0] = SourceAnnotation::WrapSourceAnnotation(baton->result.error);
+        argv[0] = SourceAnnotation::WrapSourceAnnotation(baton->report.error);
 
-    argv[1] = Result::WrapResult(baton->result, baton->ast);      
+    argv[1] = Result::WrapResult(baton->report, baton->ast);
 
     TryCatch try_catch;
     baton->callback->Call(Context::GetCurrent()->Global(), argc, argv);
