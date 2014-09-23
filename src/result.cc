@@ -42,7 +42,8 @@ Handle<Value> Result::NewInstance()
 
 v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
                                          const snowcrash::Blueprint& blueprint,
-                                         const snowcrash::SourceMap<snowcrash::Blueprint>& sourcemap)
+                                         const snowcrash::SourceMap<snowcrash::Blueprint>& sourcemap,
+                                         const snowcrash::BlueprintParserOptions& options)
 {
     Local<Object> resultWrap = constructor->NewInstance();
 
@@ -67,7 +68,8 @@ v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
 
     resultWrap->Set(String::NewSymbol(WarningsKey), warnings);
 
-    if (report.error.code == snowcrash::Error::OK)
+    // Set source map only if requested
+    if (report.error.code == snowcrash::Error::OK && (options & snowcrash::ExportSourcemapOption) != 0)
         resultWrap->Set(String::NewSymbol(SourcemapKey), Sourcemap::WrapBlueprint(sourcemap));
     else
         resultWrap->Set(String::NewSymbol(SourcemapKey), Local<Value>::New(Null()));

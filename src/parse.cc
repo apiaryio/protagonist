@@ -149,7 +149,7 @@ void AsyncParseAfter(uv_work_t* request) {
     else
         argv[0] = SourceAnnotation::WrapSourceAnnotation(baton->report.error);
 
-    argv[1] = Result::WrapResult(baton->report, baton->ast, baton->sourcemap);
+    argv[1] = Result::WrapResult(baton->report, baton->ast, baton->sourcemap, baton->options);
 
     TryCatch try_catch;
     baton->callback->Call(Context::GetCurrent()->Global(), argc, argv);

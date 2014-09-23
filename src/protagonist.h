@@ -2,6 +2,7 @@
 #include <v8.h>
 #include "Blueprint.h"
 #include "BlueprintSourcemap.h"
+#include "SectionParserData.h"
 #include "SourceAnnotation.h"
 
 namespace protagonist {
@@ -81,7 +82,8 @@ namespace protagonist {
         // Note: snowcrash::Result::Error is being sent separately as Error object
         static v8::Local<v8::Object> WrapResult(const snowcrash::Report& report,
                                                 const snowcrash::Blueprint& blueprint,
-                                                const snowcrash::SourceMap<snowcrash::Blueprint>& sourcemap);
+                                                const snowcrash::SourceMap<snowcrash::Blueprint>& sourcemap,
+                                                const snowcrash::BlueprintParserOptions& options);
 
     private:
         Result();
