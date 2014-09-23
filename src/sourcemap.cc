@@ -85,11 +85,11 @@ static Local<Object> WrapSourceMaps(const snowcrash::Collection<snowcrash::Sourc
 /** Wrap Parameters source map */
 static Local<Object> WrapParameters(const snowcrash::SourceMap<snowcrash::Parameters>& parameters)
 {
-    Local<Object> parametersCollectionArray = Array::New(parameters.list.size());
+    Local<Object> parametersCollectionArray = Array::New(parameters.collection.size());
     size_t i = 0;
 
-    for (snowcrash::Collection<snowcrash::SourceMap<snowcrash::Parameter> >::const_iterator it = parameters.list.begin();
-         it != parameters.list.end();
+    for (snowcrash::Collection<snowcrash::SourceMap<snowcrash::Parameter> >::const_iterator it = parameters.collection.begin();
+         it != parameters.collection.end();
          ++it, ++i) {
 
         Local<Object> parameterObject = Object::New();
@@ -113,11 +113,11 @@ static Local<Object> WrapParameters(const snowcrash::SourceMap<snowcrash::Parame
         parameterObject->Set(String::NewSymbol(snowcrash::SerializeKey::Example.c_str()), WrapSourceMap(it->exampleValue));
 
         // Values
-        Local<Object> valuesCollectionArray = Array::New(it->values.list.size());
+        Local<Object> valuesCollectionArray = Array::New(it->values.collection.size());
         size_t j = 0;
 
-        for (snowcrash::Collection<snowcrash::SourceMap<snowcrash::Value> >::const_iterator val_it = it->values.list.begin();
-             val_it != it->values.list.end();
+        for (snowcrash::Collection<snowcrash::SourceMap<snowcrash::Value> >::const_iterator val_it = it->values.collection.begin();
+             val_it != it->values.collection.end();
             ++val_it, ++j) {
 
             Local<Object> valueObject = Object::New();
@@ -148,7 +148,7 @@ static Local<Object> WrapPayload(const snowcrash::SourceMap<snowcrash::Payload>&
     payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Description.c_str()), WrapSourceMap(payload.description));
 
     // Headers
-    Local<Object> headers = WrapSourceMaps(payload.headers.list);
+    Local<Object> headers = WrapSourceMaps(payload.headers.collection);
     payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Headers.c_str()), headers);
 
     // Body
@@ -163,12 +163,12 @@ static Local<Object> WrapPayload(const snowcrash::SourceMap<snowcrash::Payload>&
 /** Wrap Transaction Examples source map */
 static Local<Object> WrapTransactions(const snowcrash::SourceMap<snowcrash::TransactionExamples>& examples)
 {
-    Local<Object> transactionCollectionObject = Array::New(examples.list.size());
+    Local<Object> transactionCollectionObject = Array::New(examples.collection.size());
 
     size_t i = 0;
 
-    for (snowcrash::Collection<snowcrash::SourceMap<snowcrash::TransactionExample> >::const_iterator it = examples.list.begin();
-         it != examples.list.end();
+    for (snowcrash::Collection<snowcrash::SourceMap<snowcrash::TransactionExample> >::const_iterator it = examples.collection.begin();
+         it != examples.collection.end();
          ++it, ++i) {
 
         Local<Object> transactionObject = Object::New();
@@ -180,11 +180,11 @@ static Local<Object> WrapTransactions(const snowcrash::SourceMap<snowcrash::Tran
         transactionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Description.c_str()), WrapSourceMap(it->description));
 
         // Requests
-        Local<Object> requests = Array::New(it->requests.list.size());
+        Local<Object> requests = Array::New(it->requests.collection.size());
         size_t j = 0;
 
-        for (snowcrash::Collection<snowcrash::SourceMap<snowcrash::Request> >::const_iterator request_it = it->requests.list.begin();
-             request_it != it->requests.list.end();
+        for (snowcrash::Collection<snowcrash::SourceMap<snowcrash::Request> >::const_iterator request_it = it->requests.collection.begin();
+             request_it != it->requests.collection.end();
              ++request_it, ++j) {
 
             requests->Set(j, WrapPayload(*request_it));
@@ -193,11 +193,11 @@ static Local<Object> WrapTransactions(const snowcrash::SourceMap<snowcrash::Tran
         transactionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Requests.c_str()), requests);
 
         // Responses
-        Local<Object> responses = Array::New(it->responses.list.size());
+        Local<Object> responses = Array::New(it->responses.collection.size());
         j = 0;
 
-        for (snowcrash::Collection<snowcrash::SourceMap<snowcrash::Response> >::const_iterator response_it = it->responses.list.begin();
-             response_it != it->responses.list.end();
+        for (snowcrash::Collection<snowcrash::SourceMap<snowcrash::Response> >::const_iterator response_it = it->responses.collection.begin();
+             response_it != it->responses.collection.end();
              ++response_it, ++j) {
 
             responses->Set(j, WrapPayload(*response_it));
@@ -260,11 +260,11 @@ static Local<Object> WrapResource(const snowcrash::SourceMap<snowcrash::Resource
     resourceObject->Set(String::NewSymbol(snowcrash::SerializeKey::Parameters.c_str()), parameters);
 
     // Actions
-    Local<Object> actions = Array::New(resource.actions.list.size());
+    Local<Object> actions = Array::New(resource.actions.collection.size());
     size_t i = 0;
 
-    for (snowcrash::Collection<snowcrash::SourceMap<snowcrash::Action> >::const_iterator it = resource.actions.list.begin();
-         it != resource.actions.list.end();
+    for (snowcrash::Collection<snowcrash::SourceMap<snowcrash::Action> >::const_iterator it = resource.actions.collection.begin();
+         it != resource.actions.collection.end();
          ++it, ++i) {
 
         actions->Set(i, WrapAction(*it));
@@ -287,11 +287,11 @@ static Local<Object> WrapResourceGroup(const snowcrash::SourceMap<snowcrash::Res
     groupObject->Set(String::NewSymbol(snowcrash::SerializeKey::Description.c_str()), WrapSourceMap(group.description));
 
     // Resources
-    Local<Object> resources = Array::New(group.resources.list.size());
+    Local<Object> resources = Array::New(group.resources.collection.size());
     size_t i = 0;
 
-    for (snowcrash::Collection<snowcrash::SourceMap<snowcrash::Resource> >::const_iterator it = group.resources.list.begin();
-         it != group.resources.list.end();
+    for (snowcrash::Collection<snowcrash::SourceMap<snowcrash::Resource> >::const_iterator it = group.resources.collection.begin();
+         it != group.resources.collection.end();
          ++it, ++i) {
 
         resources->Set(i, WrapResource(*it));
@@ -308,7 +308,7 @@ Local<Object> Sourcemap::WrapBlueprint(const snowcrash::SourceMap<snowcrash::Blu
     Local<Object> blueprintWrap = constructor->NewInstance();
 
     // Metadata
-    Local<Object> metadata = WrapSourceMaps(blueprint.metadata.list);
+    Local<Object> metadata = WrapSourceMaps(blueprint.metadata.collection);
     blueprintWrap->Set(String::NewSymbol(snowcrash::SerializeKey::Metadata.c_str()), metadata);
 
     // Blueprint Name
@@ -318,11 +318,11 @@ Local<Object> Sourcemap::WrapBlueprint(const snowcrash::SourceMap<snowcrash::Blu
     blueprintWrap->Set(String::NewSymbol(snowcrash::SerializeKey::Description.c_str()), WrapSourceMap(blueprint.description));
 
     // Resource Groups
-    Local<Object> groups = Array::New(blueprint.resourceGroups.list.size());
+    Local<Object> groups = Array::New(blueprint.resourceGroups.collection.size());
     size_t i = 0;
 
-    for (snowcrash::Collection<snowcrash::SourceMap<snowcrash::ResourceGroup> >::const_iterator it = blueprint.resourceGroups.list.begin();
-         it != blueprint.resourceGroups.list.end();
+    for (snowcrash::Collection<snowcrash::SourceMap<snowcrash::ResourceGroup> >::const_iterator it = blueprint.resourceGroups.collection.begin();
+         it != blueprint.resourceGroups.collection.end();
          ++it, ++i) {
 
         groups->Set(i, WrapResourceGroup(*it));
