@@ -13,6 +13,8 @@ describe "API Blueprint parser", ->
       assert.isDefined result
       assert.strictEqual result.ast.name, 'My API'
 
+      assert.isNull result.sourcemap
+
       done()
 
   it 'parses API description', (done) ->
@@ -91,6 +93,8 @@ Method description
       assert.isNull err
 
       assert.strictEqual result.ast.resourceGroups.length, 1
+
+      assert.isNull result.sourcemap
 
       resourceGroup = result.ast.resourceGroups[0]
       assert.strictEqual resourceGroup.name, ''
@@ -199,6 +203,7 @@ Method description
       assert err.message.length != 0
       assert err.code != 0
       assert.isDefined err.location
+      assert.isNull result.sourcemap
 
       done()
 
