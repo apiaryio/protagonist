@@ -7,21 +7,21 @@ path = require 'path'
 protagonist = require '../build/Release/protagonist'
 
 describe "Parser AST", ->
-  
+
   ast_fixture = require './fixtures/sample-api-ast.json'
   ast_parsed = null
 
-  # Read & parse blueprint fixture 
+  # Read & parse blueprint fixture
   before (done) ->
-    
+
     fixture_path = path.join __dirname, './fixtures/sample-api.apib'
-    
+
     fs.readFile fixture_path, 'utf8', (err, data) ->
       done err if err
-    
-      protagonist.parse data, (error, result) ->
-        done err if error
-        
+
+      protagonist.parse data, (err, result) ->
+        done err if err
+
         ast_parsed = result.ast
         done()
 
