@@ -120,12 +120,7 @@ static Local<Object> WrapParameters(const snowcrash::SourceMap<snowcrash::Parame
              val_it != it->values.collection.end();
             ++val_it, ++j) {
 
-            Local<Object> valueObject = Object::New();
-
-            // Value
-            valueObject->Set(String::NewSymbol(snowcrash::SerializeKey::Value.c_str()), WrapSourceMap(*val_it));
-
-            valuesCollectionArray->Set(j, valueObject);
+            valuesCollectionArray->Set(j, WrapSourceMap(*val_it));
         }
 
         parameterObject->Set(String::NewSymbol(snowcrash::SerializeKey::Values.c_str()), valuesCollectionArray);
