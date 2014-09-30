@@ -155,6 +155,11 @@ static Local<Object> WrapPayload(const snowcrash::Payload& payload)
     // Name
     payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Name.c_str()), String::New(payload.name.c_str()));
 
+    // Symbol
+    if (!payload.symbol.empty()) {
+        payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Symbol.c_str()), String::New(payload.symbol.c_str()));
+    }
+
     // Description
     payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Description.c_str()), String::New(payload.description.c_str()));
 
