@@ -149,7 +149,7 @@ Method description
       response = example.responses[0]
       assert.isDefined response.name
       assert.strictEqual response.name, '200'
-      assert.isUndefined response.symbol
+      assert.isUndefined response.reference
       assert.isDefined response.description
       assert.strictEqual response.description, 'Response description\n'
 
@@ -178,8 +178,9 @@ Method description
       response = example.responses[0]
       assert.isDefined response.name
       assert.strictEqual response.name, '200'
-      assert.isDefined response.symbol
-      assert.strictEqual response.symbol, 'My Resource'
+      assert.isDefined response.reference
+      assert.isDefined response.reference.id
+      assert.strictEqual response.reference.id, 'My Resource'
       assert.isDefined response.description
       assert.strictEqual response.description.length, 0
       assert.isDefined response.body
