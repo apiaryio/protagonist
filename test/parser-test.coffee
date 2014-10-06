@@ -5,13 +5,15 @@ protagonist = require '../build/Release/protagonist'
 {assert} = require 'chai'
 
 describe "API Blueprint parser", ->
-  
+
   it 'parses API name', (done) ->
     protagonist.parse '# My API', (err, result) ->
       assert.isNull err
 
       assert.isDefined result
       assert.strictEqual result.ast.name, 'My API'
+
+      assert.isNull result.sourcemap
 
       done()
 
@@ -41,7 +43,7 @@ _description_
 
       assert.isDefined result.ast.resourceGroups
       assert.strictEqual result.ast.resourceGroups.length, 1
-      assert.isDefined result.ast.resourceGroups[0] 
+      assert.isDefined result.ast.resourceGroups[0]
 
       resourceGroup = result.ast.resourceGroups[0]
       assert.isDefined resourceGroup.name
@@ -57,14 +59,14 @@ _description_
 Resource description
 
 + Model (text/plain)
-  
+
         Hello World
 
 ## Retrieve Resource [GET]
 Method description
 
 + Response 200 (text/plain)
-  
+
   Response description
 
   + Headers
@@ -92,10 +94,12 @@ Method description
 
       assert.strictEqual result.ast.resourceGroups.length, 1
 
+      assert.isNull result.sourcemap
+
       resourceGroup = result.ast.resourceGroups[0]
       assert.strictEqual resourceGroup.name, ''
       assert.strictEqual resourceGroup.description, ''
-      
+
       assert.isDefined resourceGroup.resources
       assert.strictEqual resourceGroup.resources.length, 1
       assert.isDefined resourceGroup.resources[0]
@@ -145,6 +149,7 @@ Method description
       response = example.responses[0]
       assert.isDefined response.name
       assert.strictEqual response.name, '200'
+      assert.isUndefined response.reference
       assert.isDefined response.description
       assert.strictEqual response.description, 'Response description\n'
 
@@ -173,6 +178,9 @@ Method description
       response = example.responses[0]
       assert.isDefined response.name
       assert.strictEqual response.name, '200'
+      assert.isDefined response.reference
+      assert.isDefined response.reference.id
+      assert.strictEqual response.reference.id, 'My Resource'
       assert.isDefined response.description
       assert.strictEqual response.description.length, 0
       assert.isDefined response.body
@@ -189,7 +197,7 @@ Method description
     source = """
 # /resource
 # GET
-+ Response 
++ Response
 \tC
 """
     protagonist.parse source, (err, result) ->
@@ -199,6 +207,7 @@ Method description
       assert err.message.length != 0
       assert err.code != 0
       assert.isDefined err.location
+      assert.isNull result.sourcemap
 
       done()
 
@@ -238,7 +247,7 @@ C: 3
 
       assert.isDefined result.warnings
       assert.strictEqual result.warnings.length, 0
-      
+
       assert.isDefined result.ast.metadata
       assert.strictEqual result.ast.metadata.length, 3
 
@@ -331,12 +340,12 @@ C: 3
 
       assert.strictEqual result.ast.resourceGroups.length, 1
       assert.strictEqual result.ast.resourceGroups[0].resources.length, 1
-      assert.strictEqual result.ast.resourceGroups[0].resources[0].actions.length, 1 
+      assert.strictEqual result.ast.resourceGroups[0].resources[0].actions.length, 1
 
       action = result.ast.resourceGroups[0].resources[0].actions[0]
-      assert.strictEqual action.method, "GET"  
+      assert.strictEqual action.method, "GET"
       assert.strictEqual action.parameters.length, 1
-      
+
       parameter = action.parameters[0]
       assert.strictEqual parameter.name, 'id'
       assert.strictEqual parameter.description, 'Id of coupon'
@@ -385,13 +394,13 @@ C: 3
 
       request = example.requests[0]
       assert.strictEqual request.name, 'A'
-      assert.strictEqual request.body, 'A\n'      
+      assert.strictEqual request.body, 'A\n'
 
       response = example.responses[0]
       assert.strictEqual response.name, '200'
-      assert.strictEqual response.body, '200-A\n'      
+      assert.strictEqual response.body, '200-A\n'
 
-      example = result.ast.resourceGroups[0].resources[0].actions[0].examples[1]   
+      example = result.ast.resourceGroups[0].resources[0].actions[0].examples[1]
       assert.strictEqual example.requests.length, 1
       assert.strictEqual example.responses.length, 1
 

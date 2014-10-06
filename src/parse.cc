@@ -11,6 +11,7 @@ using namespace protagonist;
 
 //static const std::string RenderDescriptionsOptionKey = "renderDescriptions";
 static const std::string RequireBlueprintNameOptionKey = "requireBlueprintName";
+static const std::string ExportSourcemapOptionKey = "exportSourcemap";
 
 // Async Parse
 void AsyncParse(uv_work_t* request);
@@ -31,6 +32,7 @@ struct Baton {
     // Output
     snowcrash::Report report;
     snowcrash::Blueprint ast;
+    snowcrash::SourceMap<snowcrash::Blueprint> sourcemap;
 };
 
 Handle<Value> protagonist::Parse(const Arguments& args) {
@@ -63,6 +65,7 @@ Handle<Value> protagonist::Parse(const Arguments& args) {
 
     // Prepare options
     snowcrash::BlueprintParserOptions options = 0;
+
     if (args.Length() == 3) {
         Handle<Object> optionsObject = Handle<Object>::Cast(args[1]);
         const Local<Array> properties = optionsObject->GetPropertyNames();
@@ -79,11 +82,18 @@ Handle<Value> protagonist::Parse(const Arguments& args) {
                 else
                     options &= snowcrash::RequireBlueprintNameOption;
             }
+            else if (ExportSourcemapOptionKey == *String::Utf8Value(key)) {
+                // ExportSourcemapOption
+                if (value->IsTrue())
+                    options |= snowcrash::ExportSourcemapOption;
+                else
+                    options &= snowcrash::ExportSourcemapOption;
+            }
             else {
                 // Unrecognized option
                 std::stringstream ss;
                 ss << "unrecognized option '" << *String::Utf8Value(key) << "', expected: ";
-                ss << "'" << RequireBlueprintNameOptionKey << "'";
+                ss << "'" << RequireBlueprintNameOptionKey << "' or '" << ExportSourcemapOptionKey << "'";
                 ThrowException(Exception::TypeError(String::New(ss.str().c_str())));
                 return scope.Close(Undefined());
             }
@@ -115,8 +125,14 @@ Handle<Value> protagonist::Parse(const Arguments& args) {
 void AsyncParse(uv_work_t* request) {
     Baton* baton = static_cast<Baton*>(request->data);
 
+    snowcrash::ParseResult<snowcrash::Blueprint> parseResult;
+
     // Parse the source data
-    snowcrash::parse(baton->sourceData, baton->options, baton->report, baton->ast);
+    snowcrash::parse(baton->sourceData, baton->options, parseResult);
+
+    baton->report = parseResult.report;
+    baton->ast = parseResult.node;
+    baton->sourcemap = parseResult.sourceMap;
 }
 
 void AsyncParseAfter(uv_work_t* request) {
@@ -133,10 +149,11 @@ void AsyncParseAfter(uv_work_t* request) {
     else
         argv[0] = SourceAnnotation::WrapSourceAnnotation(baton->report.error);
 
-    argv[1] = Result::WrapResult(baton->report, baton->ast);
+    argv[1] = Result::WrapResult(baton->report, baton->ast, baton->sourcemap, baton->options);
 
     TryCatch try_catch;
     baton->callback->Call(Context::GetCurrent()->Global(), argc, argv);
+
     if (try_catch.HasCaught()) {
         node::FatalException(try_catch);
     }

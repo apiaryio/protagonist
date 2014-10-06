@@ -1,0 +1,169 @@
+{
+  "metadata": [
+    [
+      [
+        0,
+        12
+      ]
+    ]
+  ],
+  "name": [],
+  "description": [],
+  "resourceGroups": [
+    {
+      "name": [
+        [
+          12,
+          18
+        ]
+      ],
+      "description": [],
+      "resources": [
+        {
+          "name": [
+            [
+              30,
+              28
+            ]
+          ],
+          "description": [],
+          "uriTemplate": [
+            [
+              30,
+              28
+            ]
+          ],
+          "model": {},
+          "parameters": [
+            {
+              "name": [
+                [
+                  77,
+                  23
+                ]
+              ],
+              "description": [
+                [
+                  77,
+                  23
+                ]
+              ],
+              "type": [],
+              "required": [],
+              "default": [],
+              "example": [],
+              "values": [
+                [
+                  [
+                    129,
+                    6
+                  ]
+                ],
+                [
+                  [
+                    147,
+                    6
+                  ]
+                ],
+                [
+                  [
+                    165,
+                    6
+                  ]
+                ]
+              ]
+            }
+          ],
+          "actions": [
+            {
+              "name": [
+                [
+                  172,
+                  26
+                ]
+              ],
+              "description": [],
+              "method": [
+                [
+                  172,
+                  26
+                ]
+              ],
+              "parameters": [],
+              "examples": [
+                {
+                  "name": [],
+                  "description": [],
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": [
+                        [
+                          200,
+                          27
+                        ]
+                      ],
+                      "description": [],
+                      "headers": [
+                        [
+                          [
+                            200,
+                            27
+                          ]
+                        ]
+                      ],
+                      "body": [
+                        [
+                          231,
+                          17
+                        ]
+                      ],
+                      "schema": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": [
+                [
+                  249,
+                  27
+                ]
+              ],
+              "description": [],
+              "method": [
+                [
+                  249,
+                  27
+                ]
+              ],
+              "parameters": [],
+              "examples": [
+                {
+                  "name": [],
+                  "description": [],
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": [
+                        [
+                          278,
+                          13
+                        ]
+                      ],
+                      "description": [],
+                      "headers": [],
+                      "body": [],
+                      "schema": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
