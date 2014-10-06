@@ -27,7 +27,7 @@ describe "Parser AST", ->
 
   # Parser AST should conform to AST serialization JSON media type
   #   as defined in https://github.com/apiaryio/api-blueprint-ast#json-serialization
-  it '`ast` field conforms to `vnd.apiblueprint.ast.raw+json; version=2.0`', (done) ->
+  it '`ast` field conforms to `vnd.apiblueprint.ast.raw+json; version=2.1`', (done) ->
     actual_ast_json = JSON.stringify ast_parsed, null, 2
     expected_ast_json = JSON.stringify ast_fixture, null, 2
     assert.equal actual_ast_json, expected_ast_json
