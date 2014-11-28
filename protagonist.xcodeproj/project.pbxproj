@@ -19,51 +19,6 @@
 		BBDFD83C1A28B57F0066209C /* snowcrash.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBDFD8391A28B57F0066209C /* snowcrash.a */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		BBDFD8171A28AD400066209C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BBDFD8121A28AD400066209C /* markdownparser.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BBAE529B18FEBFAE00D98223;
-			remoteInfo = libmarkdownparser;
-		};
-		BBDFD8191A28AD400066209C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BBDFD8121A28AD400066209C /* markdownparser.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BB955A4D19011E85006684B8;
-			remoteInfo = "test-libmarkdownparser";
-		};
-		BBDFD81F1A28AD400066209C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BBDFD80F1A28AD400066209C /* snowcrash.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BBFF4898170B34E6001E5FB2;
-			remoteInfo = libsnowcrash;
-		};
-		BBDFD8211A28AD400066209C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BBDFD80F1A28AD400066209C /* snowcrash.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BBFF48C0170B3C30001E5FB2;
-			remoteInfo = "test-libsnowcrash";
-		};
-		BBDFD8231A28AD400066209C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BBDFD80F1A28AD400066209C /* snowcrash.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BBA25667172BFE4C00C1AD5E;
-			remoteInfo = snowcrash;
-		};
-		BBDFD8251A28AD400066209C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BBDFD80F1A28AD400066209C /* snowcrash.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BB05B9CE180448E300243E1B;
-			remoteInfo = "perf-libsnowcrash";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		BBDFD80A1A28A8B40066209C /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -86,8 +41,6 @@
 		BBDFD8011A28A41F0066209C /* protagonist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = protagonist.h; path = protagonist/src/protagonist.h; sourceTree = SOURCE_ROOT; };
 		BBDFD8021A28A41F0066209C /* result.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = result.cc; path = protagonist/src/result.cc; sourceTree = SOURCE_ROOT; };
 		BBDFD8031A28A41F0066209C /* annotation.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = annotation.cc; path = protagonist/src/annotation.cc; sourceTree = SOURCE_ROOT; };
-		BBDFD80F1A28AD400066209C /* snowcrash.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = snowcrash.xcodeproj; path = protagonist/snowcrash/snowcrash.xcodeproj; sourceTree = "<group>"; };
-		BBDFD8121A28AD400066209C /* markdownparser.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = markdownparser.xcodeproj; path = "protagonist/snowcrash/ext/markdown-parser/markdownparser.xcodeproj"; sourceTree = "<group>"; };
 		BBDFD8371A28B57F0066209C /* sundown.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = sundown.a; path = protagonist/build/Release/sundown.a; sourceTree = "<group>"; };
 		BBDFD8381A28B57F0066209C /* markdownparser.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = markdownparser.a; path = protagonist/build/Release/markdownparser.a; sourceTree = "<group>"; };
 		BBDFD8391A28B57F0066209C /* snowcrash.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = snowcrash.a; path = protagonist/build/Release/snowcrash.a; sourceTree = "<group>"; };
@@ -121,39 +74,9 @@
 				BBDFD8371A28B57F0066209C /* sundown.a */,
 				BBDFD8381A28B57F0066209C /* markdownparser.a */,
 				BBDFD8391A28B57F0066209C /* snowcrash.a */,
-				BBDFD80E1A28AD380066209C /* Projects */,
 				BEC32694EDD348BD8825C8CC /* Source */,
 				56ED6A3536E7F9F904D5FDD5 /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		BBDFD80E1A28AD380066209C /* Projects */ = {
-			isa = PBXGroup;
-			children = (
-				BBDFD80F1A28AD400066209C /* snowcrash.xcodeproj */,
-				BBDFD8121A28AD400066209C /* markdownparser.xcodeproj */,
-			);
-			name = Projects;
-			sourceTree = "<group>";
-		};
-		BBDFD8101A28AD400066209C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				BBDFD8201A28AD400066209C /* libsnowcrash.a */,
-				BBDFD8221A28AD400066209C /* test-libsnowcrash */,
-				BBDFD8241A28AD400066209C /* snowcrash */,
-				BBDFD8261A28AD400066209C /* perf-libsnowcrash */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		BBDFD8131A28AD400066209C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				BBDFD8181A28AD400066209C /* libmarkdownparser.a */,
-				BBDFD81A1A28AD400066209C /* test-libmarkdownparser */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		BEC32694EDD348BD8825C8CC /* Source */ = {
@@ -209,67 +132,12 @@
 			);
 			mainGroup = 8E565C0D950EA14FF0D7B42C;
 			projectDirPath = ..;
-			projectReferences = (
-				{
-					ProductGroup = BBDFD8131A28AD400066209C /* Products */;
-					ProjectRef = BBDFD8121A28AD400066209C /* markdownparser.xcodeproj */;
-				},
-				{
-					ProductGroup = BBDFD8101A28AD400066209C /* Products */;
-					ProjectRef = BBDFD80F1A28AD400066209C /* snowcrash.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				8743905594E0F326BDB790BC /* protagonist */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		BBDFD8181A28AD400066209C /* libmarkdownparser.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libmarkdownparser.a;
-			remoteRef = BBDFD8171A28AD400066209C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		BBDFD81A1A28AD400066209C /* test-libmarkdownparser */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = "test-libmarkdownparser";
-			remoteRef = BBDFD8191A28AD400066209C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		BBDFD8201A28AD400066209C /* libsnowcrash.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libsnowcrash.a;
-			remoteRef = BBDFD81F1A28AD400066209C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		BBDFD8221A28AD400066209C /* test-libsnowcrash */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = "test-libsnowcrash";
-			remoteRef = BBDFD8211A28AD400066209C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		BBDFD8241A28AD400066209C /* snowcrash */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = snowcrash;
-			remoteRef = BBDFD8231A28AD400066209C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		BBDFD8261A28AD400066209C /* perf-libsnowcrash */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = "perf-libsnowcrash";
-			remoteRef = BBDFD8251A28AD400066209C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D5E7A89C4614AA621AB1A28D /* Sources */ = {
