@@ -4,4 +4,10 @@
    <FileRef
       location = "container:protagonist.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:snowcrash/snowcrash.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:snowcrash/ext/markdown-parser/markdownparser.xcodeproj">
+   </FileRef>
 </Workspace>
