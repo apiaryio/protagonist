@@ -1,6 +1,31 @@
 protagonist = require '../build/Release/protagonist'
 {assert} = require 'chai'
 
+describe 'Blueprint tree', ->
+
+  describe 'contains attributes nodes for', ->
+    ast = null
+
+    before (done) ->
+      source = '''
+      # Resource [/]
+      ## Action [GET]
+      + Response 200
+      '''
+
+      protagonist.parse source, (err, result) ->
+        done err if err
+        ast = result.ast
+        done()
+
+    it 'resource', (done) ->
+      assert.isDefined ast.resourceGroups[0].resources[0].attributes
+      done()
+
+    # it 'action', (done) ->
+    #   assert.isDefined ast.resourceGroups[0].resources[0].attributes
+    #   done()
+
 describe "API Blueprint parser", ->
 
   it 'parses API name', (done) ->
