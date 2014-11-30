@@ -39,6 +39,7 @@
               ]
             }
           ],
+          "attributes": {},
           "actions": [
             {
               "name": "Retrieve Message",

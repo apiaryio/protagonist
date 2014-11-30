@@ -13,24 +13,7 @@
 		BBDFD8071A28A41F0066209C /* protagonist.cc in Sources */ = {isa = PBXBuildFile; fileRef = BBDFD8001A28A41F0066209C /* protagonist.cc */; };
 		BBDFD8081A28A41F0066209C /* result.cc in Sources */ = {isa = PBXBuildFile; fileRef = BBDFD8021A28A41F0066209C /* result.cc */; };
 		BBDFD8091A28A41F0066209C /* annotation.cc in Sources */ = {isa = PBXBuildFile; fileRef = BBDFD8031A28A41F0066209C /* annotation.cc */; };
-		BBDFD80B1A28A8C50066209C /* protagonist.node in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4356CA71CA8E342C68FB50A5 /* protagonist.node */; };
-		BBDFD83A1A28B57F0066209C /* sundown.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBDFD8371A28B57F0066209C /* sundown.a */; };
-		BBDFD83B1A28B57F0066209C /* markdownparser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBDFD8381A28B57F0066209C /* markdownparser.a */; };
-		BBDFD83C1A28B57F0066209C /* snowcrash.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBDFD8391A28B57F0066209C /* snowcrash.a */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		BBDFD80A1A28A8B40066209C /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
-			dstPath = "$(SRCROOT)/protagonist/build/$(CONFIGURATION)";
-			dstSubfolderSpec = 0;
-			files = (
-				BBDFD80B1A28A8C50066209C /* protagonist.node in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4356CA71CA8E342C68FB50A5 /* protagonist.node */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = protagonist.node; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -41,9 +24,6 @@
 		BBDFD8011A28A41F0066209C /* protagonist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = protagonist.h; path = protagonist/src/protagonist.h; sourceTree = SOURCE_ROOT; };
 		BBDFD8021A28A41F0066209C /* result.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = result.cc; path = protagonist/src/result.cc; sourceTree = SOURCE_ROOT; };
 		BBDFD8031A28A41F0066209C /* annotation.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = annotation.cc; path = protagonist/src/annotation.cc; sourceTree = SOURCE_ROOT; };
-		BBDFD8371A28B57F0066209C /* sundown.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = sundown.a; path = protagonist/build/Release/sundown.a; sourceTree = "<group>"; };
-		BBDFD8381A28B57F0066209C /* markdownparser.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = markdownparser.a; path = protagonist/build/Release/markdownparser.a; sourceTree = "<group>"; };
-		BBDFD8391A28B57F0066209C /* snowcrash.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = snowcrash.a; path = protagonist/build/Release/snowcrash.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,9 +31,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBDFD83A1A28B57F0066209C /* sundown.a in Frameworks */,
-				BBDFD83B1A28B57F0066209C /* markdownparser.a in Frameworks */,
-				BBDFD83C1A28B57F0066209C /* snowcrash.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,9 +48,6 @@
 		8E565C0D950EA14FF0D7B42C = {
 			isa = PBXGroup;
 			children = (
-				BBDFD8371A28B57F0066209C /* sundown.a */,
-				BBDFD8381A28B57F0066209C /* markdownparser.a */,
-				BBDFD8391A28B57F0066209C /* snowcrash.a */,
 				BEC32694EDD348BD8825C8CC /* Source */,
 				56ED6A3536E7F9F904D5FDD5 /* Products */,
 			);
@@ -103,7 +77,6 @@
 			buildPhases = (
 				D5E7A89C4614AA621AB1A28D /* Sources */,
 				1F905B03D3A027AAD4B30F93 /* Frameworks */,
-				BBDFD80A1A28A8B40066209C /* CopyFiles */,
 			);
 			buildRules = (
 			);
