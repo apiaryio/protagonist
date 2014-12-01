@@ -22,9 +22,13 @@ describe 'Blueprint tree', ->
       assert.isDefined ast.resourceGroups[0].resources[0].attributes
       done()
 
-    # it 'action', (done) ->
-    #   assert.isDefined ast.resourceGroups[0].resources[0].attributes
-    #   done()
+    it 'action', (done) ->
+      assert.isDefined ast.resourceGroups[0].resources[0].actions[0].attributes
+      done()
+
+    it 'payload', (done) ->
+      assert.isDefined ast.resourceGroups[0].resources[0].actions[0].examples[0].responses[0] .attributes
+      done()
 
 describe "API Blueprint parser", ->
 

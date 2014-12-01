@@ -156,6 +156,9 @@ static Local<Object> WrapAttributes(const snowcrash::Attributes& attributes)
 {
     Local<Object> attributesObject = Object::New();
 
+    if (attributes.source.empty())
+        return attributesObject;
+
     attributesObject->Set(String::NewSymbol(SourceKey.c_str()), Null());
     attributesObject->Set(String::NewSymbol(ResolvedKey.c_str()), Null());
 
@@ -184,6 +187,10 @@ static Local<Object> WrapPayload(const snowcrash::Payload& payload)
     // Headers
     Local<Object> headers = WrapHeaders(payload.headers);
     payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Headers.c_str()), headers);
+
+    // Attributes
+    Local<Object> attributes = WrapAttributes(payload.attributes);
+    payloadObject->Set(String::NewSymbol(AttributesKey.c_str()), attributes);
 
     // Body
     payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Body.c_str()), String::New(payload.body.c_str()));
@@ -264,6 +271,10 @@ static Local<Object> WrapAction(const snowcrash::Action& action)
     Local<Object> parameters = WrapParameters(action.parameters);
     actionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Parameters.c_str()), parameters);
 
+    // Attributes
+    Local<Object> attributes = WrapAttributes(action.attributes);
+    actionObject->Set(String::NewSymbol(AttributesKey.c_str()), attributes);
+
     // Transaction Examples
     Local<Object> examples = WrapTransactions(action.examples);
     actionObject->Set(String::NewSymbol(snowcrash::SerializeKey::Examples.c_str()), examples);
@@ -294,8 +305,7 @@ static Local<Object> WrapResource(const snowcrash::Resource& resource)
     resourceObject->Set(String::NewSymbol(snowcrash::SerializeKey::Parameters.c_str()), parameters);
 
     // Attributes
-    // TODO: Change Object::New() to v8::Null
-    Local<Object> attributes = (resource.attributes.source.empty()) ? Object::New() : WrapAttributes(resource.attributes);
+    Local<Object> attributes = WrapAttributes(resource.attributes);
     resourceObject->Set(String::NewSymbol(AttributesKey.c_str()), attributes);
 
     // Actions
