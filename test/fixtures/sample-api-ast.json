@@ -46,6 +46,7 @@
               "description": "",
               "method": "GET",
               "parameters": [],
+              "attributes": {},
               "examples": [
                 {
                   "name": "",
@@ -61,6 +62,7 @@
                           "value": "text/plain"
                         }
                       ],
+                      "attributes": {},
                       "body": "Hello World!\n",
                       "schema": ""
                     }
@@ -73,6 +75,7 @@
               "description": "",
               "method": "DELETE",
               "parameters": [],
+              "attributes": {},
               "examples": [
                 {
                   "name": "",
@@ -83,6 +86,7 @@
                       "name": "204",
                       "description": "",
                       "headers": [],
+                      "attributes": {},
                       "body": "",
                       "schema": ""
                     }
