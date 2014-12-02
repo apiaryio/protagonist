@@ -18,7 +18,8 @@
         "src/parse.cc",
         "src/protagonist.cc",
         "src/protagonist.h",
-        "src/result.cc"
+        "src/result.cc",
+        "src/mson_wrapper.cc"
       ],
       "dependencies": [
         "./snowcrash/snowcrash.gyp:libsnowcrash",

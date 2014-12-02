@@ -1,9 +1,11 @@
 #include "protagonist.h"
+#include "mson_wrapper.h"
 #include "Serialize.h"
 
 using namespace v8;
 using namespace protagonist;
 
+// TODO: Move to Snow Crash
 static const std::string AttributesKey = "attributes";
 static const std::string SourceKey = "source";
 static const std::string ResolvedKey = "resolved";
@@ -159,7 +161,11 @@ static Local<Object> WrapAttributes(const snowcrash::Attributes& attributes)
     if (attributes.source.empty())
         return attributesObject;
 
-    attributesObject->Set(String::NewSymbol(SourceKey.c_str()), Null());
+    // Source
+    Local<Object> namedTypeObject = WrapNamedType(attributes.source);
+    attributesObject->Set(String::NewSymbol(SourceKey.c_str()), namedTypeObject);
+
+    // Resolved
     attributesObject->Set(String::NewSymbol(ResolvedKey.c_str()), Null());
 
     return attributesObject;

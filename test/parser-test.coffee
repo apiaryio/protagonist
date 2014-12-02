@@ -1,9 +1,9 @@
 protagonist = require '../build/Release/protagonist'
 {assert} = require 'chai'
 
-describe 'Blueprint tree', ->
+describe 'Blueprint AST', ->
 
-  describe 'contains attributes nodes for', ->
+  describe 'has attributes nodes for', ->
     ast = null
 
     before (done) ->

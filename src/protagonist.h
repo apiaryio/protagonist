@@ -1,3 +1,6 @@
+#ifndef PROTAGONIST_H
+#define PROTAGONIST_H
+
 #include <node.h>
 #include <v8.h>
 #include "Blueprint.h"
@@ -16,7 +19,7 @@ namespace protagonist {
         static void Init(v8::Handle<v8::Object> target);
 
         // Convenience function for constructor->NewInstance
-        static v8::Handle<v8::Value> NewInstance(); 
+        static v8::Handle<v8::Value> NewInstance();
 
         // Wraps snowcrash:Blueprint
         static v8::Local<v8::Object> WrapBlueprint(const snowcrash::Blueprint& blueprint);
@@ -38,7 +41,7 @@ namespace protagonist {
         static void Init(v8::Handle<v8::Object> target);
 
         // Convenience function for constructor->NewInstance
-        static v8::Handle<v8::Value> NewInstance(); 
+        static v8::Handle<v8::Value> NewInstance();
 
         // Wraps source map of snowcrash:Blueprint
         static v8::Local<v8::Object> WrapBlueprint(const snowcrash::SourceMap<snowcrash::Blueprint>& blueprint);
@@ -52,12 +55,12 @@ namespace protagonist {
     };
 
     //
-    // SourceAnnotation 
+    // SourceAnnotation
     //
     class SourceAnnotation : public node::ObjectWrap {
     public:
         static void Init(v8::Handle<v8::Object> target);
-        static v8::Handle<v8::Value> NewInstance(); 
+        static v8::Handle<v8::Value> NewInstance();
 
         // Wraps snowcrash::SourceAnnotation
         static v8::Local<v8::Object> WrapSourceAnnotation(const snowcrash::SourceAnnotation& annotation);
@@ -71,12 +74,12 @@ namespace protagonist {
     };
 
     //
-    // Result 
+    // Result
     //
     class Result : public node::ObjectWrap {
     public:
         static void Init(v8::Handle<v8::Object> target);
-        static v8::Handle<v8::Value> NewInstance(); 
+        static v8::Handle<v8::Value> NewInstance();
 
         // Wraps snowcrash::Warnings and snowcrash:Blueprint into report object
         // Note: snowcrash::Result::Error is being sent separately as Error object
@@ -91,7 +94,7 @@ namespace protagonist {
 
         static v8::Handle<v8::Value> New(const v8::Arguments& args);
         static v8::Persistent<v8::Function> constructor;
-    };    
+    };
 
     //
     // Parse function
@@ -99,3 +102,5 @@ namespace protagonist {
     extern v8::Handle<v8::Value> Parse(const v8::Arguments& args);
 
 }
+
+#endif
