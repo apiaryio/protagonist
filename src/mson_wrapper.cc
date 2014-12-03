@@ -1,5 +1,8 @@
 #include "mson_wrapper.h"
 
+// TODO: Remove
+// #include <iostream>
+
 using namespace v8;
 using namespace protagonist;
 
@@ -10,6 +13,7 @@ static const std::string Variable = "variable";
 static const std::string Base = "base";
 static const std::string TypeSpecification = "typeSpecification";
 static const std::string Attributes = "attributes";
+static const std::string Sections = "sections";
 
 // Wrap Symbol
 static Local<Value> WrapSymbol(const mson::Symbol& symbol)
@@ -34,7 +38,7 @@ static Local<Value> WrapBaseTypeName(const mson::BaseTypeName& baseTypeName)
             return String::NewSymbol("boolean");
 
         case mson::StringTypeName:
-            return String::NewSymbol("boolean");
+            return String::NewSymbol("string");
 
         case mson::NumberTypeName:
             return String::NewSymbol("number");
@@ -95,6 +99,9 @@ static Local<Value> WrapTypeDefinition(const mson::TypeDefinition& typeDefinitio
 {
     Local<Object> typeDefinitionObject = Object::New();
 
+    if (typeDefinition.empty())
+        return Local<Value>::New(Null());
+
     // Type Specification
     typeDefinitionObject->Set(String::NewSymbol(TypeSpecification.c_str()), WrapTypeSpecification(typeDefinition.typeSpecification));
 
@@ -104,19 +111,60 @@ static Local<Value> WrapTypeDefinition(const mson::TypeDefinition& typeDefinitio
     return typeDefinitionObject;
 }
 
-// Wrap Named Type
-Local<Object> protagonist::WrapNamedType(const mson::NamedType& namedType)
+// Wrap Type Sections
+static Local<Value> WrapTypeSections(const mson::TypeSections& typeSections)
 {
+    // TODO: Remove
+    //std::cout << "typeSections count:" << typeSections.size() << "\n\n";
+
+    if (typeSections.empty())
+        return Local<Value>::New(Null());
+
+    Local<Array> typeSectionsArray = Array::New(typeSections.size());
+
+    size_t i = 0;
+    for (mson::TypeSections::const_iterator it = typeSections.begin();
+        it != typeSections.end();
+        ++it, ++i) {
+
+            Local<Object> section = Object::New();
+
+
+
+            // // Name
+            // metadataObject->Set(String::NewSymbol(snowcrash::SerializeKey::Name.c_str()), String::New(it->first.c_str()));
+            //
+            // // Value
+            // metadataObject->Set(String::NewSymbol(snowcrash::SerializeKey::Value.c_str()), String::New(it->second.c_str()));
+
+            typeSectionsArray->Set(i, section);
+        }
+
+    return typeSectionsArray;
+}
+
+// Wrap Named Type
+Local<Value> protagonist::WrapNamedType(const mson::NamedType& namedType)
+{
+    if (namedType.empty())
+        return Local<Value>::New(Null());
+
     Local<Object> typeObject = Object::New();
 
     // Name
-    typeObject->Set(String::NewSymbol(Name.c_str()), WrapTypeName(namedType.name));
+    Local<Value> v = WrapTypeName(namedType.name);
+    if (v != Null())
+        typeObject->Set(String::NewSymbol(Name.c_str()), v);
 
     // Ancestor type definition
-    typeObject->Set(String::NewSymbol(Base.c_str()), WrapTypeDefinition(namedType.base));
+    v = WrapTypeDefinition(namedType.base);
+    if (v != Null())
+        typeObject->Set(String::NewSymbol(Base.c_str()), v);
 
     // Type sections
-    // TODO:
+    v = WrapTypeSections(namedType.sections);
+    if (v != Null())
+        typeObject->Set(String::NewSymbol(Sections.c_str()), v);
 
     return typeObject;
 }
