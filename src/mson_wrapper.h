@@ -8,7 +8,7 @@
 namespace protagonist {
 
     /** Wrap Named Type */
-    v8::Local<v8::Object> WrapNamedType(const mson::NamedType& namedType);
+    v8::Local<v8::Value> WrapNamedType(const mson::NamedType& namedType);
 }
 
 #endif

@@ -158,15 +158,13 @@ static Local<Object> WrapAttributes(const snowcrash::Attributes& attributes)
 {
     Local<Object> attributesObject = Object::New();
 
-    if (attributes.source.empty())
-        return attributesObject;
-
     // Source
-    Local<Object> namedTypeObject = WrapNamedType(attributes.source);
-    attributesObject->Set(String::NewSymbol(SourceKey.c_str()), namedTypeObject);
+    Local<Value> v = WrapNamedType(attributes.source);
+    if (v != Null())
+        attributesObject->Set(String::NewSymbol(SourceKey.c_str()), v);
 
     // Resolved
-    attributesObject->Set(String::NewSymbol(ResolvedKey.c_str()), Null());
+    // attributesObject->Set(String::NewSymbol(ResolvedKey.c_str()), Null());
 
     return attributesObject;
 }

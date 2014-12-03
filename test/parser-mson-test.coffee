@@ -12,13 +12,15 @@ describe 'MSON AST', ->
     # Resource [/]
     ## Action [GET]
     + Response 200
-      + Attributes
-        + name: John (string) - Name of the user
+      + attribute
+        + message (string) - The blog post article
     '''
 
     protagonist.parse source, (err, result) ->
       done err if err
-      ast = result.ast.resourceGroups[0].resources[0].actions[0].examples[0].responses[0].attributes
+      ast = result.ast.resourceGroups[0].resources[0].actions[0].examples[0].responses[0].attributes.source
+      # TODO: remove
+      # console.log JSON.stringify result.ast, undefined, 2
       done()
 
   describe 'Attributes Named Type', ->
