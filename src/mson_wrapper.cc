@@ -16,6 +16,7 @@ static const std::string TypeKey = "type";
 static const std::string ContentKey = "content";
 static const std::string ValueDefinitionKey = "valueDefinition";
 static const std::string TypeDefinitionKey = "typeDefinition";
+static const std::string NestedTypesKey = "nestedTypes";
 
 // Forward declarations
 static Local<Value> WrapTypeDefinition(const mson::TypeDefinition& typeDefinition);
@@ -83,6 +84,12 @@ static Local<Value> WrapTypeName(const mson::TypeName& typeName)
     return typeNameObject;
 }
 
+// Wrap Type Name alias
+v8::Local<v8::Value> protagonist::WrapCollectionItem(const mson::TypeName& typeName)
+{
+    return WrapTypeName(typeName);
+}
+
 // Wrap Type Specification
 static Local<Value> WrapTypeSpecification(const mson::TypeSpecification& typeSpecification)
 {
@@ -92,10 +99,45 @@ static Local<Value> WrapTypeSpecification(const mson::TypeSpecification& typeSpe
     typeSpecificationObject->Set(String::NewSymbol(NameKey.c_str()), WrapTypeName(typeSpecification.name));
 
     // Nested Types
-    
-    // TODO:
+    if (!typeSpecification.nestedTypes.empty()) {
+        Local<Value> v = WrapCollection<mson::TypeNames>(typeSpecification.nestedTypes);
+        typeSpecificationObject->Set(String::NewSymbol(NestedTypesKey.c_str()), v);
+    }
 
     return typeSpecificationObject;
+}
+
+// Generic string wrapper
+v8::Local<v8::Value> protagonist::WrapCollectionItem(const std::string& text)
+{
+    return String::NewSymbol(text.c_str());
+}
+
+// Wrap Attributes
+static Local<Value> WrapTypeAttributes(const mson::TypeAttributes& typeAttributes)
+{
+    typedef std::vector<std::string> TypeAttributesNames;
+    TypeAttributesNames attributesNames;
+
+    if (typeAttributes & mson::RequiredTypeAttribute)
+        attributesNames.push_back("required");
+
+    if (typeAttributes & mson::OptionalTypeAttribute)
+        attributesNames.push_back("optional");
+
+    if (typeAttributes & mson::FixedTypeAttribute)
+        attributesNames.push_back("fixed");
+
+    if (typeAttributes & mson::SampleTypeAttribute)
+        attributesNames.push_back("sample");
+
+    if (typeAttributes & mson::DefaultTypeAttribute)
+        attributesNames.push_back("default");
+
+    if (attributesNames.empty())
+        return Local<Value>::New(Null());
+
+    return WrapCollection<TypeAttributesNames>(attributesNames);
 }
 
 // Wrap Type Definition
@@ -111,8 +153,10 @@ static Local<Value> WrapTypeDefinition(const mson::TypeDefinition& typeDefinitio
                                                 WrapTypeSpecification(typeDefinition.typeSpecification));
 
     // Attributes
-    
-    // TODO:
+    if (typeDefinition.attributes != 0) {
+        Local<Value> v = WrapTypeAttributes(typeDefinition.attributes);
+        typeDefinitionObject->Set(String::NewSymbol(AttributesKey.c_str()), v);
+    }
 
     return typeDefinitionObject;
 }
