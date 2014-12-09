@@ -19,6 +19,8 @@ namespace protagonist {
     v8::Local<v8::Value> WrapCollectionItem(const mson::Value& value);
     v8::Local<v8::Value> WrapCollectionItem(const mson::MemberType& memberType);
     v8::Local<v8::Value> WrapCollectionItem(const mson::TypeSection& typeSection);
+    v8::Local<v8::Value> WrapCollectionItem(const mson::TypeName& typeName);
+    v8::Local<v8::Value> WrapCollectionItem(const std::string& text);
 
     /** Collection wrapper helper */
     template<typename T>
