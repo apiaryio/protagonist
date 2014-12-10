@@ -1,5 +1,5 @@
 {
-  "_version": "2.1",
+  "_version": "3.0",
   "metadata": [
     {
       "name": "FORMAT",
@@ -39,7 +39,62 @@
               ]
             }
           ],
-          "attributes": {},
+          "attributes": {
+            "source": {
+              "name": {
+                "literal": "Message",
+                "variable": false
+              },
+              "sections": [
+                {
+                  "type": "member",
+                  "content": [
+                    {
+                      "type": "property",
+                      "content": {
+                        "name": {
+                          "literal": "id"
+                        },
+                        "valueDefinition": {
+                          "typeDefinition": {
+                            "typeSpecification": {
+                              "name": {
+                                "name": "number"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "property",
+                      "content": {
+                        "name": {
+                          "literal": "message"
+                        },
+                        "description": "The Message",
+                        "valueDefinition": {
+                          "values": [
+                            {
+                              "literal": "Hello World!",
+                              "variable": false
+                            }
+                          ],
+                          "typeDefinition": {
+                            "typeSpecification": {
+                              "name": {
+                                "name": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
           "actions": [
             {
               "name": "Retrieve Message",
@@ -59,11 +114,22 @@
                       "headers": [
                         {
                           "name": "Content-Type",
-                          "value": "text/plain"
+                          "value": "application/json"
                         }
                       ],
-                      "attributes": {},
-                      "body": "Hello World!\n",
+                      "attributes": {
+                        "source": {
+                          "base": {
+                            "typeSpecification": {
+                              "name": {
+                                "literal": "Message",
+                                "variable": false
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "body": "",
                       "schema": ""
                     }
                   ]
