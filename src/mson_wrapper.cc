@@ -162,20 +162,20 @@ static Local<Value> WrapTypeDefinition(const mson::TypeDefinition& typeDefinitio
 }
 
 // Wrap Type Section Type
-static Local<Value> WrapTypeSectionType(const mson::TypeSectionType& typeSectionType)
+static Local<Value> WrapTypeSectionType(const mson::TypeSection::Type& typeSectionType)
 {
     switch (typeSectionType) {
 
-        case mson::BlockDescriptionTypeSectionType:
+        case mson::TypeSection::BlockDescriptionType:
             return String::NewSymbol("blockDescription");
 
-        case mson::MemberTypeSectionType:
+        case mson::TypeSection::MemberType:
             return String::NewSymbol("member");
 
-        case mson::SampleTypeSectionType:
+        case mson::TypeSection::SampleType:
             return String::NewSymbol("sample");
 
-        case mson::DefaultTypeSectionType:
+        case mson::TypeSection::DefaultType:
             return String::NewSymbol("default");
 
         default:
@@ -184,23 +184,23 @@ static Local<Value> WrapTypeSectionType(const mson::TypeSectionType& typeSection
 }
 
 // Wrap Member Type's Type
-static Local<Value> WrapMemberTypeType(const mson::MemberTypeType& memberTypeType)
+static Local<Value> WrapMemberTypeType(const mson::MemberType::Type& memberTypeType)
 {
     switch (memberTypeType) {
 
-        case mson::PropertyMemberType:
+        case mson::MemberType::PropertyType:
             return String::NewSymbol("property");
 
-        case mson::ValueMemberType:
+        case mson::MemberType::ValueType:
             return String::NewSymbol("value");
 
-        case mson::MixinMemberType:
+        case mson::MemberType::MixinType:
             return String::NewSymbol("mixin");
 
-        case mson::OneOfMemberType:
+        case mson::MemberType::OneOfType:
             return String::NewSymbol("oneOf");
 
-        case mson::MembersMemberType:
+        case mson::MemberType::MembersType:
             return String::NewSymbol("members");
 
         default:
@@ -305,34 +305,34 @@ static Local<Value> WrapPropertyMember(const mson::PropertyMember& propertyMembe
 }
 
 // Wrap Member Type Content
-static Local<Value> WrapMemberTypeContent(const mson::MemberType::MemberTypeContent& memberTypeContent,
-                                          const mson::MemberTypeType& memberTypeType)
+static Local<Value> WrapMemberTypeContent(const mson::MemberType::Content& memberTypeContent,
+                                          const mson::MemberType::Type& memberTypeType)
 {
     switch (memberTypeType) {
 
-        case mson::PropertyMemberType:
+        case mson::MemberType::PropertyType:
         {
             return WrapPropertyMember(memberTypeContent.property);
         }
 
-        case mson::ValueMemberType:
+        case mson::MemberType::ValueType:
         {
             return WrapValueMember(memberTypeContent.value);
         }
 
-        case mson::MixinMemberType:
+        case mson::MemberType::MixinType:
         {
             // TODO:
             return Local<Value>::New(Null());
         }
 
-        case mson::OneOfMemberType:
+        case mson::MemberType::OneOfType:
         {
             // TODO:
             return Local<Value>::New(Null());
         }
 
-        case mson::MembersMemberType:
+        case mson::MemberType::MembersType:
         {
             // TODO:
             return Local<Value>::New(Null());
@@ -359,19 +359,19 @@ Local<Value> protagonist::WrapCollectionItem(const mson::MemberType& memberType)
 }
 
 // Wrap Type Section Content
-static Local<Value> WrapTypeSectionContentValue(const mson::TypeSectionContent& typeSectionContent,
-                                                const mson::TypeSectionType& typeSectionType,
+static Local<Value> WrapTypeSectionContentValue(const mson::TypeSection::Content& typeSectionContent,
+                                                const mson::TypeSection::Type& typeSectionType,
                                                 const mson::BaseType& baseType)
 {
     switch (typeSectionType) {
-        case mson::BlockDescriptionTypeSectionType:
+        case mson::TypeSection::BlockDescriptionType:
         {
             Local<String> v = String::New(typeSectionContent.description.c_str());
             return v;
         }
 
-        case mson::SampleTypeSectionType:
-        case mson::DefaultTypeSectionType:
+        case mson::TypeSection::SampleType:
+        case mson::TypeSection::DefaultType:
         {
             if (baseType == mson::PrimitiveBaseType ||
                 baseType == mson::ImplicitPrimitiveBaseType) {
@@ -384,7 +384,7 @@ static Local<Value> WrapTypeSectionContentValue(const mson::TypeSectionContent& 
             }
         }
 
-        case mson::MemberTypeSectionType:
+        case mson::TypeSection::MemberType:
         {
             return WrapCollection<mson::MemberTypes>(typeSectionContent.members());
         }
