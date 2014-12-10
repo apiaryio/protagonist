@@ -26,6 +26,7 @@ describe "Parser sourcemap", ->
         done()
 
   # Parser Sourcemap should conform to Sourcemap serialization JSON media type
+  # TODO: update to new Source Maps format
   it '`sourcemap` field conforms to `vnd.apiblueprint.sourcemap+json; version=2.1`', (done) ->
     actual_sourcemap_json = JSON.stringify sourcemap_parsed, null, 2
     expected_sourcemap_json = JSON.stringify sourcemap_fixture, null, 2
