@@ -17,6 +17,7 @@ static const std::string ContentKey = "content";
 static const std::string ValueDefinitionKey = "valueDefinition";
 static const std::string TypeDefinitionKey = "typeDefinition";
 static const std::string NestedTypesKey = "nestedTypes";
+static const std::string MembersKey = "members";
 
 // Forward declarations
 static Local<Value> WrapTypeDefinition(const mson::TypeDefinition& typeDefinition);
@@ -296,12 +297,35 @@ static Local<Value> WrapPropertyMember(const mson::PropertyMember& propertyMembe
 {
     Local<Object> propertyMemberObject = WrapValueMember(propertyMember, !propertyMember.name.empty());
 
-    if (!propertyMember.name.empty()) {
-        Local<Value> v = WrapPropertyName(propertyMember.name);
-        propertyMemberObject->Set(String::NewSymbol(NameKey.c_str()), v);
-    }
+    // Name
+    Local<Value> v = WrapPropertyName(propertyMember.name);
+    propertyMemberObject->Set(String::NewSymbol(NameKey.c_str()), v);
 
     return propertyMemberObject;
+}
+
+// Mixin Mebmer
+static Local<Value> WrapMixinMember(const mson::Mixin& mixin)
+{
+    Local<Object> mixinMemberObject = Object::New();
+
+    // Type Definition
+    Local<Value> v = WrapTypeDefinition(mixin.typeDefinition);
+    mixinMemberObject->Set(String::NewSymbol(TypeDefinitionKey.c_str()), v);
+
+    return mixinMemberObject;
+}
+
+// Members / One Of Member
+static Local<Value> WrapMembersMember(const mson::Members& members)
+{
+    Local<Object> mebmersMemberObject = Object::New();
+
+    // Members
+    Local<Value> v = WrapCollection<mson::MemberTypes>(members.members());
+    mebmersMemberObject->Set(String::NewSymbol(MembersKey.c_str()), v);
+
+    return mebmersMemberObject;
 }
 
 // Wrap Member Type Content
@@ -322,20 +346,17 @@ static Local<Value> WrapMemberTypeContent(const mson::MemberType::Content& membe
 
         case mson::MemberType::MixinType:
         {
-            // TODO:
-            return Local<Value>::New(Null());
+            return WrapMixinMember(memberTypeContent.mixin);
         }
 
         case mson::MemberType::OneOfType:
         {
-            // TODO:
-            return Local<Value>::New(Null());
+            return WrapMembersMember(memberTypeContent.oneOf);
         }
 
         case mson::MemberType::MembersType:
         {
-            // TODO:
-            return Local<Value>::New(Null());
+            return WrapMembersMember(memberTypeContent.members);
         }
 
         default:
