@@ -15,23 +15,21 @@ describe 'MSON AST', ->
         + attribute
             + message: Hello! (string) - The blog post article
             + things: a, b, c, 1, 2 (array[string, number], required, fixed)
-            + more_fun
+            + choice
                 + One of
                     + name
                     + address
+            + mixin
+                + Include Person
     '''
-
-            # + fun (object)
-            #   + a (string)
-            #   + Include Person    
 
     protagonist.parse source, (err, result) ->
       done err if err
       mson_ast = result.ast.resourceGroups[0].resources[0].actions[0].examples[0].responses[0].attributes.source
       
       # For debugging puposes:
-      console.log JSON.stringify result.ast, undefined, 2
-
+      # console.log JSON.stringify result, undefined, 2
+      
       done()
 
   describe 'Attributes named type', ->
@@ -73,8 +71,8 @@ describe 'MSON AST', ->
       it 'is defined', ->
         assert.isDefined member_ast.content
 
-      it 'has three member section', ->
-        assert.equal member_ast.content.length, 3
+      it 'has four member section', ->
+        assert.equal member_ast.content.length, 4
 
     describe 'member type', ->
       member_type_ast = null
