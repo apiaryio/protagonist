@@ -8,16 +8,14 @@ using namespace protagonist;
 static const std::string NameKey = "name";
 static const std::string LiteralKey = "literal";
 static const std::string VariableKey = "variable";
-static const std::string BaseKey = "base";
 static const std::string TypeSpecificationKey = "typeSpecification";
 static const std::string AttributesKey = "attributes";
 static const std::string SectionsKey = "sections";
-static const std::string TypeKey = "type";
+static const std::string ClassKey = "class";
 static const std::string ContentKey = "content";
 static const std::string ValueDefinitionKey = "valueDefinition";
 static const std::string TypeDefinitionKey = "typeDefinition";
 static const std::string NestedTypesKey = "nestedTypes";
-static const std::string MembersKey = "members";
 
 // Forward declarations
 static Local<Value> WrapTypeDefinition(const mson::TypeDefinition& typeDefinition);
@@ -68,21 +66,17 @@ static Local<Value> WrapBaseTypeName(const mson::BaseTypeName& baseTypeName)
 // Wrap Type Name
 static Local<Value> WrapTypeName(const mson::TypeName& typeName)
 {
-    Local<Object> typeNameObject = Object::New();
-
     if (typeName.empty())
         return Local<Value>::New(Null());
 
-    if (typeName.name != mson::UndefinedTypeName) {
+    if (typeName.base != mson::UndefinedTypeName) {
         // Base type
-        typeNameObject->Set(String::NewSymbol(NameKey.c_str()), WrapBaseTypeName(typeName.name));
+        return WrapBaseTypeName(typeName.base);
     }
     else {
         // Symbol
         return WrapSymbol(typeName.symbol);
     }
-
-    return typeNameObject;
 }
 
 // Wrap Type Name alias
@@ -162,21 +156,21 @@ static Local<Value> WrapTypeDefinition(const mson::TypeDefinition& typeDefinitio
     return typeDefinitionObject;
 }
 
-// Wrap Type Section Type
-static Local<Value> WrapTypeSectionType(const mson::TypeSection::Type& typeSectionType)
+// Wrap Type Section Class
+static Local<Value> WrapTypeSectionClass(const mson::TypeSection::Class& typeSectionClass)
 {
-    switch (typeSectionType) {
+    switch (typeSectionClass) {
 
-        case mson::TypeSection::BlockDescriptionType:
+        case mson::TypeSection::BlockDescriptionClass:
             return String::NewSymbol("blockDescription");
 
-        case mson::TypeSection::MemberType:
-            return String::NewSymbol("member");
+        case mson::TypeSection::MemberTypeClass:
+            return String::NewSymbol("memberType");
 
-        case mson::TypeSection::SampleType:
+        case mson::TypeSection::SampleClass:
             return String::NewSymbol("sample");
 
-        case mson::TypeSection::DefaultType:
+        case mson::TypeSection::DefaultClass:
             return String::NewSymbol("default");
 
         default:
@@ -184,25 +178,25 @@ static Local<Value> WrapTypeSectionType(const mson::TypeSection::Type& typeSecti
     }
 }
 
-// Wrap Member Type's Type
-static Local<Value> WrapMemberTypeType(const mson::MemberType::Type& memberTypeType)
+// Wrap Element Class
+static Local<Value> WrapElementClass(const mson::Element::Class& elementClass)
 {
-    switch (memberTypeType) {
+    switch (elementClass) {
 
-        case mson::MemberType::PropertyType:
+        case mson::Element::PropertyClass:
             return String::NewSymbol("property");
 
-        case mson::MemberType::ValueType:
+        case mson::Element::ValueClass:
             return String::NewSymbol("value");
 
-        case mson::MemberType::MixinType:
+        case mson::Element::MixinClass:
             return String::NewSymbol("mixin");
 
-        case mson::MemberType::OneOfType:
+        case mson::Element::OneOfClass:
             return String::NewSymbol("oneOf");
 
-        case mson::MemberType::MembersType:
-            return String::NewSymbol("members");
+        case mson::Element::GroupClass:
+            return String::NewSymbol("group");
 
         default:
             return Local<Value>::New(Null());
@@ -304,59 +298,42 @@ static Local<Value> WrapPropertyMember(const mson::PropertyMember& propertyMembe
     return propertyMemberObject;
 }
 
-// Mixin Mebmer
-static Local<Value> WrapMixinMember(const mson::Mixin& mixin)
+// Elements / One Of 
+static Local<Value> WrapElements(const mson::Elements& elements)
 {
-    Local<Object> mixinMemberObject = Object::New();
-
-    // Type Definition
-    Local<Value> v = WrapTypeDefinition(mixin.typeDefinition);
-    mixinMemberObject->Set(String::NewSymbol(TypeDefinitionKey.c_str()), v);
-
-    return mixinMemberObject;
+    Local<Value> v = WrapCollection<mson::Elements>(elements);
+    return v;
 }
 
-// Members / One Of Member
-static Local<Value> WrapMembersMember(const mson::Members& members)
+// Wrap Element Content
+static Local<Value> WrapElementContent(const mson::Element::Content& elementContent,
+                                       const mson::Element::Class& elementClass)
 {
-    Local<Object> mebmersMemberObject = Object::New();
+    switch (elementClass) {
 
-    // Members
-    Local<Value> v = WrapCollection<mson::MemberTypes>(members.members());
-    mebmersMemberObject->Set(String::NewSymbol(MembersKey.c_str()), v);
-
-    return mebmersMemberObject;
-}
-
-// Wrap Member Type Content
-static Local<Value> WrapMemberTypeContent(const mson::MemberType::Content& memberTypeContent,
-                                          const mson::MemberType::Type& memberTypeType)
-{
-    switch (memberTypeType) {
-
-        case mson::MemberType::PropertyType:
+        case mson::Element::PropertyClass:
         {
-            return WrapPropertyMember(memberTypeContent.property);
+            return WrapPropertyMember(elementContent.property);
         }
 
-        case mson::MemberType::ValueType:
+        case mson::Element::ValueClass:
         {
-            return WrapValueMember(memberTypeContent.value);
+            return WrapValueMember(elementContent.value);
         }
 
-        case mson::MemberType::MixinType:
+        case mson::Element::MixinClass:
         {
-            return WrapMixinMember(memberTypeContent.mixin);
+            return WrapTypeDefinition(elementContent.mixin);
         }
 
-        case mson::MemberType::OneOfType:
+        case mson::Element::OneOfClass:
         {
-            return WrapMembersMember(memberTypeContent.oneOf);
+            return WrapElements(elementContent.elements());
         }
 
-        case mson::MemberType::MembersType:
+        case mson::Element::GroupClass:
         {
-            return WrapMembersMember(memberTypeContent.members);
+            return WrapElements(elementContent.elements());
         }
 
         default:
@@ -364,35 +341,35 @@ static Local<Value> WrapMemberTypeContent(const mson::MemberType::Content& membe
     }
 }
 
-// Wrap Member Type
-Local<Value> protagonist::WrapCollectionItem(const mson::MemberType& memberType)
+// Wrap Element
+Local<Value> protagonist::WrapCollectionItem(const mson::Element& element)
 {
-    Local<Object> memberTypeObject = Object::New();
+    Local<Object> elementObject = Object::New();
 
-    // Type
-    memberTypeObject->Set(String::NewSymbol(TypeKey.c_str()), WrapMemberTypeType(memberType.type));
+    // Class
+    elementObject->Set(String::NewSymbol(ClassKey.c_str()), WrapElementClass(element.klass));
 
     // Content
-    memberTypeObject->Set(String::NewSymbol(ContentKey.c_str()), WrapMemberTypeContent(memberType.content,
-                                                                                       memberType.type));
+    elementObject->Set(String::NewSymbol(ContentKey.c_str()), WrapElementContent(element.content,
+                                                                                 element.klass));
 
-    return memberTypeObject;
+    return elementObject;
 }
 
 // Wrap Type Section Content
 static Local<Value> WrapTypeSectionContentValue(const mson::TypeSection::Content& typeSectionContent,
-                                                const mson::TypeSection::Type& typeSectionType,
+                                                const mson::TypeSection::Class& typeSectionClass,
                                                 const mson::BaseType& baseType)
 {
-    switch (typeSectionType) {
-        case mson::TypeSection::BlockDescriptionType:
+    switch (typeSectionClass) {
+        case mson::TypeSection::BlockDescriptionClass:
         {
             Local<String> v = String::New(typeSectionContent.description.c_str());
             return v;
         }
 
-        case mson::TypeSection::SampleType:
-        case mson::TypeSection::DefaultType:
+        case mson::TypeSection::SampleClass:
+        case mson::TypeSection::DefaultClass:
         {
             if (baseType == mson::PrimitiveBaseType ||
                 baseType == mson::ImplicitPrimitiveBaseType) {
@@ -401,13 +378,13 @@ static Local<Value> WrapTypeSectionContentValue(const mson::TypeSection::Content
                 return v;
             }
             else {
-                return WrapCollection<mson::MemberTypes>(typeSectionContent.members());
+                return WrapCollection<mson::Elements>(typeSectionContent.elements());
             }
         }
 
-        case mson::TypeSection::MemberType:
+        case mson::TypeSection::MemberTypeClass:
         {
-            return WrapCollection<mson::MemberTypes>(typeSectionContent.members());
+            return WrapCollection<mson::Elements>(typeSectionContent.elements());
         }
 
         default:
@@ -420,12 +397,12 @@ Local<Value> protagonist::WrapCollectionItem(const mson::TypeSection& typeSectio
 {
     Local<Object> typeSectionObject = Object::New();
 
-    // Type
-    typeSectionObject->Set(String::NewSymbol(TypeKey.c_str()), WrapTypeSectionType(typeSection.type));
+    // Class
+    typeSectionObject->Set(String::NewSymbol(ClassKey.c_str()), WrapTypeSectionClass(typeSection.klass));
 
     // Content
     typeSectionObject->Set(String::NewSymbol(ContentKey.c_str()), WrapTypeSectionContentValue(typeSection.content,
-                                                                                              typeSection.type,
+                                                                                              typeSection.klass,
                                                                                               typeSection.baseType));
     return typeSectionObject;
 }
@@ -445,9 +422,9 @@ Local<Value> protagonist::WrapNamedType(const mson::NamedType& namedType)
     }
 
     // Ancestor type definition
-    if (!namedType.base.empty()) {
-        Local<Value> v = WrapTypeDefinition(namedType.base);
-        typeObject->Set(String::NewSymbol(BaseKey.c_str()), v);
+    if (!namedType.typeDefinition.empty()) {
+        Local<Value> v = WrapTypeDefinition(namedType.typeDefinition);
+        typeObject->Set(String::NewSymbol(TypeDefinitionKey.c_str()), v);
     }
 
     // Type sections

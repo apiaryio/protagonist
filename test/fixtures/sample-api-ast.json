@@ -47,10 +47,10 @@
               },
               "sections": [
                 {
-                  "type": "member",
+                  "class": "memberType",
                   "content": [
                     {
-                      "type": "property",
+                      "class": "property",
                       "content": {
                         "name": {
                           "literal": "id"
@@ -58,16 +58,14 @@
                         "valueDefinition": {
                           "typeDefinition": {
                             "typeSpecification": {
-                              "name": {
-                                "name": "number"
-                              }
+                              "name": "number"
                             }
                           }
                         }
                       }
                     },
                     {
-                      "type": "property",
+                      "class": "property",
                       "content": {
                         "name": {
                           "literal": "message"
@@ -82,9 +80,7 @@
                           ],
                           "typeDefinition": {
                             "typeSpecification": {
-                              "name": {
-                                "name": "string"
-                              }
+                              "name": "string"
                             }
                           }
                         }
@@ -119,7 +115,7 @@
                       ],
                       "attributes": {
                         "source": {
-                          "base": {
+                          "typeDefinition": {
                             "typeSpecification": {
                               "name": {
                                 "literal": "Message",
