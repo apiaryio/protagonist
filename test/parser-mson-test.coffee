@@ -28,7 +28,7 @@ describe 'MSON AST', ->
       mson_ast = result.ast.resourceGroups[0].resources[0].actions[0].examples[0].responses[0].attributes.source
       
       # For debugging puposes:
-      # console.log JSON.stringify result, undefined, 2
+      #console.log JSON.stringify result, undefined, 2
       
       done()
 
@@ -60,12 +60,12 @@ describe 'MSON AST', ->
     it 'is defined', ->
       assert.isDefined member_ast
 
-    describe 'type', ->
+    describe 'class', ->
       it 'is defined', ->
-        assert.isDefined member_ast.type
+        assert.isDefined member_ast.class
 
-      it 'is of "member" type', ->
-        assert.equal member_ast.type, 'member'
+      it 'is of "memberType" class', ->
+        assert.equal member_ast.class, 'memberType'
 
     describe 'content', ->
       it 'is defined', ->
@@ -83,12 +83,12 @@ describe 'MSON AST', ->
       it 'is defined', ->
         assert.isDefined member_type_ast
 
-      describe 'type', ->
+      describe 'class', ->
         it 'is defined', ->
-          assert.isDefined member_type_ast.type
+          assert.isDefined member_type_ast.class
 
-        it 'is of "property" type', ->
-          assert.equal member_type_ast.type, 'property'
+        it 'is of "property" class', ->
+          assert.equal member_type_ast.class, 'property'
 
       describe 'content', ->
         it 'is defined', ->
@@ -148,4 +148,4 @@ describe 'MSON AST', ->
                   assert.isDefined property_member_ast.valueDefinition.typeDefinition.typeSpecification.name
 
                 it 'is of "string" type', ->
-                  assert.equal property_member_ast.valueDefinition.typeDefinition.typeSpecification.name.name, 'string'
+                  assert.equal property_member_ast.valueDefinition.typeDefinition.typeSpecification.name, 'string'
