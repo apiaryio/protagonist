@@ -126,7 +126,15 @@
                         }
                       },
                       "body": "",
-                      "schema": ""
+                      "schema": "",
+                      "assets": {
+                       "body": {
+                         "source": ""
+                       },
+                       "schema": {
+                         "source": ""
+                       }
+                      }
                     }
                   ]
                 }
@@ -150,7 +158,15 @@
                       "headers": [],
                       "attributes": {},
                       "body": "",
-                      "schema": ""
+                      "schema": "",
+                      "assets": {
+                       "body": {
+                         "source": ""
+                       },
+                       "schema": {
+                         "source": ""
+                       }
+                      }                      
                     }
                   ]
                 }

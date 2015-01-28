@@ -22,8 +22,8 @@ describe "Parser sourcemap", ->
         sourcemap_parsed = result.sourcemap
         done()
 
-  # Parser Sourcemap should conform to Sourcemap serialization JSON media type
-  # TODO: update to new Source Maps format
+  # Parser Sourcemap should conform to recent source map serialization JSON media type
+  # TODO: update to new Source Maps format as described in the https://github.com/apiaryio/api-blueprint-ast/blob/zdne/attributes-description/Source%20Map.md
   it '`sourcemap` field conforms to `vnd.apiblueprint.sourcemap+json; version=2.1`', (done) ->
     actual_sourcemap_json = JSON.stringify sourcemap_parsed, null, 2
     expected_sourcemap_json = JSON.stringify sourcemap_fixture, null, 2
