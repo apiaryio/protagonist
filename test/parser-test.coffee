@@ -30,7 +30,7 @@ describe 'Blueprint AST', ->
       done()
 
     it 'payload', (done) ->
-      assert.isDefined ast.resourceGroups[0].resources[0].actions[0].examples[0].responses[0] .attributes
+      assert.isDefined ast.resourceGroups[0].resources[0].actions[0].examples[0].responses[0].attributes
       done()
 
 describe "API Blueprint parser", ->
@@ -145,8 +145,14 @@ Method description
       assert.strictEqual resource.model.name, 'My Resource'
       assert.isDefined resource.model.description
       assert.strictEqual resource.model.description.length, 0
-      assert.isDefined resource.model.body
+      assert.isDefined resource.model.body                      # deprecated body
       assert.strictEqual resource.model.body, 'Hello World\n'
+
+      assert.isDefined resource.model.assets
+      assert.isDefined resource.model.assets.body
+      assert.isDefined resource.model.assets.body.source
+      assert.strictEqual resource.model.assets.body.source, 'Hello World\n'
+
       assert.isDefined resource.model.headers
       assert.strictEqual resource.model.headers.length, 1
       assert.strictEqual resource.model.headers[0].name, 'Content-Type'

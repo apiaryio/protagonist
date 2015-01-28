@@ -196,11 +196,29 @@ static Local<Object> WrapPayload(const snowcrash::Payload& payload)
     Local<Object> attributes = WrapAttributes(payload.attributes);
     payloadObject->Set(String::NewSymbol(AttributesKey.c_str()), attributes);
 
-    // Body
-    payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Body.c_str()), String::New(payload.assets.body.source.c_str()));
+    // Legacy Body
+    payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Body.c_str()),
+                                            String::New(payload.assets.body.source.c_str()));
 
-    // Schema
-    payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Schema.c_str()), String::New(payload.assets.schema.source.c_str()));
+    // Legacy Schema
+    payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Schema.c_str()),
+                        String::New(payload.assets.schema.source.c_str()));
+
+    // Assets
+    Local<Object> assets = Object::New();
+
+    Local<Object> bodyAsset = Object::New();
+    bodyAsset->Set(String::NewSymbol(snowcrash::SerializeKey::Source.c_str()),
+                    String::New(payload.assets.body.source.c_str()));
+
+    Local<Object> schemaAsset = Object::New();
+    schemaAsset->Set(String::NewSymbol(snowcrash::SerializeKey::Source.c_str()),
+                    String::New(payload.assets.schema.source.c_str()));
+
+    assets->Set(String::NewSymbol(snowcrash::SerializeKey::Body.c_str()), bodyAsset);
+    assets->Set(String::NewSymbol(snowcrash::SerializeKey::Schema.c_str()), schemaAsset);
+
+    payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Assets.c_str()), assets);
 
     return payloadObject;
 }
