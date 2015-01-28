@@ -56,7 +56,7 @@ static Local<Object> WrapSourceMap(const snowcrash::SourceMapBase& value)
          ++it, ++i) {
 
         Local<Object> range = Array::New(2);
-        
+
         range->Set(0, Number::New(it->location));
         range->Set(1, Number::New(it->length));
 
@@ -152,10 +152,10 @@ static Local<Object> WrapPayload(const snowcrash::SourceMap<snowcrash::Payload>&
     payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Headers.c_str()), headers);
 
     // Body
-    payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Body.c_str()), WrapSourceMap(payload.body));
+    payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Body.c_str()), WrapSourceMap(payload.assets.body));
 
     // Schema
-    payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Schema.c_str()), WrapSourceMap(payload.schema));
+    payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Schema.c_str()), WrapSourceMap(payload.assets.schema));
 
     return payloadObject;
 }

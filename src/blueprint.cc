@@ -197,10 +197,10 @@ static Local<Object> WrapPayload(const snowcrash::Payload& payload)
     payloadObject->Set(String::NewSymbol(AttributesKey.c_str()), attributes);
 
     // Body
-    payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Body.c_str()), String::New(payload.body.c_str()));
+    payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Body.c_str()), String::New(payload.assets.body.source.c_str()));
 
     // Schema
-    payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Schema.c_str()), String::New(payload.schema.c_str()));
+    payloadObject->Set(String::NewSymbol(snowcrash::SerializeKey::Schema.c_str()), String::New(payload.assets.schema.source.c_str()));
 
     return payloadObject;
 }
