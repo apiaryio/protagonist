@@ -7,12 +7,6 @@ using namespace protagonist;
 
 void Init(Handle<Object> exports) {
 
-    // Blueprint object
-    Blueprint::Init(exports);
-
-    // Sourcemap object
-    Sourcemap::Init(exports);
-
     // SourceAnnotation object
     SourceAnnotation::Init(exports);
 

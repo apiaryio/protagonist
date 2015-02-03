@@ -1,4 +1,7 @@
 #include "protagonist.h"
+#include "SerializeAST.h"
+#include "SerializeSourcemap.h"
+#include "v8_wrapper.h"
 
 using namespace v8;
 using namespace protagonist;
@@ -51,8 +54,11 @@ v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
     static const char* WarningsKey = "warnings";
     static const char* SourcemapKey = "sourcemap";
 
-    if (report.error.code == snowcrash::Error::OK)
-        resultWrap->Set(String::NewSymbol(AstKey), Blueprint::WrapBlueprint(blueprint));
+    if (report.error.code == snowcrash::Error::OK) {
+        sos::Object blueprintSerializationWrap = snowcrash::WrapBlueprint(blueprint);
+        
+        resultWrap->Set(String::NewSymbol(AstKey), v8_wrap(blueprintSerializationWrap));
+    }
     else 
         resultWrap->Set(String::NewSymbol(AstKey), Local<Value>::New(Null()));
 
@@ -69,8 +75,11 @@ v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
     resultWrap->Set(String::NewSymbol(WarningsKey), warnings);
 
     // Set source map only if requested
-    if (report.error.code == snowcrash::Error::OK && (options & snowcrash::ExportSourcemapOption) != 0)
-        resultWrap->Set(String::NewSymbol(SourcemapKey), Sourcemap::WrapBlueprint(sourcemap));
+    if (report.error.code == snowcrash::Error::OK && (options & snowcrash::ExportSourcemapOption) != 0) {
+        sos::Object sourcemapSerializationWrap = snowcrash::WrapBlueprintSourcemap(sourcemap);
+
+        resultWrap->Set(String::NewSymbol(SourcemapKey), v8_wrap(sourcemapSerializationWrap));
+    }
     else
         resultWrap->Set(String::NewSymbol(SourcemapKey), Local<Value>::New(Null()));
 
