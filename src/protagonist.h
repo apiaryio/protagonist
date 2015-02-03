@@ -11,50 +11,6 @@
 namespace protagonist {
 
     //
-    // Blueprint wrapper
-    //
-    class Blueprint : public node::ObjectWrap {
-    public:
-        // Blueprint Wrapper registration
-        static void Init(v8::Handle<v8::Object> target);
-
-        // Convenience function for constructor->NewInstance
-        static v8::Handle<v8::Value> NewInstance();
-
-        // Wraps snowcrash:Blueprint
-        static v8::Local<v8::Object> WrapBlueprint(const snowcrash::Blueprint& blueprint);
-
-    private:
-        Blueprint();
-        ~Blueprint();
-
-        static v8::Handle<v8::Value> New(const v8::Arguments& args);
-        static v8::Persistent<v8::Function> constructor;
-    };
-
-    //
-    // Sourcemap wrapper
-    //
-    class Sourcemap : public node::ObjectWrap {
-    public:
-        // Sourcemap Wrapper registration
-        static void Init(v8::Handle<v8::Object> target);
-
-        // Convenience function for constructor->NewInstance
-        static v8::Handle<v8::Value> NewInstance();
-
-        // Wraps source map of snowcrash:Blueprint
-        static v8::Local<v8::Object> WrapBlueprint(const snowcrash::SourceMap<snowcrash::Blueprint>& blueprint);
-
-    private:
-        Sourcemap();
-        ~Sourcemap();
-
-        static v8::Handle<v8::Value> New(const v8::Arguments& args);
-        static v8::Persistent<v8::Function> constructor;
-    };
-
-    //
     // SourceAnnotation
     //
     class SourceAnnotation : public node::ObjectWrap {

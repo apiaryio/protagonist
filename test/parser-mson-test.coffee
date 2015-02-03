@@ -1,6 +1,3 @@
-SegfaultHandler = require 'segfault-handler'
-SegfaultHandler.registerHandler()
-
 protagonist = require '../build/Release/protagonist'
 {assert} = require 'chai'
 
@@ -24,12 +21,12 @@ describe 'MSON AST', ->
     '''
 
     protagonist.parse source, (err, result) ->
-      done err if err
-      mson_ast = result.ast.resourceGroups[0].resources[0].actions[0].examples[0].responses[0].attributes.source
-      
+      return done err if err
+      mson_ast = result.ast.content[0].content[0].actions[0].examples[0].responses[0].content[0]
+
       # For debugging puposes:
-      #console.log JSON.stringify result, undefined, 2
-      
+      #console.log JSON.stringify mson_ast, undefined, 2
+
       done()
 
   describe 'Attributes named type', ->
@@ -37,8 +34,8 @@ describe 'MSON AST', ->
       assert.isDefined mson_ast
 
     describe 'name', ->
-      it 'is undefined', ->
-        assert.isUndefined mson_ast.name
+      it 'is defined', ->
+        assert.isDefined mson_ast.name
 
     describe 'base', ->
       it 'is undefined', ->
