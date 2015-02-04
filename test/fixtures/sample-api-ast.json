@@ -8,12 +8,14 @@
   ],
   "name": "",
   "description": "",
+  "element": "category",
   "resourceGroups": [
     {
       "name": "Messages",
       "description": "",
       "resources": [
         {
+          "element": "resource",
           "name": "Message",
           "description": "",
           "uriTemplate": "/messages/{id}",
@@ -45,6 +47,7 @@
               "description": "",
               "method": "GET",
               "parameters": [],
+              "content": [],
               "examples": [
                 {
                   "name": "",
@@ -57,11 +60,31 @@
                       "headers": [
                         {
                           "name": "Content-Type",
-                          "value": "text/plain"
+                          "value": "application/json"
                         }
                       ],
-                      "body": "Hello World!\n",
-                      "schema": ""
+                      "body": "",
+                      "schema": "",
+                      "content": [
+                        {
+                          "element": "dataStructure",
+                          "name": {
+                            "literal": "",
+                            "variable": false
+                          },
+                          "typeDefinition": {
+                            "typeSpecification": {
+                              "name": {
+                                "literal": "Message",
+                                "variable": false
+                              },
+                              "nestedTypes": []
+                            },
+                            "attributes": []
+                          },
+                          "sections": []
+                        }
+                      ]
                     }
                   ]
                 }
@@ -72,6 +95,7 @@
               "description": "",
               "method": "DELETE",
               "parameters": [],
+              "content": [],
               "examples": [
                 {
                   "name": "",
@@ -83,7 +107,262 @@
                       "description": "",
                       "headers": [],
                       "body": "",
-                      "schema": ""
+                      "schema": "",
+                      "content": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "content": [
+            {
+              "element": "dataStructure",
+              "name": {
+                "literal": "Message",
+                "variable": false
+              },
+              "typeDefinition": {
+                "typeSpecification": {
+                  "name": {
+                    "literal": "",
+                    "variable": false
+                  },
+                  "nestedTypes": []
+                },
+                "attributes": []
+              },
+              "sections": [
+                {
+                  "class": "memberType",
+                  "content": [
+                    {
+                      "content": {
+                        "name": {
+                          "literal": "id"
+                        },
+                        "description": "",
+                        "valueDefinition": {
+                          "values": [],
+                          "typeDefinition": {
+                            "typeSpecification": {
+                              "name": "number",
+                              "nestedTypes": []
+                            },
+                            "attributes": []
+                          }
+                        },
+                        "sections": []
+                      },
+                      "class": "property"
+                    },
+                    {
+                      "content": {
+                        "name": {
+                          "literal": "message"
+                        },
+                        "description": "The Message",
+                        "valueDefinition": {
+                          "values": [
+                            {
+                              "literal": "Hello World!",
+                              "variable": false
+                            }
+                          ],
+                          "typeDefinition": {
+                            "typeSpecification": {
+                              "name": "string",
+                              "nestedTypes": []
+                            },
+                            "attributes": []
+                          }
+                        },
+                        "sections": []
+                      },
+                      "class": "property"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "content": [
+    {
+      "element": "category",
+      "attributes": {
+        "name": "Messages"
+      },
+      "content": [
+        {
+          "element": "resource",
+          "name": "Message",
+          "description": "",
+          "uriTemplate": "/messages/{id}",
+          "model": {},
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Id of a message",
+              "type": "",
+              "required": true,
+              "default": "",
+              "example": "",
+              "values": [
+                {
+                  "value": "1"
+                },
+                {
+                  "value": "2"
+                },
+                {
+                  "value": "3"
+                }
+              ]
+            }
+          ],
+          "actions": [
+            {
+              "name": "Retrieve Message",
+              "description": "",
+              "method": "GET",
+              "parameters": [],
+              "content": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "200",
+                      "description": "",
+                      "headers": [
+                        {
+                          "name": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "",
+                      "schema": "",
+                      "content": [
+                        {
+                          "element": "dataStructure",
+                          "name": {
+                            "literal": "",
+                            "variable": false
+                          },
+                          "typeDefinition": {
+                            "typeSpecification": {
+                              "name": {
+                                "literal": "Message",
+                                "variable": false
+                              },
+                              "nestedTypes": []
+                            },
+                            "attributes": []
+                          },
+                          "sections": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Delete Message",
+              "description": "",
+              "method": "DELETE",
+              "parameters": [],
+              "content": [],
+              "examples": [
+                {
+                  "name": "",
+                  "description": "",
+                  "requests": [],
+                  "responses": [
+                    {
+                      "name": "204",
+                      "description": "",
+                      "headers": [],
+                      "body": "",
+                      "schema": "",
+                      "content": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "content": [
+            {
+              "element": "dataStructure",
+              "name": {
+                "literal": "Message",
+                "variable": false
+              },
+              "typeDefinition": {
+                "typeSpecification": {
+                  "name": {
+                    "literal": "",
+                    "variable": false
+                  },
+                  "nestedTypes": []
+                },
+                "attributes": []
+              },
+              "sections": [
+                {
+                  "class": "memberType",
+                  "content": [
+                    {
+                      "content": {
+                        "name": {
+                          "literal": "id"
+                        },
+                        "description": "",
+                        "valueDefinition": {
+                          "values": [],
+                          "typeDefinition": {
+                            "typeSpecification": {
+                              "name": "number",
+                              "nestedTypes": []
+                            },
+                            "attributes": []
+                          }
+                        },
+                        "sections": []
+                      },
+                      "class": "property"
+                    },
+                    {
+                      "content": {
+                        "name": {
+                          "literal": "message"
+                        },
+                        "description": "The Message",
+                        "valueDefinition": {
+                          "values": [
+                            {
+                              "literal": "Hello World!",
+                              "variable": false
+                            }
+                          ],
+                          "typeDefinition": {
+                            "typeSpecification": {
+                              "name": "string",
+                              "nestedTypes": []
+                            },
+                            "attributes": []
+                          }
+                        },
+                        "sections": []
+                      },
+                      "class": "property"
                     }
                   ]
                 }
