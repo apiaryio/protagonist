@@ -1,6 +1,6 @@
 {
   "name": "protagonist-experimental",
-  "version": "0.18.5",
+  "version": "0.18.6",
   "description": "API Blueprint Parser",
   "author": "Apiary.io <support@apiary.io>",
   "main": "./build/Release/protagonist",
