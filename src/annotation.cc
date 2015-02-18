@@ -19,8 +19,8 @@ void SourceAnnotation::Init(Handle<Object> exports)
     NanScope();
 
     Local<FunctionTemplate> t = NanNew<FunctionTemplate>(New);
-    t->InstanceTemplate()->SetInternalFieldCount(1);
     t->SetClassName(NanNew<String>("SourceAnnotation"));
+    t->InstanceTemplate()->SetInternalFieldCount(1);
 
     constructor = Persistent<Function>::New(t->GetFunction());
     exports->Set(NanNew<String>("SourceAnnotation"), constructor);
@@ -34,13 +34,6 @@ NAN_METHOD(SourceAnnotation::New)
     annotation->Wrap(args.This());
 
     NanReturnValue(args.This());
-}
-
-Handle<Value> SourceAnnotation::NewInstance()
-{
-    HandleScope scope;
-    Local<Object> instance = constructor->NewInstance();
-    return scope.Close(instance);
 }
 
 static Local<Object> WrapSourceCharactersRange(const mdp::CharactersRange& range)

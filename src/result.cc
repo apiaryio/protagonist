@@ -21,8 +21,8 @@ void Result::Init(Handle<Object> exports)
     NanScope();
 
     Local<FunctionTemplate> t = NanNew<FunctionTemplate>(New);
-    t->InstanceTemplate()->SetInternalFieldCount(1);
     t->SetClassName(NanNew<String>("Result"));
+    t->InstanceTemplate()->SetInternalFieldCount(1);
 
     constructor = Persistent<Function>::New(t->GetFunction());
     exports->Set(NanNew<String>("Result"), constructor);
@@ -36,13 +36,6 @@ NAN_METHOD(Result::New)
     result->Wrap(args.This());
 
     NanReturnValue(args.This());
-}
-
-Handle<Value> Result::NewInstance()
-{
-    HandleScope scope;
-    Local<Object> instance = constructor->NewInstance();
-    return scope.Close(instance);
 }
 
 v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
