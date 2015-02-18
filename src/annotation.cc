@@ -16,22 +16,24 @@ Persistent<Function> SourceAnnotation::constructor;
 
 void SourceAnnotation::Init(Handle<Object> exports)
 {
-    HandleScope scope;
+    NanScope();
 
-    Local<FunctionTemplate> t = FunctionTemplate::New(New);
+    Local<FunctionTemplate> t = NanNew<FunctionTemplate>(New);
     t->InstanceTemplate()->SetInternalFieldCount(1);
-    t->SetClassName(String::NewSymbol("SourceAnnotation"));
+    t->SetClassName(NanNew<String>("SourceAnnotation"));
 
     constructor = Persistent<Function>::New(t->GetFunction());
-    exports->Set(String::NewSymbol("SourceAnnotation"), constructor);
+    exports->Set(NanNew<String>("SourceAnnotation"), constructor);
 }
 
-Handle<Value> SourceAnnotation::New(const Arguments& args)
+NAN_METHOD(SourceAnnotation::New)
 {
-    HandleScope scope;
+    NanScope();
+
     SourceAnnotation* annotation = ::new SourceAnnotation();
     annotation->Wrap(args.This());
-    return scope.Close(args.This());
+
+    NanReturnValue(args.This());
 }
 
 Handle<Value> SourceAnnotation::NewInstance()
@@ -43,10 +45,10 @@ Handle<Value> SourceAnnotation::NewInstance()
 
 static Local<Object> WrapSourceCharactersRange(const mdp::CharactersRange& range)
 {
-    Local<Object> rangeObject = Object::New();
+    Local<Object> rangeObject = NanNew<Object>();
 
-    rangeObject->Set(String::NewSymbol("index"), Number::New(range.location));
-    rangeObject->Set(String::NewSymbol("length"), Number::New(range.length));
+    rangeObject->Set(NanNew<String>("index"), NanNew<Number>(range.location));
+    rangeObject->Set(NanNew<String>("length"), NanNew<Number>(range.length));
     return rangeObject;
 }
 
@@ -54,10 +56,10 @@ Local<Object> SourceAnnotation::WrapSourceAnnotation(const snowcrash::SourceAnno
 {
     Local<Object> annotationWrap = constructor->NewInstance();
 
-    annotationWrap->Set(String::NewSymbol("code"), Number::New(annotation.code));
-    annotationWrap->Set(String::NewSymbol("message"), String::New(annotation.message.c_str()));
+    annotationWrap->Set(NanNew<String>("code"), NanNew<Number>(annotation.code));
+    annotationWrap->Set(NanNew<String>("message"), NanNew<String>(annotation.message.c_str()));
 
-    Local<Object> location = Array::New(annotation.location.size());
+    Local<Object> location = NanNew<Array>(annotation.location.size());
     size_t i = 0;
     for (mdp::CharactersRangeSet::const_iterator it = annotation.location.begin();
          it != annotation.location.end();
@@ -66,6 +68,6 @@ Local<Object> SourceAnnotation::WrapSourceAnnotation(const snowcrash::SourceAnno
         location->Set(i, WrapSourceCharactersRange(*it));
     }
 
-    annotationWrap->Set(String::NewSymbol("location"), location);    
+    annotationWrap->Set(NanNew<String>("location"), location);
     return annotationWrap;
 }

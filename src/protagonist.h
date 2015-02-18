@@ -3,6 +3,7 @@
 
 #include <node.h>
 #include <v8.h>
+#include "nan.h"
 #include "Blueprint.h"
 #include "BlueprintSourcemap.h"
 #include "SectionParserData.h"
@@ -25,7 +26,7 @@ namespace protagonist {
         SourceAnnotation();
         ~SourceAnnotation();
 
-        static v8::Handle<v8::Value> New(const v8::Arguments& args);
+        static NAN_METHOD(New);
         static v8::Persistent<v8::Function> constructor;
     };
 
@@ -48,15 +49,14 @@ namespace protagonist {
         Result();
         ~Result();
 
-        static v8::Handle<v8::Value> New(const v8::Arguments& args);
+        static NAN_METHOD(New);
         static v8::Persistent<v8::Function> constructor;
     };
 
     //
     // Parse function
     //
-    extern v8::Handle<v8::Value> Parse(const v8::Arguments& args);
-
+    extern NAN_METHOD(Parse);
 }
 
 #endif

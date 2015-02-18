@@ -10,7 +10,8 @@
         "./snowcrash/ext/markdown-parser/src",
         "./snowcrash/ext/markdown-parser/ext/sundown/src",
         "./snowcrash/ext/markdown-parser/ext/sundown/html",
-        "./snowcrash/ext/sos/src"
+        "./snowcrash/ext/sos/src",
+        "<!(node -e \"require('nan')\")"
       ],
       "sources": [
         "src/annotation.cc",
