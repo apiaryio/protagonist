@@ -43,7 +43,7 @@ NAN_METHOD(protagonist::Parse) {
     }
 
     if (!args[0]->IsString()) {
-        ThrowException(Exception::TypeError(NanNew<String>("wrong argument - string expected, `parse(string, options, callback)`")));
+        NanThrowTypeError("wrong argument - string expected, `parse(string, options, callback)`");
         NanReturnUndefined();
     }
 
@@ -107,7 +107,7 @@ NAN_METHOD(protagonist::Parse) {
     Baton* baton = ::new Baton();
     baton->options = options;
     baton->sourceData = *sourceData;
-    baton->callback = Persistent<Function>::New(callback);
+    NanAssignPersistent<Function>(baton->callback, callback);
 
     // This creates the work request struct.
     uv_work_t *request = ::new uv_work_t();
@@ -137,7 +137,7 @@ void AsyncParse(uv_work_t* request) {
 }
 
 void AsyncParseAfter(uv_work_t* request) {
-    HandleScope scope;
+    NanScope();
     Baton* baton = static_cast<Baton*>(request->data);
 
     // Prepare report
@@ -153,13 +153,14 @@ void AsyncParseAfter(uv_work_t* request) {
     argv[1] = Result::WrapResult(baton->report, baton->ast, baton->sourcemap, baton->options);
 
     TryCatch try_catch;
-    baton->callback->Call(Context::GetCurrent()->Global(), argc, argv);
+    Local<Function> callback = NanNew<Function>(baton->callback);
+    callback->Call(NanGetCurrentContext()->Global(), argc, argv);
 
     if (try_catch.HasCaught()) {
         node::FatalException(try_catch);
     }
 
-    baton->callback.Dispose();
+    NanDisposePersistent(baton->callback);
     delete baton;
     delete request;
 }
