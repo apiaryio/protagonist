@@ -18,22 +18,24 @@ Persistent<Function> Result::constructor;
 
 void Result::Init(Handle<Object> exports)
 {
-    HandleScope scope;
+    NanScope();
 
-    Local<FunctionTemplate> t = FunctionTemplate::New(New);
+    Local<FunctionTemplate> t = NanNew<FunctionTemplate>(New);
     t->InstanceTemplate()->SetInternalFieldCount(1);
-    t->SetClassName(String::NewSymbol("Result"));
+    t->SetClassName(NanNew<String>("Result"));
 
     constructor = Persistent<Function>::New(t->GetFunction());
-    exports->Set(String::NewSymbol("Result"), constructor);
+    exports->Set(NanNew<String>("Result"), constructor);
 }
 
-Handle<Value> Result::New(const Arguments& args)
+NAN_METHOD(Result::New)
 {
-    HandleScope scope;
+    NanScope();
+
     Result* result = ::new Result();
     result->Wrap(args.This());
-    return scope.Close(args.This());
+
+    NanReturnValue(args.This());
 }
 
 Handle<Value> Result::NewInstance()
@@ -57,12 +59,12 @@ v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
     if (report.error.code == snowcrash::Error::OK) {
         sos::Object blueprintSerializationWrap = snowcrash::WrapBlueprint(blueprint);
         
-        resultWrap->Set(String::NewSymbol(AstKey), v8_wrap(blueprintSerializationWrap));
+        resultWrap->Set(NanNew<String>(AstKey), v8_wrap(blueprintSerializationWrap));
     }
     else 
-        resultWrap->Set(String::NewSymbol(AstKey), Local<Value>::New(Null()));
+        resultWrap->Set(NanNew<String>(AstKey), NanNew<Value>(NanNull()));
 
-    Local<Object> warnings = Array::New(report.warnings.size());
+    Local<Object> warnings = NanNew<Array>(report.warnings.size());
     size_t i = 0;
 
     for (snowcrash::Warnings::const_iterator it = report.warnings.begin();
@@ -72,16 +74,16 @@ v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
         warnings->Set(i, SourceAnnotation::WrapSourceAnnotation(*it));
     }
 
-    resultWrap->Set(String::NewSymbol(WarningsKey), warnings);
+    resultWrap->Set(NanNew<String>(WarningsKey), warnings);
 
     // Set source map only if requested
     if (report.error.code == snowcrash::Error::OK && (options & snowcrash::ExportSourcemapOption) != 0) {
         sos::Object sourcemapSerializationWrap = snowcrash::WrapBlueprintSourcemap(sourcemap);
 
-        resultWrap->Set(String::NewSymbol(SourcemapKey), v8_wrap(sourcemapSerializationWrap));
+        resultWrap->Set(NanNew<String>(SourcemapKey), v8_wrap(sourcemapSerializationWrap));
     }
     else
-        resultWrap->Set(String::NewSymbol(SourcemapKey), Local<Value>::New(Null()));
+        resultWrap->Set(NanNew<String>(SourcemapKey), NanNew<Value>(NanNull()));
 
     return resultWrap;
 }
