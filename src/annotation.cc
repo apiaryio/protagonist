@@ -22,8 +22,8 @@ void SourceAnnotation::Init(Handle<Object> exports)
     t->SetClassName(NanNew<String>("SourceAnnotation"));
     t->InstanceTemplate()->SetInternalFieldCount(1);
 
-    constructor = Persistent<Function>::New(t->GetFunction());
-    exports->Set(NanNew<String>("SourceAnnotation"), constructor);
+    NanAssignPersistent<Function>(constructor, t->GetFunction());
+    exports->Set(NanNew<String>("SourceAnnotation"), t->GetFunction());
 }
 
 NAN_METHOD(SourceAnnotation::New)
@@ -47,7 +47,8 @@ static Local<Object> WrapSourceCharactersRange(const mdp::CharactersRange& range
 
 Local<Object> SourceAnnotation::WrapSourceAnnotation(const snowcrash::SourceAnnotation& annotation)
 {
-    Local<Object> annotationWrap = constructor->NewInstance();
+    Local<Function> cons = NanNew<Function>(constructor);
+    Local<Object> annotationWrap = cons->NewInstance();
 
     annotationWrap->Set(NanNew<String>("code"), NanNew<Number>(annotation.code));
     annotationWrap->Set(NanNew<String>("message"), NanNew<String>(annotation.message.c_str()));

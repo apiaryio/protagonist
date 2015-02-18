@@ -24,8 +24,8 @@ void Result::Init(Handle<Object> exports)
     t->SetClassName(NanNew<String>("Result"));
     t->InstanceTemplate()->SetInternalFieldCount(1);
 
-    constructor = Persistent<Function>::New(t->GetFunction());
-    exports->Set(NanNew<String>("Result"), constructor);
+    NanAssignPersistent<Function>(constructor, t->GetFunction());
+    exports->Set(NanNew<String>("Result"), t->GetFunction());
 }
 
 NAN_METHOD(Result::New)
@@ -43,7 +43,8 @@ v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
                                          const snowcrash::SourceMap<snowcrash::Blueprint>& sourcemap,
                                          const snowcrash::BlueprintParserOptions& options)
 {
-    Local<Object> resultWrap = constructor->NewInstance();
+    Local<Function> cons = NanNew<Function>(constructor);
+    Local<Object> resultWrap = cons->NewInstance();
 
     static const char* AstKey = "ast";
     static const char* WarningsKey = "warnings";
