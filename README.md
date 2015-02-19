@@ -18,6 +18,8 @@ The best way to install Protagonist is by using its [NPM package](https://npmjs.
 $ npm install protagonist
 ```
 
+Works smoothly with node.js ~0.8.15, 0.10.x, 0.12.x and iojs v1.x.x
+
 ## Getting started
 
 ```js
