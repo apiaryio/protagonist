@@ -1,5 +1,3 @@
-#include <node.h>
-#include <v8.h>
 #include <string>
 #include <sstream>
 #include "protagonist.h"
@@ -35,29 +33,30 @@ struct Baton {
     snowcrash::SourceMap<snowcrash::Blueprint> sourcemap;
 };
 
-Handle<Value> protagonist::Parse(const Arguments& args) {
-    HandleScope scope;
+NAN_METHOD(protagonist::Parse) {
+    NanScope();
 
     // Check arguments
     if (args.Length() != 2 && args.Length() != 3) {
-        ThrowException(Exception::TypeError(String::New("wrong number of arguments, `parse(string, options, callback)` expected")));
-        return scope.Close(Undefined());
+        NanThrowTypeError("wrong number of arguments, `parse(string, options, callback)` expected");
+        NanReturnUndefined();
     }
 
     if (!args[0]->IsString()) {
-        ThrowException(Exception::TypeError(String::New("wrong argument - string expected, `parse(string, options, callback)`")));
-        return scope.Close(Undefined());
+        NanThrowTypeError("wrong argument - string expected, `parse(string, options, callback)`");
+        NanReturnUndefined();
     }
 
     if ((args.Length() == 2 && !args[1]->IsFunction()) ||
         (args.Length() == 3 && !args[2]->IsFunction())) {
-        ThrowException(Exception::TypeError(String::New("wrong argument - callback expected, `parse(string, options, callback)`")));
-        return scope.Close(Undefined());
+
+        NanThrowTypeError("wrong argument - callback expected, `parse(string, options, callback)`");
+        NanReturnUndefined();
     }
 
     if (args.Length() == 3 && !args[1]->IsObject()) {
-        ThrowException(Exception::TypeError(String::New("wrong argument - object expected, `parse(string, options, callback)`")));
-        return scope.Close(Undefined());
+        NanThrowTypeError("wrong argument - object expected, `parse(string, options, callback)`");
+        NanReturnUndefined();
     }    
     
     // Get source data
@@ -94,8 +93,9 @@ Handle<Value> protagonist::Parse(const Arguments& args) {
                 std::stringstream ss;
                 ss << "unrecognized option '" << *String::Utf8Value(key) << "', expected: ";
                 ss << "'" << RequireBlueprintNameOptionKey << "' or '" << ExportSourcemapOptionKey << "'";
-                ThrowException(Exception::TypeError(String::New(ss.str().c_str())));
-                return scope.Close(Undefined());
+
+                NanThrowTypeError(ss.str().c_str());
+                NanReturnUndefined();
             }
         } 
     }
@@ -107,7 +107,7 @@ Handle<Value> protagonist::Parse(const Arguments& args) {
     Baton* baton = ::new Baton();
     baton->options = options;
     baton->sourceData = *sourceData;
-    baton->callback = Persistent<Function>::New(callback);
+    NanAssignPersistent<Function>(baton->callback, callback);
 
     // This creates the work request struct.
     uv_work_t *request = ::new uv_work_t();
@@ -118,8 +118,9 @@ Handle<Value> protagonist::Parse(const Arguments& args) {
                                 request, 
                                 AsyncParse,
                                 (uv_after_work_cb)AsyncParseAfter);
+
     assert(status == 0);
-    return scope.Close(Undefined());
+    NanReturnUndefined();
 }    
 
 void AsyncParse(uv_work_t* request) {
@@ -136,7 +137,7 @@ void AsyncParse(uv_work_t* request) {
 }
 
 void AsyncParseAfter(uv_work_t* request) {
-    HandleScope scope;
+    NanScope();
     Baton* baton = static_cast<Baton*>(request->data);
 
     // Prepare report
@@ -145,20 +146,21 @@ void AsyncParseAfter(uv_work_t* request) {
 
     // Error Object
     if (baton->report.error.code == snowcrash::Error::OK)
-        argv[0] = Local<Value>::New(Null());
+        argv[0] = NanNull();
     else
         argv[0] = SourceAnnotation::WrapSourceAnnotation(baton->report.error);
 
     argv[1] = Result::WrapResult(baton->report, baton->ast, baton->sourcemap, baton->options);
 
     TryCatch try_catch;
-    baton->callback->Call(Context::GetCurrent()->Global(), argc, argv);
+    Local<Function> callback = NanNew<Function>(baton->callback);
+    callback->Call(NanGetCurrentContext()->Global(), argc, argv);
 
     if (try_catch.HasCaught()) {
         node::FatalException(try_catch);
     }
 
-    baton->callback.Dispose();
+    NanDisposePersistent(baton->callback);
     delete baton;
     delete request;
 }

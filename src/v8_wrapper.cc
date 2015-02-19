@@ -38,27 +38,27 @@ Local<Value> protagonist::v8_wrap(const sos::Base& base)
 
 Local<Value> v8_wrap_null()
 {
-    return Local<Value>::New(Null());
+    return NanNull();
 }
 
 Local<Value> v8_wrap_string(const std::string& value)
 {
-    return String::NewSymbol(value.c_str());
+    return NanNew<String>(value.c_str());
 }
 
 Local<Value> v8_wrap_number(double value)
 {
-    return Local<Value>::New(Number::New(value));
+    return NanNew<Number>(value);
 }
 
 Local<Value> v8_wrap_boolean(bool value)
 {
-    return Local<Value>::New(Boolean::New(value));
+    return NanNew<Boolean>(value);
 }
 
 Local<Value> v8_wrap_array(const sos::Base& value)
 {
-    Local<Array> wrappedArray = Array::New();
+    Local<Array> wrappedArray = NanNew<Array>();
     size_t i = 0;
 
     for (sos::Bases::const_iterator it = value.array().begin();
@@ -74,7 +74,7 @@ Local<Value> v8_wrap_array(const sos::Base& value)
 
 Local<Value> v8_wrap_object(const sos::Base& value)
 {
-    Local<Object> wrappedObject = Object::New();
+    Local<Object> wrappedObject = NanNew<Object>();
     size_t i = 0;
 
     for (sos::Keys::const_iterator it = value.keys.begin();

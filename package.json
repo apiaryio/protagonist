@@ -11,6 +11,9 @@
   "engines": {
     "node": ">=0.8.15"
   },
+  "dependencies": {
+    "nan": "~1.6.x"
+  },
   "devDependencies": {
     "coffee-script": "~1.6.0",
     "mocha": "~1.17.1",

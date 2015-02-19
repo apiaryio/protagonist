@@ -1,15 +1,18 @@
 language: node_js
 node_js:
+  - "0.12"
+  - "0.11"
   - "0.10"
   - "0.8"
+  - iojs
 script: "npm install && npm test"
 before_install:
   - git submodule update --init --recursive
-  - npm install -g npm@~1.4.6
+  - ruby -e "\`npm i -g npm\` if '`npm -v`'<'2.0.0'"
 notifications:
   email:
     recipients:
-      - z@apiary.io  
+      - z@apiary.io
     on_success: change
     on_failure: always
   hipchat:

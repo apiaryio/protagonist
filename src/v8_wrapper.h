@@ -3,6 +3,7 @@
 
 #include <node.h>
 #include <v8.h>
+#include "nan.h"
 #include "sos.h"
 
 namespace protagonist {
