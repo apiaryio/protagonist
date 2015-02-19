@@ -52,11 +52,11 @@ v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
 
     if (report.error.code == snowcrash::Error::OK) {
         sos::Object blueprintSerializationWrap = snowcrash::WrapBlueprint(blueprint);
-        
+
         resultWrap->Set(NanNew<String>(AstKey), v8_wrap(blueprintSerializationWrap));
     }
-    else 
-        resultWrap->Set(NanNew<String>(AstKey), NanNew<Value>(NanNull()));
+    else
+        resultWrap->Set(NanNew<String>(AstKey), NanNull());
 
     Local<Object> warnings = NanNew<Array>(report.warnings.size());
     size_t i = 0;
@@ -77,7 +77,7 @@ v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
         resultWrap->Set(NanNew<String>(SourcemapKey), v8_wrap(sourcemapSerializationWrap));
     }
     else
-        resultWrap->Set(NanNew<String>(SourcemapKey), NanNew<Value>(NanNull()));
+        resultWrap->Set(NanNew<String>(SourcemapKey), NanNull());
 
     return resultWrap;
 }

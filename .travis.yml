@@ -8,7 +8,7 @@ node_js:
 script: "npm install && npm test"
 before_install:
   - git submodule update --init --recursive
-  - ruby -e "if '`npm -v`'<'2.0.0' then \`npm i -g npm\` else '' end"
+  - ruby -e "\`npm i -g npm\` if '`npm -v`'<'2.0.0'"
 notifications:
   email:
     recipients:
