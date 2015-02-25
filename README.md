@@ -1,6 +1,11 @@
 ![logo](https://raw.github.com/apiaryio/api-blueprint/master/assets/logo_apiblueprint.png)
 
-# Protagonist [![Build Status](https://travis-ci.org/apiaryio/protagonist.png?branch=master)](https://travis-ci.org/apiaryio/protagonist)
+# Protagonist
+
+[![Build Status Linux](https://travis-ci.org/apiaryio/protagonist.png?branch=master)](https://travis-ci.org/apiaryio/protagonist)
+[![Build Status Windows](https://ci.appveyor.com/api/projects/status/8ny3ffe2xf40yn22/branch/master?svg=true)](https://ci.appveyor.com/project/zdne/protagonist/branch/master)
+
+
 ### API Blueprint Parser for Node.js
 Protagonist is a Node.js wrapper for the [Snow Crash](https://github.com/apiaryio/snowcrash) library.
 
@@ -23,14 +28,14 @@ protagonist.parse('# My API', function(error, result) {
         console.log(error);
         return;
     }
-  
+
     console.log(result.ast);
 });
 ```
 
 ### Parsing Result
 
-Parsing this blueprint: 
+Parsing this blueprint:
 
 ```
 # GET /1
@@ -103,7 +108,7 @@ will produce the following object (`result` variable):
 
 #### Keys Description
 
-+ `ast` ... This is the abstract syntax tree (AST) of the parsed blueprint. 
++ `ast` ... This is the abstract syntax tree (AST) of the parsed blueprint.
 
     The structure under this key is **1:1** with the [AST Blueprint serialization JSON media type v2.1](https://github.com/apiaryio/api-blueprint-ast#json-serialization) – `vnd.apiblueprint.ast.raw+json; version=2.1`.
 
@@ -118,7 +123,7 @@ will produce the following object (`result` variable):
 You are welcome to contribute. Use following steps to build & test Protagonist.
 
 ### Build
-Protagonist uses [node-gyp](https://github.com/TooTallNate/node-gyp) build tool. 
+Protagonist uses [node-gyp](https://github.com/TooTallNate/node-gyp) build tool.
 
 1. If needed, install node-gyp:
 
@@ -133,12 +138,12 @@ Protagonist uses [node-gyp](https://github.com/TooTallNate/node-gyp) build tool.
     $ cd protagonist
     $ git submodule update --init --recursive
     ```
-    
+
 3. Build:
-    
+
     ```sh
     $ node-gyp configure
-    $ node-gyp build    
+    $ node-gyp build
     ```
 
 ### Test
@@ -148,9 +153,9 @@ Inside the protagonist repository run:
 $ npm install
 $ npm test
 ```
-    
+
 ### Contribute
-Fork & Pull Request. 
+Fork & Pull Request.
 
 ## License
 MIT License. See the [LICENSE](https://github.com/apiaryio/protagonist/blob/master/LICENSE) file.
