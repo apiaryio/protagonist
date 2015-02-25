@@ -1,0 +1,7 @@
+machine:
+  node:
+    version: 0.10
+
+checkout:
+  post:
+    - git submodule update --init --recursive
