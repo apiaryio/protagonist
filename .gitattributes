@@ -1,0 +1,2 @@
+# Blueprints line endings MUST be LF-only (unix)
+*.apib text eol=lf

@@ -15,11 +15,10 @@
     "coffee-script": "~1.6.0",
     "mocha": "~1.17.1",
     "async": "~0.2.10",
-    "chai": "~1.9.0",
-    "segfault-handler": "git://github.com/ddopson/node-segfault-handler.git#master"
+    "chai": "~1.9.0"
   },
   "scripts": {
-    "test": "make test"
+    "test": "mocha --compilers coffee:coffee-script -R spec ./test/*-test.coffee"
   },
   "license": "MIT"
 }
