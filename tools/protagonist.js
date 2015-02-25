@@ -8,8 +8,14 @@ var protagonist = require('../build/Release/protagonist');
 //var protagonist = require('protagonist');
 
 // Add Segfault handler
-var segfaultHandler = require('segfault-handler');
-segfaultHandler.registerHandler();
+//
+// Note: this is possible only for OS X & *nix
+//
+// Install (or add to package.json) segfault-handler:
+// "segfault-handler": "git://github.com/ddopson/node-segfault-handler.git#master"
+//
+//var segfaultHandler = require('segfault-handler');
+//segfaultHandler.registerHandler();
 
 // Process arguments
 var args = process.argv.slice(2);

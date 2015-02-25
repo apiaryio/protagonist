@@ -1,6 +1,3 @@
-SegfaultHandler = require 'segfault-handler'
-SegfaultHandler.registerHandler()
-
 fs = require 'fs'
 path = require 'path'
 {assert} = require 'chai'
@@ -17,10 +14,10 @@ describe "Parser AST", ->
     fixture_path = path.join __dirname, './fixtures/sample-api.apib'
 
     fs.readFile fixture_path, 'utf8', (err, data) ->
-      done err if err
+      return done err if err
 
       protagonist.parse data, (err, result) ->
-        done err if err
+        return done err if err
 
         ast_parsed = result.ast
         done()
