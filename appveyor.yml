@@ -1,42 +1,23 @@
-# AppVeyor file
-# http://www.appveyor.com/docs/appveyor-yml
-# Originaly taken from:
-#   https://github.com/gruntjs/grunt/blob/master/appveyor.yml
-
-# Build version format
-version: "{build}"
-
-# clone_depth: 10
-
-# Fix line endings on Windows
-#init:
-#  - git config --global core.autocrlf true
-
-# What combinations to test
+# Test against this version of Node.js
 environment:
-  matrix:
-    - nodejs_version: 0.10
-#    - nodejs_version: 0.12
-#    - nodejs_version: 1.0
+  nodejs_version: "0.10"
 
+# Install scripts. (runs after repo cloning)
 install:
+  # Fetch project submodules
+  - git submodule update --init --recursive
+  # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
+  # install modules
   - npm install
 
-build: off
-
+# Post-install test scripts.
 test_script:
   # Output useful info for debugging.
-  - node --version && npm --version
-  # We test multiple Windows shells because of prior stdout buffering issues
-  # filed against Grunt. https://github.com/joyent/node/issues/3584
-  - ps: "npm test # PowerShell" # Pass comment to PS for easier debugging
-  - cmd: npm test
+  - node --version
+  - npm --version
+  # run tests
+  - npm test
 
-matrix:
-  fast_finish: true
-
-cache:
-  - C:\Users\appveyor\AppData\Roaming\npm\node_modules -> package.json  # global npm modules
-  - C:\Users\appveyor\AppData\Roaming\npm-cache -> package.json         # npm cache
-  - node_modules -> package.json                                        # local npm modules
+# Don't actually build.
+build: off
