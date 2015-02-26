@@ -1,8 +1,5 @@
 # Test against this version of Node.js
 environment:
-  nodejs_version: "0.10"
-
-environment:
   matrix:
   # node.js
   - nodejs_version: "0.10"
