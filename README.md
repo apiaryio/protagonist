@@ -1,6 +1,6 @@
 ![logo](https://raw.github.com/apiaryio/api-blueprint/master/assets/logo_apiblueprint.png)
 
-# Protagonist
+# Protagonist [![Build Status](https://travis-ci.org/apiaryio/protagonist.png?branch=master)](https://travis-ci.org/apiaryio/protagonist)
 
 [![Circle CI](https://circleci.com/gh/apiaryio/protagonist/tree/master.svg?style=svg)](https://circleci.com/gh/apiaryio/protagonist/tree/master)
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/8ny3ffe2xf40yn22/branch/master?svg=true)](https://ci.appveyor.com/project/zdne/protagonist/branch/master)
