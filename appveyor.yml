@@ -1,6 +1,13 @@
 # Test against this version of Node.js
 environment:
-  nodejs_version: "0.10"
+  matrix:
+  # node.js
+  - nodejs_version: "0.10"
+  - nodejs_version: "0.8"
+
+cache:
+  - node_modules # local packages node_modules
+  - C:\Users\appveyor\AppData\Roaming\npm-cache # preserve npm-cache
 
 # Install scripts. (runs after repo cloning)
 install:

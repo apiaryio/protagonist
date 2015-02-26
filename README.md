@@ -2,8 +2,7 @@
 
 # Protagonist
 
-[![Circle CI](https://circleci.com/gh/apiaryio/protagonist/tree/master.svg?style=svg)](https://circleci.com/gh/apiaryio/protagonist/tree/master)
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/8ny3ffe2xf40yn22/branch/master?svg=true)](https://ci.appveyor.com/project/zdne/protagonist/branch/master)
+[![Build Status](https://travis-ci.org/apiaryio/protagonist.svg?branch=master)](https://travis-ci.org/apiaryio/protagonist) [![Circle CI](https://img.shields.io/circleci/project/apiaryio/protagonist.svg)](https://circleci.com/gh/apiaryio/protagonist/tree/master) [![AppVeyor](https://ci.appveyor.com/api/projects/status/8ny3ffe2xf40yn22/branch/master?svg=true)](https://ci.appveyor.com/project/zdne/protagonist/branch/master)
 
 
 ### API Blueprint Parser for Node.js
