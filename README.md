@@ -134,6 +134,7 @@ Protagonist uses [node-gyp](https://github.com/TooTallNate/node-gyp) build tool.
     $ git clone git://github.com/apiaryio/protagonist.git
     $ cd protagonist
     $ git submodule update --init --recursive
+    $ npm install
     ```
     
 3. Build:
@@ -147,7 +148,6 @@ Protagonist uses [node-gyp](https://github.com/TooTallNate/node-gyp) build tool.
 Inside the protagonist repository run:
 
 ```sh
-$ npm install
 $ npm test
 ```
     
