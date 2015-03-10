@@ -1,3 +1,6 @@
 [submodule "snowcrash"]
 	path = snowcrash
 	url = https://github.com/apiaryio/snowcrash.git
+[submodule "drafter"]
+	path = drafter
+	url = https://github.com/apiaryio/drafter.git
