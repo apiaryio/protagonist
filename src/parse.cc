@@ -2,6 +2,7 @@
 #include <sstream>
 #include "protagonist.h"
 #include "snowcrash.h"
+#include "drafter.h"
 
 using std::string;
 using namespace v8;
@@ -129,7 +130,7 @@ void AsyncParse(uv_work_t* request) {
     snowcrash::ParseResult<snowcrash::Blueprint> parseResult;
 
     // Parse the source data
-    snowcrash::parse(baton->sourceData, baton->options, parseResult);
+    drafter::parse_blueprint(baton->sourceData, baton->options, parseResult);
 
     baton->report = parseResult.report;
     baton->ast = parseResult.node;
