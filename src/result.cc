@@ -51,7 +51,7 @@ v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
     static const char* SourcemapKey = "sourcemap";
 
     if (report.error.code == snowcrash::Error::OK) {
-        sos::Object blueprintSerializationWrap = snowcrash::WrapBlueprint(blueprint);
+        sos::Object blueprintSerializationWrap = drafter::WrapBlueprint(blueprint);
 
         resultWrap->Set(NanNew<String>(AstKey), v8_wrap(blueprintSerializationWrap));
     }
@@ -72,7 +72,7 @@ v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
 
     // Set source map only if requested
     if (report.error.code == snowcrash::Error::OK && (options & snowcrash::ExportSourcemapOption) != 0) {
-        sos::Object sourcemapSerializationWrap = snowcrash::WrapBlueprintSourcemap(sourcemap);
+        sos::Object sourcemapSerializationWrap = drafter::WrapBlueprintSourcemap(sourcemap);
 
         resultWrap->Set(NanNew<String>(SourcemapKey), v8_wrap(sourcemapSerializationWrap));
     }
