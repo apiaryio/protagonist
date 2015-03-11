@@ -34,7 +34,52 @@
             ]
           ],
           "model": {},
-          "parameters": [],
+          "parameters": [
+            {
+              "name": [
+                [
+                  77,
+                  23
+                ]
+              ],
+              "description": [
+                [
+                  77,
+                  23
+                ]
+              ],
+              "type": [],
+              "required": [],
+              "example": [],
+              "default": [],
+              "values": [
+                {
+                  "value": [
+                    [
+                      129,
+                      6
+                    ]
+                  ]
+                },
+                {
+                  "value": [
+                    [
+                      147,
+                      6
+                    ]
+                  ]
+                },
+                {
+                  "value": [
+                    [
+                      165,
+                      6
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
           "actions": [
             {
               "name": [
@@ -91,6 +136,10 @@
                   ]
                 }
               ],
+              "attributes": {
+                "relation": [],
+                "uriTemplate": []
+              },
               "content": []
             },
             {
@@ -130,6 +179,10 @@
                   ]
                 }
               ],
+              "attributes": {
+                "relation": [],
+                "uriTemplate": []
+              },
               "content": []
             }
           ],
@@ -215,7 +268,52 @@
             ]
           ],
           "model": {},
-          "parameters": [],
+          "parameters": [
+            {
+              "name": [
+                [
+                  77,
+                  23
+                ]
+              ],
+              "description": [
+                [
+                  77,
+                  23
+                ]
+              ],
+              "type": [],
+              "required": [],
+              "example": [],
+              "default": [],
+              "values": [
+                {
+                  "value": [
+                    [
+                      129,
+                      6
+                    ]
+                  ]
+                },
+                {
+                  "value": [
+                    [
+                      147,
+                      6
+                    ]
+                  ]
+                },
+                {
+                  "value": [
+                    [
+                      165,
+                      6
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
           "actions": [
             {
               "name": [
@@ -272,6 +370,10 @@
                   ]
                 }
               ],
+              "attributes": {
+                "relation": [],
+                "uriTemplate": []
+              },
               "content": []
             },
             {
@@ -311,6 +413,10 @@
                   ]
                 }
               ],
+              "attributes": {
+                "relation": [],
+                "uriTemplate": []
+              },
               "content": []
             }
           ],
