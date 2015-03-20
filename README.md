@@ -49,7 +49,7 @@ will produce the following object (`result` variable):
 ```json
 {
   "ast": {
-    "_version": "2.1",
+    "_version": "3.0",
     "metadata": [],
     "name": "",
     "description": "",
@@ -112,7 +112,7 @@ will produce the following object (`result` variable):
 
 + `ast` ... This is the abstract syntax tree (AST) of the parsed blueprint.
 
-    The structure under this key is **1:1** with the [AST Blueprint serialization JSON media type v2.1](https://github.com/apiaryio/api-blueprint-ast#json-serialization) – `vnd.apiblueprint.ast.raw+json; version=2.1`.
+    The structure under this key is **1:1** with the [AST Blueprint serialization JSON media type v3.0](https://github.com/apiaryio/api-blueprint-ast#example-json-serialization) – `vnd.apiblueprint.ast.raw+json; version=3.0`.
 
 + `warnings` ... Array of the parser warnings as occurred during the parsing
     + `code` ...  Warning [group](https://github.com/apiaryio/snowcrash/blob/master/src/SourceAnnotation.h#L128) code

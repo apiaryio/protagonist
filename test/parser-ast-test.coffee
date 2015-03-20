@@ -34,9 +34,8 @@ describe 'Blueprint AST', ->
       it 'is defined', ->
         assert.isDefined ast._version
 
-      it 'is equal to 2.1', ->
-        # TODO: this should be 3.0!
-        assert.equal ast._version, '2.1'
+      it 'is equal to 3.0', ->
+        assert.equal ast._version, '3.0'
 
     describe 'metadata', ->
       it 'is defined', ->
