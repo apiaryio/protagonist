@@ -23,5 +23,5 @@ describe "Parser AST", ->
         done()
 
   # Parser AST should conform to AST serialization JSON media type
-  it '`ast` field conforms to `vnd.apiblueprint.ast.raw+json; version=2.1`', ->
+  it '`ast` field conforms to `vnd.apiblueprint.ast.raw+json; version=3.0`', ->
     assert.deepEqual ast_parsed, ast_parsed

@@ -130,7 +130,7 @@ void AsyncParse(uv_work_t* request) {
     snowcrash::ParseResult<snowcrash::Blueprint> parseResult;
 
     // Parse the source data
-    drafter::parse_blueprint(baton->sourceData, baton->options, parseResult);
+    drafter::ParseBlueprint(baton->sourceData, baton->options, parseResult);
 
     baton->report = parseResult.report;
     baton->ast = parseResult.node;
