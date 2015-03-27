@@ -2,7 +2,7 @@
 
 # Protagonist
 
-[![Circle CI](https://circleci.com/gh/apiaryio/protagonist.svg?style=svg)](https://circleci.com/gh/apiaryio/protagonist)
+[![Circle CI](https://circleci.com/gh/apiaryio/protagonist.svg?style=shield)](https://circleci.com/gh/apiaryio/protagonist)
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/uaa6ivk97urmoucr?svg=true)](https://ci.appveyor.com/project/Apiary/protagonist)
 
 
