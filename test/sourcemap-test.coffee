@@ -22,9 +22,6 @@ describe "Parser sourcemap", ->
         sourcemap_parsed = result.sourcemap
         done()
 
-  # Parser Sourcemap should conform to Sourcemap serialization JSON media type
-  it '`sourcemap` field conforms to `vnd.apiblueprint.sourcemap+json; version=2.1`', (done) ->
-    actual_sourcemap_json = JSON.stringify sourcemap_parsed, null, 2
-    expected_sourcemap_json = JSON.stringify sourcemap_fixture, null, 2
-    assert.equal actual_sourcemap_json, expected_sourcemap_json
-    done()
+  # Parser Sourcemap should conform to recent source map serialization JSON media type
+  it '`sourcemap` field conforms to `vnd.apiblueprint.sourcemap+json; version=3.0`', ->
+    assert.deepEqual sourcemap_fixture, sourcemap_parsed

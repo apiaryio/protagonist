@@ -1,17 +1,9 @@
-#include <node.h>
-#include <v8.h>
 #include "protagonist.h"
 
 using namespace v8;
 using namespace protagonist;
 
 void Init(Handle<Object> exports) {
-
-    // Blueprint object
-    Blueprint::Init(exports);
-
-    // Sourcemap object
-    Sourcemap::Init(exports);
 
     // SourceAnnotation object
     SourceAnnotation::Init(exports);
@@ -20,7 +12,7 @@ void Init(Handle<Object> exports) {
     Result::Init(exports);
 
     // Parse function
-    exports->Set(String::NewSymbol("parse"), FunctionTemplate::New(Parse)->GetFunction());
+    exports->Set(NanNew<String>("parse"), NanNew<FunctionTemplate>(Parse)->GetFunction());
 }
 
 NODE_MODULE(protagonist, Init)

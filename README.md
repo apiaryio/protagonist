@@ -2,8 +2,9 @@
 
 # Protagonist
 
-[![Circle CI](https://circleci.com/gh/apiaryio/protagonist.svg?style=svg)](https://circleci.com/gh/apiaryio/protagonist)
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/8ny3ffe2xf40yn22/branch/master?svg=true)](https://ci.appveyor.com/project/zdne/protagonist/branch/master)
+[![Circle CI](https://circleci.com/gh/apiaryio/protagonist.svg?style=shield)](https://circleci.com/gh/apiaryio/protagonist)
+[![AppVeyor](https://ci.appveyor.com/api/projects/status/uaa6ivk97urmoucr?svg=true)](https://ci.appveyor.com/project/Apiary/protagonist)
+
 
 
 ### API Blueprint Parser for Node.js
@@ -17,6 +18,8 @@ The best way to install Protagonist is by using its [NPM package](https://npmjs.
 ```sh
 $ npm install protagonist
 ```
+
+Works smoothly with node.js ~0.8.15, 0.10.x, 0.12.x and iojs v1.x.x
 
 ## Getting started
 
@@ -47,7 +50,7 @@ will produce the following object (`result` variable):
 ```json
 {
   "ast": {
-    "_version": "2.1",
+    "_version": "3.0",
     "metadata": [],
     "name": "",
     "description": "",
@@ -110,7 +113,7 @@ will produce the following object (`result` variable):
 
 + `ast` ... This is the abstract syntax tree (AST) of the parsed blueprint.
 
-    The structure under this key is **1:1** with the [AST Blueprint serialization JSON media type v2.1](https://github.com/apiaryio/api-blueprint-ast#json-serialization) – `vnd.apiblueprint.ast.raw+json; version=2.1`.
+    The structure under this key is **1:1** with the [AST Blueprint serialization JSON media type v3.0](https://github.com/apiaryio/api-blueprint-ast#example-json-serialization) – `vnd.apiblueprint.ast.raw+json; version=3.0`.
 
 + `warnings` ... Array of the parser warnings as occurred during the parsing
     + `code` ...  Warning [group](https://github.com/apiaryio/snowcrash/blob/master/src/SourceAnnotation.h#L128) code
@@ -137,6 +140,7 @@ Protagonist uses [node-gyp](https://github.com/TooTallNate/node-gyp) build tool.
     $ git clone git://github.com/apiaryio/protagonist.git
     $ cd protagonist
     $ git submodule update --init --recursive
+    $ npm install
     ```
 
 3. Build:
@@ -150,7 +154,6 @@ Protagonist uses [node-gyp](https://github.com/TooTallNate/node-gyp) build tool.
 Inside the protagonist repository run:
 
 ```sh
-$ npm install
 $ npm test
 ```
 
