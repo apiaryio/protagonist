@@ -18,6 +18,9 @@ describe 'MSON AST', ->
                     + address
             + mixin
                 + Include Person
+
+    # Data Structures
+    ## Person
     '''
 
     protagonist.parse source, (err, result) ->
