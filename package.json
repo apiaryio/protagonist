@@ -1,6 +1,6 @@
 {
   "name": "protagonist",
-  "version": "0.19.4",
+  "version": "0.19.5",
   "description": "API Blueprint Parser",
   "author": "Apiary.io <support@apiary.io>",
   "main": "./build/Release/protagonist",
@@ -12,7 +12,7 @@
     "node": ">=0.8.15"
   },
   "dependencies": {
-    "nan": "~1.6.x"
+    "nan": "~1.8.4"
   },
   "devDependencies": {
     "coffee-script": "~1.6.0",
