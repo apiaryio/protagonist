@@ -120,7 +120,7 @@ will produce the following object (`result` variable):
     + `message` ... Warning message
     + `location` ... Array of (possibly non-continuous) locations in the source blueprint
         + `index` ... Zero-based index of the character where the warning occurs
-        + `lenght` ... Number of the characters from index where the warning occurs
+        + `length` ... Number of the characters from index where the warning occurs
 
 ## Hacking Protagonist
 You are welcome to contribute. Use following steps to build & test Protagonist.
