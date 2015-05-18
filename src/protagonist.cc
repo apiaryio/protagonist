@@ -13,6 +13,7 @@ void Init(Handle<Object> exports) {
 
     // Parse function
     exports->Set(NanNew<String>("parse"), NanNew<FunctionTemplate>(Parse)->GetFunction());
+    exports->Set(NanNew<String>("parseSync"), NanNew<FunctionTemplate>(ParseSync)->GetFunction());
 }
 
 NODE_MODULE(protagonist, Init)

@@ -12,6 +12,16 @@
 namespace protagonist {
 
     //
+    // Options parsing
+    ///
+    struct OptionsResult {
+      snowcrash::BlueprintParserOptions options;
+      const char *error;
+    };
+
+    OptionsResult* ParseOptionsObject(v8::Handle<v8::Object>);
+
+    //
     // SourceAnnotation
     //
     class SourceAnnotation : public node::ObjectWrap {
@@ -55,6 +65,7 @@ namespace protagonist {
     // Parse function
     //
     extern NAN_METHOD(Parse);
+    extern NAN_METHOD(ParseSync);
 }
 
 #endif
