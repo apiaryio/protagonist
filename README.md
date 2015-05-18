@@ -36,6 +36,16 @@ protagonist.parse('# My API', function(error, result) {
 });
 ```
 
+### Synchronous usage
+
+If you for some reason need to use the api synchronous, that is also possible.
+Please note that the recommended way is to use the asynchronous api as to not
+block the event loop.
+
+```js
+var result = protagonist.parseSync('# My API');
+```
+
 ### Parsing Result
 
 Parsing this blueprint:
