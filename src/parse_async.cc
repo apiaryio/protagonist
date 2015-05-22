@@ -8,10 +8,6 @@ using std::string;
 using namespace v8;
 using namespace protagonist;
 
-//static const std::string RenderDescriptionsOptionKey = "renderDescriptions";
-static const std::string RequireBlueprintNameOptionKey = "requireBlueprintName";
-static const std::string ExportSourcemapOptionKey = "exportSourcemap";
-
 // Async Parse
 void AsyncParse(uv_work_t* request);
 
@@ -58,8 +54,8 @@ NAN_METHOD(protagonist::Parse) {
     if (args.Length() == 3 && !args[1]->IsObject()) {
         NanThrowTypeError("wrong argument - object expected, `parse(string, options, callback)`");
         NanReturnUndefined();
-    }    
-    
+    }
+
     // Get source data
     String::Utf8Value sourceData(args[0]->ToString());
 
@@ -67,38 +63,15 @@ NAN_METHOD(protagonist::Parse) {
     snowcrash::BlueprintParserOptions options = 0;
 
     if (args.Length() == 3) {
-        Handle<Object> optionsObject = Handle<Object>::Cast(args[1]);
-        const Local<Array> properties = optionsObject->GetPropertyNames();
-        const uint32_t length = properties->Length();
-        
-        for (uint32_t i = 0 ; i < length ; ++i) {
-            const Local<Value> key = properties->Get(i);
-            const Local<Value> value = optionsObject->Get(key);
+        OptionsResult *optionsResult = ParseOptionsObject(Handle<Object>::Cast(args[1]));
 
-            if (RequireBlueprintNameOptionKey == *String::Utf8Value(key)) {
-                // RequireBlueprintNameOption
-                if (value->IsTrue())
-                    options |= snowcrash::RequireBlueprintNameOption;
-                else
-                    options &= snowcrash::RequireBlueprintNameOption;
-            }
-            else if (ExportSourcemapOptionKey == *String::Utf8Value(key)) {
-                // ExportSourcemapOption
-                if (value->IsTrue())
-                    options |= snowcrash::ExportSourcemapOption;
-                else
-                    options &= snowcrash::ExportSourcemapOption;
-            }
-            else {
-                // Unrecognized option
-                std::stringstream ss;
-                ss << "unrecognized option '" << *String::Utf8Value(key) << "', expected: ";
-                ss << "'" << RequireBlueprintNameOptionKey << "' or '" << ExportSourcemapOptionKey << "'";
+        if (optionsResult->error != NULL) {
+            NanThrowTypeError(optionsResult->error);
+            NanReturnUndefined();
+        }
 
-                NanThrowTypeError(ss.str().c_str());
-                NanReturnUndefined();
-            }
-        } 
+        options = optionsResult->options;
+        free(optionsResult);
     }
 
     // Get Callback
@@ -115,14 +88,14 @@ NAN_METHOD(protagonist::Parse) {
     request->data = baton;
 
     // Schedule the work request
-    int status = uv_queue_work(uv_default_loop(), 
-                                request, 
+    int status = uv_queue_work(uv_default_loop(),
+                                request,
                                 AsyncParse,
                                 (uv_after_work_cb)AsyncParseAfter);
 
     assert(status == 0);
     NanReturnUndefined();
-}    
+}
 
 void AsyncParse(uv_work_t* request) {
     Baton* baton = static_cast<Baton*>(request->data);

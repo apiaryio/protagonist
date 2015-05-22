@@ -16,7 +16,9 @@
       ],
       "sources": [
         "src/annotation.cc",
-        "src/parse.cc",
+        "src/options_parser.cc",
+        "src/parse_async.cc",
+        "src/parse_sync.cc",
         "src/protagonist.cc",
         "src/protagonist.h",
         "src/result.cc",
