@@ -67,23 +67,52 @@
                           "value": "application/json"
                         }
                       ],
-                      "body": "",
+                      "body": "{\n  \"id\": 0,\n  \"message\": \"Hello World!\"\n}",
                       "schema": "",
                       "content": [
                         {
-                          "element": "dataStructure",
-                          "name": null,
-                          "typeDefinition": {
-                            "typeSpecification": {
-                              "name": {
-                                "literal": "Message",
-                                "variable": false
+                          "element": "extend",
+                          "content": [
+                            {
+                              "element": "object",
+                              "meta": {
+                                "ref": "Message"
                               },
-                              "nestedTypes": []
+                              "content": [
+                                {
+                                  "element": "member",
+                                  "content": {
+                                    "key": {
+                                      "element": "string",
+                                      "content": "id"
+                                    },
+                                    "value": {
+                                      "element": "number"
+                                    }
+                                  }
+                                },
+                                {
+                                  "element": "member",
+                                  "meta": {
+                                    "description": "The Message"
+                                  },
+                                  "content": {
+                                    "key": {
+                                      "element": "string",
+                                      "content": "message"
+                                    },
+                                    "value": {
+                                      "element": "string",
+                                      "content": "Hello World!"
+                                    }
+                                  }
+                                }
+                              ]
                             },
-                            "attributes": []
-                          },
-                          "sections": []
+                            {
+                              "element": "object"
+                            }
+                          ]
                         }
                       ]
                     }
@@ -122,68 +151,38 @@
           ],
           "content": [
             {
-              "element": "dataStructure",
-              "name": {
-                "literal": "Message",
-                "variable": false
+              "element": "object",
+              "meta": {
+                "id": "Message"
               },
-              "typeDefinition": {
-                "typeSpecification": {
-                  "name": null,
-                  "nestedTypes": []
-                },
-                "attributes": []
-              },
-              "sections": [
+              "content": [
                 {
-                  "class": "memberType",
-                  "content": [
-                    {
-                      "content": {
-                        "name": {
-                          "literal": "id"
-                        },
-                        "description": "",
-                        "valueDefinition": {
-                          "values": [],
-                          "typeDefinition": {
-                            "typeSpecification": {
-                              "name": "number",
-                              "nestedTypes": []
-                            },
-                            "attributes": []
-                          }
-                        },
-                        "sections": []
-                      },
-                      "class": "property"
+                  "element": "member",
+                  "content": {
+                    "key": {
+                      "element": "string",
+                      "content": "id"
                     },
-                    {
-                      "content": {
-                        "name": {
-                          "literal": "message"
-                        },
-                        "description": "The Message",
-                        "valueDefinition": {
-                          "values": [
-                            {
-                              "literal": "Hello World!",
-                              "variable": false
-                            }
-                          ],
-                          "typeDefinition": {
-                            "typeSpecification": {
-                              "name": "string",
-                              "nestedTypes": []
-                            },
-                            "attributes": []
-                          }
-                        },
-                        "sections": []
-                      },
-                      "class": "property"
+                    "value": {
+                      "element": "number"
                     }
-                  ]
+                  }
+                },
+                {
+                  "element": "member",
+                  "meta": {
+                    "description": "The Message"
+                  },
+                  "content": {
+                    "key": {
+                      "element": "string",
+                      "content": "message"
+                    },
+                    "value": {
+                      "element": "string",
+                      "content": "Hello World!"
+                    }
+                  }
                 }
               ]
             }
@@ -252,23 +251,52 @@
                           "value": "application/json"
                         }
                       ],
-                      "body": "",
+                      "body": "{\n  \"id\": 0,\n  \"message\": \"Hello World!\"\n}",
                       "schema": "",
                       "content": [
                         {
-                          "element": "dataStructure",
-                          "name": null,
-                          "typeDefinition": {
-                            "typeSpecification": {
-                              "name": {
-                                "literal": "Message",
-                                "variable": false
+                          "element": "extend",
+                          "content": [
+                            {
+                              "element": "object",
+                              "meta": {
+                                "ref": "Message"
                               },
-                              "nestedTypes": []
+                              "content": [
+                                {
+                                  "element": "member",
+                                  "content": {
+                                    "key": {
+                                      "element": "string",
+                                      "content": "id"
+                                    },
+                                    "value": {
+                                      "element": "number"
+                                    }
+                                  }
+                                },
+                                {
+                                  "element": "member",
+                                  "meta": {
+                                    "description": "The Message"
+                                  },
+                                  "content": {
+                                    "key": {
+                                      "element": "string",
+                                      "content": "message"
+                                    },
+                                    "value": {
+                                      "element": "string",
+                                      "content": "Hello World!"
+                                    }
+                                  }
+                                }
+                              ]
                             },
-                            "attributes": []
-                          },
-                          "sections": []
+                            {
+                              "element": "object"
+                            }
+                          ]
                         }
                       ]
                     }
@@ -307,68 +335,38 @@
           ],
           "content": [
             {
-              "element": "dataStructure",
-              "name": {
-                "literal": "Message",
-                "variable": false
+              "element": "object",
+              "meta": {
+                "id": "Message"
               },
-              "typeDefinition": {
-                "typeSpecification": {
-                  "name": null,
-                  "nestedTypes": []
-                },
-                "attributes": []
-              },
-              "sections": [
+              "content": [
                 {
-                  "class": "memberType",
-                  "content": [
-                    {
-                      "content": {
-                        "name": {
-                          "literal": "id"
-                        },
-                        "description": "",
-                        "valueDefinition": {
-                          "values": [],
-                          "typeDefinition": {
-                            "typeSpecification": {
-                              "name": "number",
-                              "nestedTypes": []
-                            },
-                            "attributes": []
-                          }
-                        },
-                        "sections": []
-                      },
-                      "class": "property"
+                  "element": "member",
+                  "content": {
+                    "key": {
+                      "element": "string",
+                      "content": "id"
                     },
-                    {
-                      "content": {
-                        "name": {
-                          "literal": "message"
-                        },
-                        "description": "The Message",
-                        "valueDefinition": {
-                          "values": [
-                            {
-                              "literal": "Hello World!",
-                              "variable": false
-                            }
-                          ],
-                          "typeDefinition": {
-                            "typeSpecification": {
-                              "name": "string",
-                              "nestedTypes": []
-                            },
-                            "attributes": []
-                          }
-                        },
-                        "sections": []
-                      },
-                      "class": "property"
+                    "value": {
+                      "element": "number"
                     }
-                  ]
+                  }
+                },
+                {
+                  "element": "member",
+                  "meta": {
+                    "description": "The Message"
+                  },
+                  "content": {
+                    "key": {
+                      "element": "string",
+                      "content": "message"
+                    },
+                    "value": {
+                      "element": "string",
+                      "content": "Hello World!"
+                    }
+                  }
                 }
               ]
             }
