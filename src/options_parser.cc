@@ -41,7 +41,7 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject) {
         }
         else if (TypeOptionKey == *String::Utf8Value(key)) {
             // TypeOption
-            char *strValue = *String::Utf8Value(value);
+            const char *strValue = *String::Utf8Value(value);
             if (TypeOptionAst == strValue) {
                 // TODO
                 // optionsResult->options &= snowcrash::TypeOptionAst;
