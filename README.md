@@ -3,9 +3,7 @@
 # Protagonist
 
 [![Circle CI](https://circleci.com/gh/apiaryio/protagonist.svg?style=shield)](https://circleci.com/gh/apiaryio/protagonist)
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/uaa6ivk97urmoucr?svg=true)](https://ci.appveyor.com/project/Apiary/protagonist)
-
-
+[![AppVeyor](https://ci.appveyor.com/api/projects/status/uaa6ivk97urmoucr/branch/master?svg=true)](https://ci.appveyor.com/project/Apiary/protagonist)
 
 ### API Blueprint Parser for Node.js
 Protagonist is a Node.js wrapper for the [Snow Crash](https://github.com/apiaryio/snowcrash) library.
