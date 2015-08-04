@@ -7,6 +7,10 @@ using namespace protagonist;
 //static const std::string RenderDescriptionsOptionKey = "renderDescriptions";
 static const std::string RequireBlueprintNameOptionKey = "requireBlueprintName";
 static const std::string ExportSourcemapOptionKey = "exportSourcemap";
+static const std::string TypeOptionKey = "type";
+
+static const std::string TypeOptionAst = "ast";
+static const std::string TypeOptionRefract = "refract";
 
 OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject) {
     OptionsResult *optionsResult = (OptionsResult *) malloc(sizeof(OptionsResult));
@@ -35,11 +39,30 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject) {
             else
                 optionsResult->options &= snowcrash::ExportSourcemapOption;
         }
+        else if (TypeOptionKey == *String::Utf8Value(key)) {
+            // TypeOption
+            char *strValue = *String::Utf8Value(value);
+            if (TypeOptionAst == strValue) {
+                // TODO
+                // optionsResult->options &= snowcrash::TypeOptionAst;
+            } else if (TypeOptionRefract == strValue) {
+                // TODO
+                // optionsResult->options &= snowcrash::TypeOptionRefract;
+            } else {
+                std::stringstream ss;
+                ss << "unrecognized type '" << strValue << "', expected '";
+                ss << TypeOptionAst << "' or '" << TypeOptionRefract << "'";
+
+                optionsResult->error = ss.str().c_str();
+                return optionsResult;
+            }
+        }
         else {
             // Unrecognized option
             std::stringstream ss;
             ss << "unrecognized option '" << *String::Utf8Value(key) << "', expected: ";
-            ss << "'" << RequireBlueprintNameOptionKey << "' or '" << ExportSourcemapOptionKey << "'";
+            ss << "'" << RequireBlueprintNameOptionKey << "', '";
+            ss << ExportSourcemapOptionKey << "' or '" << TypeOptionKey << '"';
 
             optionsResult->error = ss.str().c_str();
             return optionsResult;
