@@ -17,7 +17,7 @@ describe 'Blueprint AST', ->
     ### Message [/message{id}]
     '''
 
-    protagonist.parse source, (err, result) ->
+    protagonist.parse source, type: 'ast', (err, result) ->
       return done err if err
       ast = result.ast
 

@@ -16,6 +16,7 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject) {
     OptionsResult *optionsResult = (OptionsResult *) malloc(sizeof(OptionsResult));
 
     optionsResult->options = 0;
+    optionsResult->astType = drafter::RefractASTType;
     optionsResult->error = NULL;
 
     const Local<Array> properties = optionsObject->GetPropertyNames();
@@ -43,11 +44,9 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject) {
             // TypeOption
             const char *strValue = *String::Utf8Value(value);
             if (TypeOptionAst == strValue) {
-                // TODO
-                // optionsResult->options &= snowcrash::TypeOptionAst;
+                optionsResult->astType = drafter::NormalASTType;
             } else if (TypeOptionRefract == strValue) {
-                // TODO
-                // optionsResult->options &= snowcrash::TypeOptionRefract;
+                optionsResult->astType = drafter::RefractASTType;
             } else {
                 std::stringstream ss;
                 ss << "unrecognized type '" << strValue << "', expected '";

@@ -41,7 +41,8 @@ NAN_METHOD(Result::New)
 v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
                                          const snowcrash::Blueprint& blueprint,
                                          const snowcrash::SourceMap<snowcrash::Blueprint>& sourcemap,
-                                         const snowcrash::BlueprintParserOptions& options)
+                                         const snowcrash::BlueprintParserOptions& options,
+                                         const drafter::ASTType& astType)
 {
     Local<Function> cons = NanNew<Function>(constructor);
     Local<Object> resultWrap = cons->NewInstance();
@@ -51,7 +52,7 @@ v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
     static const char* SourcemapKey = "sourcemap";
 
     if (report.error.code == snowcrash::Error::OK) {
-        sos::Object blueprintSerializationWrap = drafter::WrapBlueprint(blueprint);
+        sos::Object blueprintSerializationWrap = drafter::WrapBlueprint(blueprint, astType);
 
         resultWrap->Set(NanNew<String>(AstKey), v8_wrap(blueprintSerializationWrap));
     }

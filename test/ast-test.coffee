@@ -16,7 +16,7 @@ describe "Parser AST - Async", ->
     fs.readFile fixture_path, 'utf8', (err, data) ->
       return done err if err
 
-      protagonist.parse data, (err, result) ->
+      protagonist.parse data, type: 'ast', (err, result) ->
         return done err if err
 
         ast_parsed = result.ast

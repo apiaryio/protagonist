@@ -7,6 +7,7 @@
 #include "Blueprint.h"
 #include "BlueprintSourcemap.h"
 #include "SectionParserData.h"
+#include "Serialize.h"
 #include "SourceAnnotation.h"
 
 namespace protagonist {
@@ -16,6 +17,7 @@ namespace protagonist {
     ///
     struct OptionsResult {
       snowcrash::BlueprintParserOptions options;
+      drafter::ASTType astType;
       const char *error;
     };
 
@@ -51,7 +53,8 @@ namespace protagonist {
         static v8::Local<v8::Object> WrapResult(const snowcrash::Report& report,
                                                 const snowcrash::Blueprint& blueprint,
                                                 const snowcrash::SourceMap<snowcrash::Blueprint>& sourcemap,
-                                                const snowcrash::BlueprintParserOptions& options);
+                                                const snowcrash::BlueprintParserOptions& options,
+                                                const drafter::ASTType& astType);
 
     private:
         Result();

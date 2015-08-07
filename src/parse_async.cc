@@ -22,6 +22,7 @@ struct Baton {
 
     // Input
     snowcrash::BlueprintParserOptions options;
+    drafter::ASTType astType;
     mdp::ByteBuffer sourceData;
 
     // Output
@@ -61,6 +62,7 @@ NAN_METHOD(protagonist::Parse) {
 
     // Prepare options
     snowcrash::BlueprintParserOptions options = 0;
+    drafter::ASTType astType = drafter::RefractASTType;
 
     if (args.Length() == 3) {
         OptionsResult *optionsResult = ParseOptionsObject(Handle<Object>::Cast(args[1]));
@@ -71,6 +73,7 @@ NAN_METHOD(protagonist::Parse) {
         }
 
         options = optionsResult->options;
+        astType = optionsResult->astType;
         free(optionsResult);
     }
 
@@ -80,6 +83,7 @@ NAN_METHOD(protagonist::Parse) {
     // Prepare threadpool baton
     Baton* baton = ::new Baton();
     baton->options = options;
+    baton->astType = astType;
     baton->sourceData = *sourceData;
     NanAssignPersistent<Function>(baton->callback, callback);
 
@@ -124,7 +128,7 @@ void AsyncParseAfter(uv_work_t* request) {
     else
         argv[0] = SourceAnnotation::WrapSourceAnnotation(baton->report.error);
 
-    argv[1] = Result::WrapResult(baton->report, baton->ast, baton->sourcemap, baton->options);
+    argv[1] = Result::WrapResult(baton->report, baton->ast, baton->sourcemap, baton->options, baton->astType);
 
     TryCatch try_catch;
     Local<Function> callback = NanNew<Function>(baton->callback);
