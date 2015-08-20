@@ -71,46 +71,51 @@
                       "schema": "",
                       "content": [
                         {
-                          "element": "extend",
+                          "element": "dataStructure",
                           "content": [
                             {
-                              "element": "object",
-                              "meta": {
-                                "ref": "Message"
-                              },
+                              "element": "extend",
                               "content": [
                                 {
-                                  "element": "member",
-                                  "content": {
-                                    "key": {
-                                      "element": "string",
-                                      "content": "id"
+                                  "element": "object",
+                                  "meta": {
+                                    "ref": "Message"
+                                  },
+                                  "content": [
+                                    {
+                                      "element": "member",
+                                      "content": {
+                                        "key": {
+                                          "element": "string",
+                                          "content": "id"
+                                        },
+                                        "value": {
+                                          "element": "number"
+                                        }
+                                      }
                                     },
-                                    "value": {
-                                      "element": "number"
+                                    {
+                                      "element": "member",
+                                      "meta": {
+                                        "description": "The Message"
+                                      },
+                                      "content": {
+                                        "key": {
+                                          "element": "string",
+                                          "content": "message"
+                                        },
+                                        "value": {
+                                          "element": "string",
+                                          "content": "Hello World!"
+                                        }
+                                      }
                                     }
-                                  }
+                                  ]
                                 },
                                 {
-                                  "element": "member",
-                                  "meta": {
-                                    "description": "The Message"
-                                  },
-                                  "content": {
-                                    "key": {
-                                      "element": "string",
-                                      "content": "message"
-                                    },
-                                    "value": {
-                                      "element": "string",
-                                      "content": "Hello World!"
-                                    }
-                                  }
+                                  "element": "object"
                                 }
                               ]
-                            },
-                            {
-                              "element": "object"
                             }
                           ]
                         }
@@ -151,38 +156,43 @@
           ],
           "content": [
             {
-              "element": "object",
-              "meta": {
-                "id": "Message"
-              },
+              "element": "dataStructure",
               "content": [
                 {
-                  "element": "member",
-                  "content": {
-                    "key": {
-                      "element": "string",
-                      "content": "id"
-                    },
-                    "value": {
-                      "element": "number"
-                    }
-                  }
-                },
-                {
-                  "element": "member",
+                  "element": "object",
                   "meta": {
-                    "description": "The Message"
+                    "id": "Message"
                   },
-                  "content": {
-                    "key": {
-                      "element": "string",
-                      "content": "message"
+                  "content": [
+                    {
+                      "element": "member",
+                      "content": {
+                        "key": {
+                          "element": "string",
+                          "content": "id"
+                        },
+                        "value": {
+                          "element": "number"
+                        }
+                      }
                     },
-                    "value": {
-                      "element": "string",
-                      "content": "Hello World!"
+                    {
+                      "element": "member",
+                      "meta": {
+                        "description": "The Message"
+                      },
+                      "content": {
+                        "key": {
+                          "element": "string",
+                          "content": "message"
+                        },
+                        "value": {
+                          "element": "string",
+                          "content": "Hello World!"
+                        }
+                      }
                     }
-                  }
+                  ]
                 }
               ]
             }
@@ -255,46 +265,51 @@
                       "schema": "",
                       "content": [
                         {
-                          "element": "extend",
+                          "element": "dataStructure",
                           "content": [
                             {
-                              "element": "object",
-                              "meta": {
-                                "ref": "Message"
-                              },
+                              "element": "extend",
                               "content": [
                                 {
-                                  "element": "member",
-                                  "content": {
-                                    "key": {
-                                      "element": "string",
-                                      "content": "id"
+                                  "element": "object",
+                                  "meta": {
+                                    "ref": "Message"
+                                  },
+                                  "content": [
+                                    {
+                                      "element": "member",
+                                      "content": {
+                                        "key": {
+                                          "element": "string",
+                                          "content": "id"
+                                        },
+                                        "value": {
+                                          "element": "number"
+                                        }
+                                      }
                                     },
-                                    "value": {
-                                      "element": "number"
+                                    {
+                                      "element": "member",
+                                      "meta": {
+                                        "description": "The Message"
+                                      },
+                                      "content": {
+                                        "key": {
+                                          "element": "string",
+                                          "content": "message"
+                                        },
+                                        "value": {
+                                          "element": "string",
+                                          "content": "Hello World!"
+                                        }
+                                      }
                                     }
-                                  }
+                                  ]
                                 },
                                 {
-                                  "element": "member",
-                                  "meta": {
-                                    "description": "The Message"
-                                  },
-                                  "content": {
-                                    "key": {
-                                      "element": "string",
-                                      "content": "message"
-                                    },
-                                    "value": {
-                                      "element": "string",
-                                      "content": "Hello World!"
-                                    }
-                                  }
+                                  "element": "object"
                                 }
                               ]
-                            },
-                            {
-                              "element": "object"
                             }
                           ]
                         }
@@ -335,38 +350,43 @@
           ],
           "content": [
             {
-              "element": "object",
-              "meta": {
-                "id": "Message"
-              },
+              "element": "dataStructure",
               "content": [
                 {
-                  "element": "member",
-                  "content": {
-                    "key": {
-                      "element": "string",
-                      "content": "id"
-                    },
-                    "value": {
-                      "element": "number"
-                    }
-                  }
-                },
-                {
-                  "element": "member",
+                  "element": "object",
                   "meta": {
-                    "description": "The Message"
+                    "id": "Message"
                   },
-                  "content": {
-                    "key": {
-                      "element": "string",
-                      "content": "message"
+                  "content": [
+                    {
+                      "element": "member",
+                      "content": {
+                        "key": {
+                          "element": "string",
+                          "content": "id"
+                        },
+                        "value": {
+                          "element": "number"
+                        }
+                      }
                     },
-                    "value": {
-                      "element": "string",
-                      "content": "Hello World!"
+                    {
+                      "element": "member",
+                      "meta": {
+                        "description": "The Message"
+                      },
+                      "content": {
+                        "key": {
+                          "element": "string",
+                          "content": "message"
+                        },
+                        "value": {
+                          "element": "string",
+                          "content": "Hello World!"
+                        }
+                      }
                     }
-                  }
+                  ]
                 }
               ]
             }

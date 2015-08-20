@@ -2,6 +2,7 @@
 #include "SerializeAST.h"
 #include "SerializeSourcemap.h"
 #include "v8_wrapper.h"
+#include "snowcrash.h"
 
 using namespace v8;
 using namespace protagonist;
@@ -38,9 +39,7 @@ NAN_METHOD(Result::New)
     NanReturnValue(args.This());
 }
 
-v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
-                                         const snowcrash::Blueprint& blueprint,
-                                         const snowcrash::SourceMap<snowcrash::Blueprint>& sourcemap,
+v8::Local<v8::Object> Result::WrapResult(const snowcrash::ParseResult<snowcrash::Blueprint>& parseResult,
                                          const snowcrash::BlueprintParserOptions& options,
                                          const drafter::ASTType& astType)
 {
@@ -51,19 +50,27 @@ v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
     static const char* WarningsKey = "warnings";
     static const char* SourcemapKey = "sourcemap";
 
-    if (report.error.code == snowcrash::Error::OK) {
-        sos::Object blueprintSerializationWrap = drafter::WrapBlueprint(blueprint, astType);
+    if (astType == drafter::RefractASTType) {
+      // The Refract output contains all the warnings and source map info, so
+      // we can just wrap and return the parse result.
+      sos::Object blueprintSerializationWrap = drafter::WrapParseResult(parseResult, options);
+
+      return v8_wrap(blueprintSerializationWrap)->ToObject();
+    }
+
+    if (parseResult.report.error.code == snowcrash::Error::OK) {
+        sos::Object blueprintSerializationWrap = drafter::WrapBlueprint(parseResult.node, astType);
 
         resultWrap->Set(NanNew<String>(AstKey), v8_wrap(blueprintSerializationWrap));
     }
     else
         resultWrap->Set(NanNew<String>(AstKey), NanNull());
 
-    Local<Object> warnings = NanNew<Array>(report.warnings.size());
+    Local<Object> warnings = NanNew<Array>(parseResult.report.warnings.size());
     size_t i = 0;
 
-    for (snowcrash::Warnings::const_iterator it = report.warnings.begin();
-         it != report.warnings.end();
+    for (snowcrash::Warnings::const_iterator it = parseResult.report.warnings.begin();
+         it != parseResult.report.warnings.end();
          ++it, ++i) {
 
         warnings->Set(i, SourceAnnotation::WrapSourceAnnotation(*it));
@@ -72,8 +79,8 @@ v8::Local<v8::Object> Result::WrapResult(const snowcrash::Report& report,
     resultWrap->Set(NanNew<String>(WarningsKey), warnings);
 
     // Set source map only if requested
-    if (report.error.code == snowcrash::Error::OK && (options & snowcrash::ExportSourcemapOption) != 0) {
-        sos::Object sourcemapSerializationWrap = drafter::WrapBlueprintSourcemap(sourcemap);
+    if (parseResult.report.error.code == snowcrash::Error::OK && (options & snowcrash::ExportSourcemapOption) != 0) {
+        sos::Object sourcemapSerializationWrap = drafter::WrapBlueprintSourcemap(parseResult.sourceMap);
 
         resultWrap->Set(NanNew<String>(SourcemapKey), v8_wrap(sourcemapSerializationWrap));
     }

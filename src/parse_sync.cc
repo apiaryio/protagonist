@@ -56,5 +56,5 @@ NAN_METHOD(protagonist::ParseSync) {
         NanReturnUndefined();
     }
 
-    NanReturnValue(Result::WrapResult(parseResult.report, parseResult.node, parseResult.sourceMap, options, astType));
+    NanReturnValue(Result::WrapResult(parseResult, options, astType));
 }

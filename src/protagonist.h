@@ -8,6 +8,7 @@
 #include "BlueprintSourcemap.h"
 #include "SectionParserData.h"
 #include "Serialize.h"
+#include "SerializeResult.h"
 #include "SourceAnnotation.h"
 
 namespace protagonist {
@@ -50,9 +51,7 @@ namespace protagonist {
 
         // Wraps snowcrash::Warnings and snowcrash:Blueprint into report object
         // Note: snowcrash::Result::Error is being sent separately as Error object
-        static v8::Local<v8::Object> WrapResult(const snowcrash::Report& report,
-                                                const snowcrash::Blueprint& blueprint,
-                                                const snowcrash::SourceMap<snowcrash::Blueprint>& sourcemap,
+        static v8::Local<v8::Object> WrapResult(const snowcrash::ParseResult<snowcrash::Blueprint>& parseResult,
                                                 const snowcrash::BlueprintParserOptions& options,
                                                 const drafter::ASTType& astType);
 

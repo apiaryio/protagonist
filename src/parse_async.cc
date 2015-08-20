@@ -26,9 +26,7 @@ struct Baton {
     mdp::ByteBuffer sourceData;
 
     // Output
-    snowcrash::Report report;
-    snowcrash::Blueprint ast;
-    snowcrash::SourceMap<snowcrash::Blueprint> sourcemap;
+    snowcrash::ParseResult<snowcrash::Blueprint> parseResult;
 };
 
 NAN_METHOD(protagonist::Parse) {
@@ -109,9 +107,7 @@ void AsyncParse(uv_work_t* request) {
     // Parse the source data
     drafter::ParseBlueprint(baton->sourceData, baton->options, parseResult);
 
-    baton->report = parseResult.report;
-    baton->ast = parseResult.node;
-    baton->sourcemap = parseResult.sourceMap;
+    baton->parseResult = parseResult;
 }
 
 void AsyncParseAfter(uv_work_t* request) {
@@ -123,12 +119,12 @@ void AsyncParseAfter(uv_work_t* request) {
     Local<Value> argv[argc];
 
     // Error Object
-    if (baton->report.error.code == snowcrash::Error::OK)
+    if (baton->parseResult.report.error.code == snowcrash::Error::OK)
         argv[0] = NanNull();
     else
-        argv[0] = SourceAnnotation::WrapSourceAnnotation(baton->report.error);
+        argv[0] = SourceAnnotation::WrapSourceAnnotation(baton->parseResult.report.error);
 
-    argv[1] = Result::WrapResult(baton->report, baton->ast, baton->sourcemap, baton->options, baton->astType);
+    argv[1] = Result::WrapResult(baton->parseResult, baton->options, baton->astType);
 
     TryCatch try_catch;
     Local<Function> callback = NanNew<Function>(baton->callback);
