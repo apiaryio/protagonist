@@ -4,9 +4,6 @@
 #include <node.h>
 #include <v8.h>
 #include "nan.h"
-#include "Blueprint.h"
-#include "BlueprintSourcemap.h"
-#include "SectionParserData.h"
 #include "Serialize.h"
 #include "SerializeResult.h"
 #include "SourceAnnotation.h"

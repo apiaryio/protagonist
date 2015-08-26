@@ -74,48 +74,7 @@
                           "element": "dataStructure",
                           "content": [
                             {
-                              "element": "extend",
-                              "content": [
-                                {
-                                  "element": "object",
-                                  "meta": {
-                                    "ref": "Message"
-                                  },
-                                  "content": [
-                                    {
-                                      "element": "member",
-                                      "content": {
-                                        "key": {
-                                          "element": "string",
-                                          "content": "id"
-                                        },
-                                        "value": {
-                                          "element": "number"
-                                        }
-                                      }
-                                    },
-                                    {
-                                      "element": "member",
-                                      "meta": {
-                                        "description": "The Message"
-                                      },
-                                      "content": {
-                                        "key": {
-                                          "element": "string",
-                                          "content": "message"
-                                        },
-                                        "value": {
-                                          "element": "string",
-                                          "content": "Hello World!"
-                                        }
-                                      }
-                                    }
-                                  ]
-                                },
-                                {
-                                  "element": "object"
-                                }
-                              ]
+                              "element": "Message"
                             }
                           ]
                         }
@@ -268,48 +227,7 @@
                           "element": "dataStructure",
                           "content": [
                             {
-                              "element": "extend",
-                              "content": [
-                                {
-                                  "element": "object",
-                                  "meta": {
-                                    "ref": "Message"
-                                  },
-                                  "content": [
-                                    {
-                                      "element": "member",
-                                      "content": {
-                                        "key": {
-                                          "element": "string",
-                                          "content": "id"
-                                        },
-                                        "value": {
-                                          "element": "number"
-                                        }
-                                      }
-                                    },
-                                    {
-                                      "element": "member",
-                                      "meta": {
-                                        "description": "The Message"
-                                      },
-                                      "content": {
-                                        "key": {
-                                          "element": "string",
-                                          "content": "message"
-                                        },
-                                        "value": {
-                                          "element": "string",
-                                          "content": "Hello World!"
-                                        }
-                                      }
-                                    }
-                                  ]
-                                },
-                                {
-                                  "element": "object"
-                                }
-                              ]
+                              "element": "Message"
                             }
                           ]
                         }
