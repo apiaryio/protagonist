@@ -26,29 +26,33 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject) {
         const Local<Value> key = properties->Get(i);
         const Local<Value> value = optionsObject->Get(key);
 
-        if (RequireBlueprintNameOptionKey == *String::Utf8Value(key)) {
+        const String::Utf8Value strKey(key);
+
+        if (RequireBlueprintNameOptionKey == *strKey) {
             // RequireBlueprintNameOption
             if (value->IsTrue())
                 optionsResult->options |= snowcrash::RequireBlueprintNameOption;
             else
                 optionsResult->options &= snowcrash::RequireBlueprintNameOption;
         }
-        else if (ExportSourcemapOptionKey == *String::Utf8Value(key)) {
+        else if (ExportSourcemapOptionKey == *strKey) {
             // ExportSourcemapOption
             if (value->IsTrue())
                 optionsResult->options |= snowcrash::ExportSourcemapOption;
             else
                 optionsResult->options &= snowcrash::ExportSourcemapOption;
         }
-        else if (TypeOptionKey == *String::Utf8Value(key)) {
+        else if (TypeOptionKey == *strKey) {
             // TypeOption
-            if (TypeOptionAst == *String::Utf8Value(value)) {
+            const String::Utf8Value strValue(value);
+
+            if (TypeOptionAst == *strValue) {
                 optionsResult->astType = drafter::NormalASTType;
-            } else if (TypeOptionRefract == *String::Utf8Value(value)) {
+            } else if (TypeOptionRefract == *strValue) {
                 optionsResult->astType = drafter::RefractASTType;
             } else {
                 std::stringstream ss;
-                ss << "unrecognized type '" << *String::Utf8Value(value) << "', expected '";
+                ss << "unrecognized type '" << *strValue << "', expected '";
                 ss << TypeOptionAst << "' or '" << TypeOptionRefract << "'";
 
                 optionsResult->error = ss.str().c_str();
@@ -58,7 +62,7 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject) {
         else {
             // Unrecognized option
             std::stringstream ss;
-            ss << "unrecognized option '" << *String::Utf8Value(key) << "', expected: ";
+            ss << "unrecognized option '" << *strKey << "', expected: ";
             ss << "'" << RequireBlueprintNameOptionKey << "', '";
             ss << ExportSourcemapOptionKey << "' or '" << TypeOptionKey << '"';
 
