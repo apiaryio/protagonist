@@ -3,10 +3,10 @@ path = require 'path'
 {assert} = require 'chai'
 protagonist = require '../build/Release/protagonist'
 
-describe "Parser AST - Async", ->
+describe "Parser Refract - Async", ->
 
-  ast_fixture = require './fixtures/sample-api-ast.json'
-  ast_parsed = null
+  refract_fixture = require './fixtures/sample-api-refract.json'
+  refract_parsed = null
 
   # Read & parse blueprint fixture
   before (done) ->
@@ -16,12 +16,12 @@ describe "Parser AST - Async", ->
     fs.readFile fixture_path, 'utf8', (err, data) ->
       return done err if err
 
-      protagonist.parse data, type: 'ast', (err, result) ->
+      protagonist.parse data, (err, result) ->
         return done err if err
 
-        ast_parsed = result.ast
+        refract_parsed = result
         done()
 
   # Parser AST should conform to AST serialization JSON media type
-  it '`ast` field conforms to `vnd.apiblueprint.ast.raw+json; version=3.0`', ->
-    assert.deepEqual ast_parsed, ast_fixture
+  it 'conforms to the refract spec', ->
+    assert.deepEqual refract_parsed, refract_fixture

@@ -1,0 +1,226 @@
+{
+  "element": "parseResult",
+  "content": [
+    {
+      "element": "category",
+      "meta": {
+        "classes": [
+          "api"
+        ],
+        "title": ""
+      },
+      "attributes": {
+        "meta": [
+          {
+            "element": "member",
+            "meta": {
+              "classes": [
+                "user"
+              ]
+            },
+            "content": {
+              "key": {
+                "element": "string",
+                "content": "FORMAT"
+              },
+              "value": {
+                "element": "string",
+                "content": "1A"
+              }
+            }
+          }
+        ]
+      },
+      "content": [
+        {
+          "element": "category",
+          "meta": {
+            "classes": [
+              "resourceGroup"
+            ],
+            "title": "Messages"
+          },
+          "content": [
+            {
+              "element": "resource",
+              "meta": {
+                "title": "Message"
+              },
+              "attributes": {
+                "href": "/messages/{id}",
+                "hrefVariables": {
+                  "element": "hrefVariables",
+                  "content": [
+                    {
+                      "element": "member",
+                      "meta": {
+                        "description": "Id of a message"
+                      },
+                      "content": {
+                        "key": {
+                          "element": "string",
+                          "content": "id"
+                        },
+                        "value": {
+                          "element": "enum",
+                          "content": [
+                            {
+                              "element": "string",
+                              "content": "1"
+                            },
+                            {
+                              "element": "string",
+                              "content": "2"
+                            },
+                            {
+                              "element": "string",
+                              "content": "3"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "content": [
+                {
+                  "element": "dataStructure",
+                  "content": [
+                    {
+                      "element": "object",
+                      "meta": {
+                        "id": "Message"
+                      },
+                      "content": [
+                        {
+                          "element": "member",
+                          "content": {
+                            "key": {
+                              "element": "string",
+                              "content": "id"
+                            },
+                            "value": {
+                              "element": "number"
+                            }
+                          }
+                        },
+                        {
+                          "element": "member",
+                          "meta": {
+                            "description": "The Message"
+                          },
+                          "content": {
+                            "key": {
+                              "element": "string",
+                              "content": "message"
+                            },
+                            "value": {
+                              "element": "string",
+                              "content": "Hello World!"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "element": "transition",
+                  "meta": {
+                    "title": "Retrieve Message"
+                  },
+                  "content": [
+                    {
+                      "element": "httpTransaction",
+                      "content": [
+                        {
+                          "element": "httpRequest",
+                          "attributes": {
+                            "method": "GET"
+                          },
+                          "content": []
+                        },
+                        {
+                          "element": "httpResponse",
+                          "attributes": {
+                            "statusCode": "200",
+                            "headers": {
+                              "element": "httpHeaders",
+                              "content": [
+                                {
+                                  "element": "member",
+                                  "content": {
+                                    "key": {
+                                      "element": "string",
+                                      "content": "Content-Type"
+                                    },
+                                    "value": {
+                                      "element": "string",
+                                      "content": "application/json"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "content": [
+                            {
+                              "element": "dataStructure",
+                              "content": [
+                                {
+                                  "element": "Message"
+                                }
+                              ]
+                            },
+                            {
+                              "element": "asset",
+                              "meta": {
+                                "classes": "messageBody"
+                              },
+                              "attributes": {
+                                "contentType": "application/json"
+                              },
+                              "content": "{\n  \"id\": 0,\n  \"message\": \"Hello World!\"\n}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "element": "transition",
+                  "meta": {
+                    "title": "Delete Message"
+                  },
+                  "content": [
+                    {
+                      "element": "httpTransaction",
+                      "content": [
+                        {
+                          "element": "httpRequest",
+                          "attributes": {
+                            "method": "DELETE"
+                          },
+                          "content": []
+                        },
+                        {
+                          "element": "httpResponse",
+                          "attributes": {
+                            "statusCode": "204"
+                          },
+                          "content": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

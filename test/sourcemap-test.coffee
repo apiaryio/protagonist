@@ -16,7 +16,7 @@ describe "Parser sourcemap", ->
     fs.readFile fixture_path, 'utf8', (err, data) ->
       return done err if err
 
-      protagonist.parse data, { exportSourcemap: true }, (err, result) ->
+      protagonist.parse data, { type: 'ast', exportSourcemap: true }, (err, result) ->
         return done err if err
 
         sourcemap_parsed = result.sourcemap

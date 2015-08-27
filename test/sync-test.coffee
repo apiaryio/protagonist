@@ -16,7 +16,7 @@ describe "Parser AST - Sync", ->
     fs.readFile fixture_path, 'utf8', (err, data) ->
       return done err if err
 
-      ast_parsed = protagonist.parseSync(data).ast
+      ast_parsed = protagonist.parseSync(data, type: 'ast').ast
       done()
 
   # Parser AST should conform to AST serialization JSON media type

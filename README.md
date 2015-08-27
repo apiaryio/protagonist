@@ -46,6 +46,25 @@ block the event loop.
 var result = protagonist.parseSync('# My API');
 ```
 
+### Parsing Options
+
+Options can be passed to the parser as an optional second argument to both the asynchronous and synchronous interfaces:
+
+```js
+var options = {
+    exportSourcemap: true
+}
+protagonist.parse('# My API', options, callback);
+```
+
+The available options are:
+
+Name                   | Description
+---------------------- | ----------------------------------------------------------
+`requireBlueprintName` | Require that the API Blueprint have a title
+`exportSourcemap`      | Enable sourcemap generation
+`type`                 | Set the output structure type as either `ast` or `refract`.
+
 ### Parsing Result
 
 Parsing this blueprint:
