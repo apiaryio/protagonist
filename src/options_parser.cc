@@ -42,14 +42,13 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject) {
         }
         else if (TypeOptionKey == *String::Utf8Value(key)) {
             // TypeOption
-            const char *strValue = *String::Utf8Value(value);
-            if (TypeOptionAst == strValue) {
+            if (TypeOptionAst == *String::Utf8Value(value)) {
                 optionsResult->astType = drafter::NormalASTType;
-            } else if (TypeOptionRefract == strValue) {
+            } else if (TypeOptionRefract == *String::Utf8Value(value)) {
                 optionsResult->astType = drafter::RefractASTType;
             } else {
                 std::stringstream ss;
-                ss << "unrecognized type '" << strValue << "', expected '";
+                ss << "unrecognized type '" << *String::Utf8Value(value) << "', expected '";
                 ss << TypeOptionAst << "' or '" << TypeOptionRefract << "'";
 
                 optionsResult->error = ss.str().c_str();
