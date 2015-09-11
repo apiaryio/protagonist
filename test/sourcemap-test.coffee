@@ -16,12 +16,12 @@ describe "Parser sourcemap", ->
     fs.readFile fixture_path, 'utf8', (err, data) ->
       return done err if err
 
-      protagonist.parse data, { exportSourcemap: true }, (err, result) ->
+      protagonist.parse data, { type: 'ast', exportSourcemap: true }, (err, result) ->
         return done err if err
 
         sourcemap_parsed = result.sourcemap
         done()
 
   # Parser Sourcemap should conform to recent source map serialization JSON media type
-  it '`sourcemap` field conforms to `vnd.apiblueprint.sourcemap+json; version=3.0`', ->
+  it '`sourcemap` field conforms to `vnd.apiblueprint.sourcemap+json; version=4.0`', ->
     assert.deepEqual sourcemap_fixture, sourcemap_parsed

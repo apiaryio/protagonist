@@ -17,7 +17,7 @@ describe 'Blueprint AST', ->
     ### Message [/message{id}]
     '''
 
-    protagonist.parse source, (err, result) ->
+    protagonist.parse source, type: 'ast', (err, result) ->
       return done err if err
       ast = result.ast
 
@@ -34,8 +34,8 @@ describe 'Blueprint AST', ->
       it 'is defined', ->
         assert.isDefined ast._version
 
-      it 'is equal to 3.0', ->
-        assert.equal ast._version, '3.0'
+      it 'is equal to 4.0', ->
+        assert.equal ast._version, '4.0'
 
     describe 'metadata', ->
       it 'is defined', ->

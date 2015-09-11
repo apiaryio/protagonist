@@ -32,6 +32,7 @@ NAN_METHOD(protagonist::ParseSync) {
 
     // Prepare options
     snowcrash::BlueprintParserOptions options = 0;
+    drafter::ASTType astType = drafter::RefractASTType;
 
     if (args.Length() == 2) {
         OptionsResult *optionsResult = ParseOptionsObject(Handle<Object>::Cast(args[1]));
@@ -42,6 +43,7 @@ NAN_METHOD(protagonist::ParseSync) {
         }
 
         options = optionsResult->options;
+        astType = optionsResult->astType;
         free(optionsResult);
     }
 
@@ -54,5 +56,5 @@ NAN_METHOD(protagonist::ParseSync) {
         NanReturnUndefined();
     }
 
-    NanReturnValue(Result::WrapResult(parseResult.report, parseResult.node, parseResult.sourceMap, options));
+    NanReturnValue(Result::WrapResult(parseResult, options, astType));
 }
