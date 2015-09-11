@@ -32,7 +32,7 @@ protagonist.parse('# My API', function(error, result) {
         return;
     }
 
-    console.log(result.ast);
+    console.log(result);
 });
 ```
 
@@ -78,78 +78,71 @@ will produce the following object (`result` variable):
 
 ```json
 {
-  "ast": {
-    "_version": "3.0",
-    "metadata": [],
-    "name": "",
-    "description": "",
-    "resourceGroups": [
-      {
-        "name": "",
-        "description": "",
-        "resources": [
-          {
-            "name": "",
-            "description": "",
-            "uriTemplate": "/1",
-            "model": {},
-            "parameters": [],
-            "actions": [
-              {
-                "name": "",
-                "description": "",
-                "method": "GET",
-                "parameters": [],
-                "examples": [
-                  {
-                    "name": "",
-                    "description": "",
-                    "requests": [],
-                    "responses": [
-                      {
-                        "name": "200",
-                        "description": "",
-                        "headers": [],
-                        "body": "",
-                        "schema": ""
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  "warnings": [
+  "element": "parseResult",
+  "content": [
     {
-      "code": 6,
-      "message": "missing response HTTP status code, assuming 'Response 200'",
-      "location": [
+      "element": "category",
+      "meta": {
+        "classes": [
+          "api"
+        ],
+        "title": ""
+      },
+      "content": [
         {
-          "index": 12,
-          "length": 9
+          "element": "category",
+          "meta": {
+            "classes": [
+              "resourceGroup"
+            ],
+            "title": ""
+          },
+          "content": [
+            {
+              "element": "resource",
+              "meta": {
+                "title": ""
+              },
+              "attributes": {
+                "href": "/1"
+              },
+              "content": [
+                {
+                  "element": "transition",
+                  "meta": {
+                    "title": ""
+                  },
+                  "content": [
+                    {
+                      "element": "httpTransaction",
+                      "content": [
+                        {
+                          "element": "httpRequest",
+                          "attributes": {
+                            "method": "GET"
+                          },
+                          "content": []
+                        },
+                        {
+                          "element": "httpResponse",
+                          "attributes": {
+                            "statusCode": "200"
+                          },
+                          "content": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     }
   ]
 }
 ```
-
-#### Keys Description
-
-+ `ast` ... This is the abstract syntax tree (AST) of the parsed blueprint.
-
-    The structure under this key is **1:1** with the [AST Blueprint serialization JSON media type v3.0](https://github.com/apiaryio/api-blueprint-ast#example-json-serialization) – `vnd.apiblueprint.ast.raw+json; version=3.0`.
-
-+ `warnings` ... Array of the parser warnings as occurred during the parsing
-    + `code` ...  Warning [group](https://github.com/apiaryio/snowcrash/blob/master/src/SourceAnnotation.h#L128) code
-    + `message` ... Warning message
-    + `location` ... Array of (possibly non-continuous) locations in the source blueprint
-        + `index` ... Zero-based index of the character where the warning occurs
-        + `length` ... Number of the characters from index where the warning occurs
 
 ## Hacking Protagonist
 You are welcome to contribute. Use following steps to build & test Protagonist.
