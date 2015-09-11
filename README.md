@@ -8,7 +8,7 @@
 ### API Blueprint Parser for Node.js
 Protagonist is a Node.js wrapper for the [Snow Crash](https://github.com/apiaryio/snowcrash) library.
 
-API Blueprint is Web API documentation language. You can find API Blueprint documentation on the [API Blueprint site](http://apiblueprint.org).
+API Blueprint is Web API documentation language. You can find API Blueprint documentation on the [API Blueprint site](https://apiblueprint.org).
 
 ## Install
 The best way to install Protagonist is by using its [NPM package](https://npmjs.org/package/protagonist).
@@ -36,8 +36,8 @@ protagonist.parse('# My API', function(error, result) {
 
 ### Synchronous usage
 
-If you for some reason need to use the api synchronous, that is also possible.
-Please note that the recommended way is to use the asynchronous api as to not
+If you for some reason need to use the API synchronously, that is also possible.
+Please note that the recommended way is to use the asynchronous API as to not
 block the event loop.
 
 ```js
@@ -59,7 +59,7 @@ The available options are:
 
 Name                   | Description
 ---------------------- | ----------------------------------------------------------
-`requireBlueprintName` | Require that the API Blueprint have a title (default: false)
+`requireBlueprintName` | Require parsed blueprints have a title (default: false)
 `exportSourcemap`      | Enable sourcemap generation (default: false)
 `type`                 | Set the output structure type as either `ast` or `refract` (default: `refract`)
 
@@ -154,12 +154,11 @@ Protagonist uses [node-gyp](https://github.com/TooTallNate/node-gyp) build tool.
     $ npm install -g node-gyp
     ```
 
-2. Clone the repo + fetch the submodules:
+2. Clone the repository, and fetch the submodules:
 
     ```sh
-    $ git clone git://github.com/apiaryio/protagonist.git
+    $ git clone --recursive git://github.com/apiaryio/protagonist.git
     $ cd protagonist
-    $ git submodule update --init --recursive
     $ npm install
     ```
 
