@@ -1,6 +1,6 @@
 {
   "name": "protagonist",
-  "version": "0.20.1-refract2",
+  "version": "1.0.0",
   "description": "API Blueprint Parser",
   "author": "Apiary.io <support@apiary.io>",
   "main": "./build/Release/protagonist",
