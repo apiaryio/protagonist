@@ -61,9 +61,9 @@ The available options are:
 
 Name                   | Description
 ---------------------- | ----------------------------------------------------------
-`requireBlueprintName` | Require that the API Blueprint have a title
-`exportSourcemap`      | Enable sourcemap generation
-`type`                 | Set the output structure type as either `ast` or `refract`.
+`requireBlueprintName` | Require that the API Blueprint have a title (default: false)
+`exportSourcemap`      | Enable sourcemap generation (default: false)
+`type`                 | Set the output structure type as either `ast` or `refract` (default: `refract`)
 
 ### Parsing Result
 

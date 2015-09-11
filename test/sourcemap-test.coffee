@@ -23,5 +23,5 @@ describe "Parser sourcemap", ->
         done()
 
   # Parser Sourcemap should conform to recent source map serialization JSON media type
-  it '`sourcemap` field conforms to `vnd.apiblueprint.sourcemap+json; version=3.0`', ->
+  it '`sourcemap` field conforms to `vnd.apiblueprint.sourcemap+json; version=4.0`', ->
     assert.deepEqual sourcemap_fixture, sourcemap_parsed
