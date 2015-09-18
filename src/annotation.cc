@@ -13,28 +13,28 @@ SourceAnnotation::~SourceAnnotation()
 {
 }
 
-Persistent<Function> SourceAnnotation::constructor;
+Nan::Persistent<Function> SourceAnnotation::constructor;
 
 void SourceAnnotation::Init(Handle<Object> exports)
 {
-    NanScope();
+    Nan::HandleScope scope;
 
-    Local<FunctionTemplate> t = NanNew<FunctionTemplate>(New);
-    t->SetClassName(NanNew<String>("SourceAnnotation"));
+    Local<FunctionTemplate> t = Nan::New<FunctionTemplate>(New);
+    t->SetClassName(Nan::New<String>("SourceAnnotation").ToLocalChecked());
     t->InstanceTemplate()->SetInternalFieldCount(1);
 
-    NanAssignPersistent<Function>(constructor, t->GetFunction());
-    exports->Set(NanNew<String>("SourceAnnotation"), t->GetFunction());
+    constructor.Reset(t->GetFunction());
+    exports->Set(Nan::New<String>("SourceAnnotation").ToLocalChecked(), t->GetFunction());
 }
 
 NAN_METHOD(SourceAnnotation::New)
 {
-    NanScope();
+    Nan::HandleScope scope;
 
     SourceAnnotation* annotation = ::new SourceAnnotation();
-    annotation->Wrap(args.This());
+    annotation->Wrap(info.This());
 
-    NanReturnValue(args.This());
+    info.GetReturnValue().Set(info.This());
 }
 
 Local<Object> SourceAnnotation::WrapSourceAnnotation(const snowcrash::SourceAnnotation& annotation)

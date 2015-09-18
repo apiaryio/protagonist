@@ -18,7 +18,7 @@ void AsyncParseAfter(uv_work_t* request);
 struct Baton {
 
     // Callback
-    Persistent<Function> callback;
+    Nan::Persistent<Function> callback;
 
     // Input
     snowcrash::BlueprintParserOptions options;
@@ -30,44 +30,44 @@ struct Baton {
 };
 
 NAN_METHOD(protagonist::Parse) {
-    NanScope();
+    Nan::HandleScope scope;
 
     // Check arguments
-    if (args.Length() != 2 && args.Length() != 3) {
-        NanThrowTypeError("wrong number of arguments, `parse(string, options, callback)` expected");
-        NanReturnUndefined();
+    if (info.Length() != 2 && info.Length() != 3) {
+        Nan::ThrowTypeError("wrong number of arguments, `parse(string, options, callback)` expected");
+        return;
     }
 
-    if (!args[0]->IsString()) {
-        NanThrowTypeError("wrong argument - string expected, `parse(string, options, callback)`");
-        NanReturnUndefined();
+    if (!info[0]->IsString()) {
+        Nan::ThrowTypeError("wrong argument - string expected, `parse(string, options, callback)`");
+        return;
     }
 
-    if ((args.Length() == 2 && !args[1]->IsFunction()) ||
-        (args.Length() == 3 && !args[2]->IsFunction())) {
+    if ((info.Length() == 2 && !info[1]->IsFunction()) ||
+        (info.Length() == 3 && !info[2]->IsFunction())) {
 
-        NanThrowTypeError("wrong argument - callback expected, `parse(string, options, callback)`");
-        NanReturnUndefined();
+        Nan::ThrowTypeError("wrong argument - callback expected, `parse(string, options, callback)`");
+        return;
     }
 
-    if (args.Length() == 3 && !args[1]->IsObject()) {
-        NanThrowTypeError("wrong argument - object expected, `parse(string, options, callback)`");
-        NanReturnUndefined();
+    if (info.Length() == 3 && !info[1]->IsObject()) {
+        Nan::ThrowTypeError("wrong argument - object expected, `parse(string, options, callback)`");
+        return;
     }
 
     // Get source data
-    String::Utf8Value sourceData(args[0]->ToString());
+    String::Utf8Value sourceData(info[0]->ToString());
 
     // Prepare options
     snowcrash::BlueprintParserOptions options = 0;
     drafter::ASTType astType = drafter::RefractASTType;
 
-    if (args.Length() == 3) {
-        OptionsResult *optionsResult = ParseOptionsObject(Handle<Object>::Cast(args[1]));
+    if (info.Length() == 3) {
+        OptionsResult *optionsResult = ParseOptionsObject(Handle<Object>::Cast(info[1]));
 
         if (optionsResult->error != NULL) {
-            NanThrowTypeError(optionsResult->error);
-            NanReturnUndefined();
+            Nan::ThrowTypeError(optionsResult->error);
+            return;
         }
 
         options = optionsResult->options;
@@ -76,14 +76,14 @@ NAN_METHOD(protagonist::Parse) {
     }
 
     // Get Callback
-    Local<Function> callback = (args.Length() == 3) ?  Local<Function>::Cast(args[2]) : Local<Function>::Cast(args[1]);
+    Local<Function> callback = (info.Length() == 3) ?  Local<Function>::Cast(info[2]) : Local<Function>::Cast(info[1]);
 
     // Prepare threadpool baton
     Baton* baton = ::new Baton();
     baton->options = options;
     baton->astType = astType;
     baton->sourceData = *sourceData;
-    NanAssignPersistent<Function>(baton->callback, callback);
+    baton->callback.Reset(callback);
 
     // This creates the work request struct.
     uv_work_t *request = ::new uv_work_t();
@@ -96,7 +96,7 @@ NAN_METHOD(protagonist::Parse) {
                                 (uv_after_work_cb)AsyncParseAfter);
 
     assert(status == 0);
-    NanReturnUndefined();
+    return;
 }
 
 void AsyncParse(uv_work_t* request) {
@@ -111,7 +111,7 @@ void AsyncParse(uv_work_t* request) {
 }
 
 void AsyncParseAfter(uv_work_t* request) {
-    NanScope();
+    Nan::HandleScope scope;
     Baton* baton = static_cast<Baton*>(request->data);
 
     // Prepare report
@@ -122,19 +122,19 @@ void AsyncParseAfter(uv_work_t* request) {
 
     // Error Object
     if (baton->parseResult.report.error.code == snowcrash::Error::OK)
-        argv[0] = NanNull();
+        argv[0] = Nan::Null();
     else
         argv[0] = SourceAnnotation::WrapSourceAnnotation(baton->parseResult.report.error);
 
     TryCatch try_catch;
-    Local<Function> callback = NanNew<Function>(baton->callback);
-    callback->Call(NanGetCurrentContext()->Global(), argc, argv);
+    Local<Function> callback = Nan::New<Function>(baton->callback);
+    callback->Call(Nan::GetCurrentContext()->Global(), argc, argv);
 
     if (try_catch.HasCaught()) {
         node::FatalException(try_catch);
     }
 
-    NanDisposePersistent(baton->callback);
+    baton->callback.Reset();
     delete baton;
     delete request;
 }
