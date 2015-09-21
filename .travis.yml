@@ -6,6 +6,14 @@ node_js:
 - '0.12'
 - '0.10'
 - '0.8'
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-4.8
+    - g++-4.8
+env: CXX="g++-4.8" CC="gcc-4.8"
 before_install:
 - git submodule update --init --recursive
 - ruby -e "\`npm i -g npm@2\` if '`npm -v`'<'2.0.0'"
