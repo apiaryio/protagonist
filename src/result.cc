@@ -38,7 +38,7 @@ NAN_METHOD(Result::New)
     NanReturnValue(args.This());
 }
 
-v8::Local<v8::Object> Result::WrapResult(const snowcrash::ParseResult<snowcrash::Blueprint>& parseResult,
+v8::Local<v8::Object> Result::WrapResult(snowcrash::ParseResult<snowcrash::Blueprint>& parseResult,
                                          const snowcrash::BlueprintParserOptions& options,
                                          const drafter::ASTType& astType)
 {
@@ -46,7 +46,14 @@ v8::Local<v8::Object> Result::WrapResult(const snowcrash::ParseResult<snowcrash:
     static const char* ErrorKey = "error";
     static const char* SourcemapKey = "sourcemap";
 
-    sos::Object result = drafter::WrapResult(parseResult, options, astType);
+    sos::Object result;
+
+    try {
+        result = drafter::WrapResult(parseResult, options, astType);
+    }
+    catch (snowcrash::Error& error) {
+        parseResult.report.error = error;
+    }
 
     if (parseResult.report.error.code != snowcrash::Error::OK) {
         result.set(AstKey, sos::Null());
