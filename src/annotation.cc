@@ -1,5 +1,6 @@
 #include "protagonist.h"
-#include "Serialize.h"
+#include "SerializeResult.h"
+#include "v8_wrapper.h"
 
 using namespace v8;
 using namespace protagonist;
@@ -36,32 +37,9 @@ NAN_METHOD(SourceAnnotation::New)
     NanReturnValue(args.This());
 }
 
-static Local<Object> WrapSourceCharactersRange(const mdp::CharactersRange& range)
-{
-    Local<Object> rangeObject = NanNew<Object>();
-
-    rangeObject->Set(NanNew<String>("index"), NanNew<Number>(range.location));
-    rangeObject->Set(NanNew<String>("length"), NanNew<Number>(range.length));
-    return rangeObject;
-}
-
 Local<Object> SourceAnnotation::WrapSourceAnnotation(const snowcrash::SourceAnnotation& annotation)
 {
-    Local<Function> cons = NanNew<Function>(constructor);
-    Local<Object> annotationWrap = cons->NewInstance();
+    sos::Object annotationObject = drafter::WrapAnnotation(annotation);
 
-    annotationWrap->Set(NanNew<String>("code"), NanNew<Number>(annotation.code));
-    annotationWrap->Set(NanNew<String>("message"), NanNew<String>(annotation.message.c_str()));
-
-    Local<Object> location = NanNew<Array>(annotation.location.size());
-    size_t i = 0;
-    for (mdp::CharactersRangeSet::const_iterator it = annotation.location.begin();
-         it != annotation.location.end();
-         ++it, ++i) {
-
-        location->Set(i, WrapSourceCharactersRange(*it));
-    }
-
-    annotationWrap->Set(NanNew<String>("location"), location);
-    return annotationWrap;
+    return v8_wrap(annotationObject)->ToObject();
 }
