@@ -55,16 +55,15 @@ v8::Local<v8::Object> Result::WrapResult(snowcrash::ParseResult<snowcrash::Bluep
         parseResult.report.error = error;
     }
 
-    if (parseResult.report.error.code != snowcrash::Error::OK) {
+    if (astType == drafter::NormalASTType && parseResult.report.error.code != snowcrash::Error::OK) {
         result.set(AstKey, sos::Null());
 
         if ((options & snowcrash::ExportSourcemapOption) != 0) {
             result.set(SourcemapKey, sos::Null());
         }
     }
-    else {
-        result.unset(ErrorKey);
-    }
+
+    result.unset(ErrorKey);
 
     return v8_wrap(result)->ToObject();
 }
