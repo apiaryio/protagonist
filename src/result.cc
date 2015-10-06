@@ -14,28 +14,28 @@ Result::~Result()
 {
 }
 
-Persistent<Function> Result::constructor;
+Nan::Persistent<Function> Result::constructor;
 
 void Result::Init(Handle<Object> exports)
 {
-    NanScope();
+    Nan::HandleScope scope;
 
-    Local<FunctionTemplate> t = NanNew<FunctionTemplate>(New);
-    t->SetClassName(NanNew<String>("Result"));
+    Local<FunctionTemplate> t = Nan::New<FunctionTemplate>(New);
+    t->SetClassName(Nan::New<String>("Result").ToLocalChecked());
     t->InstanceTemplate()->SetInternalFieldCount(1);
 
-    NanAssignPersistent<Function>(constructor, t->GetFunction());
-    exports->Set(NanNew<String>("Result"), t->GetFunction());
+    constructor.Reset(t->GetFunction());
+    exports->Set(Nan::New<String>("Result").ToLocalChecked(), t->GetFunction());
 }
 
 NAN_METHOD(Result::New)
 {
-    NanScope();
+    Nan::HandleScope scope;
 
     Result* result = ::new Result();
-    result->Wrap(args.This());
+    result->Wrap(info.This());
 
-    NanReturnValue(args.This());
+    info.GetReturnValue().Set(info.This());
 }
 
 v8::Local<v8::Object> Result::WrapResult(snowcrash::ParseResult<snowcrash::Blueprint>& parseResult,

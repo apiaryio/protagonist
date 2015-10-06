@@ -24,7 +24,7 @@ namespace protagonist {
     //
     // SourceAnnotation
     //
-    class SourceAnnotation : public node::ObjectWrap {
+    class SourceAnnotation : public Nan::ObjectWrap {
     public:
         static void Init(v8::Handle<v8::Object> target);
 
@@ -36,13 +36,13 @@ namespace protagonist {
         ~SourceAnnotation();
 
         static NAN_METHOD(New);
-        static v8::Persistent<v8::Function> constructor;
+        static Nan::Persistent<v8::Function> constructor;
     };
 
     //
     // Result
     //
-    class Result : public node::ObjectWrap {
+    class Result : public Nan::ObjectWrap {
     public:
         static void Init(v8::Handle<v8::Object> target);
 
@@ -57,7 +57,7 @@ namespace protagonist {
         ~Result();
 
         static NAN_METHOD(New);
-        static v8::Persistent<v8::Function> constructor;
+        static Nan::Persistent<v8::Function> constructor;
     };
 
     //

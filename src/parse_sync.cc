@@ -9,37 +9,37 @@ using namespace v8;
 using namespace protagonist;
 
 NAN_METHOD(protagonist::ParseSync) {
-    NanScope();
+    Nan::HandleScope scope;
 
     // Check arguments
-    if (args.Length() != 1 && args.Length() != 2) {
-        NanThrowTypeError("wrong number of arguments, `parseSync(string, options)` expected");
-        NanReturnUndefined();
+    if (info.Length() != 1 && info.Length() != 2) {
+        Nan::ThrowTypeError("wrong number of arguments, `parseSync(string, options)` expected");
+        return;
     }
 
-    if (!args[0]->IsString()) {
-        NanThrowTypeError("wrong argument - string expected, `parseSync(string, options)`");
-        NanReturnUndefined();
+    if (!info[0]->IsString()) {
+        Nan::ThrowTypeError("wrong argument - string expected, `parseSync(string, options)`");
+        return;
     }
 
-    if (args.Length() == 2 && !args[1]->IsObject()) {
-        NanThrowTypeError("wrong argument - object expected, `parseSync(string, options)`");
-        NanReturnUndefined();
+    if (info.Length() == 2 && !info[1]->IsObject()) {
+        Nan::ThrowTypeError("wrong argument - object expected, `parseSync(string, options)`");
+        return;
     }
 
     // Get source data
-    String::Utf8Value sourceData(args[0]->ToString());
+    String::Utf8Value sourceData(info[0]->ToString());
 
     // Prepare options
     snowcrash::BlueprintParserOptions options = 0;
     drafter::ASTType astType = drafter::RefractASTType;
 
-    if (args.Length() == 2) {
-        OptionsResult *optionsResult = ParseOptionsObject(Handle<Object>::Cast(args[1]));
+    if (info.Length() == 2) {
+        OptionsResult *optionsResult = ParseOptionsObject(Handle<Object>::Cast(info[1]));
 
         if (optionsResult->error != NULL) {
-            NanThrowTypeError(optionsResult->error);
-            NanReturnUndefined();
+            Nan::ThrowTypeError(optionsResult->error);
+            return;
         }
 
         options = optionsResult->options;
@@ -54,9 +54,9 @@ NAN_METHOD(protagonist::ParseSync) {
     Local<Object> result = Result::WrapResult(parseResult, options, astType);
 
     if (parseResult.report.error.code != snowcrash::Error::OK) {
-        NanThrowError(SourceAnnotation::WrapSourceAnnotation(parseResult.report.error));
-        NanReturnUndefined();
+        Nan::ThrowError((Local<Value>) SourceAnnotation::WrapSourceAnnotation(parseResult.report.error));
+        return;
     }
 
-    NanReturnValue(result);
+    info.GetReturnValue().Set(result);
 }
