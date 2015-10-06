@@ -118,13 +118,13 @@ void AsyncParseAfter(uv_work_t* request) {
     const unsigned argc = 2;
     Local<Value> argv[argc];
 
+    argv[1] = Result::WrapResult(baton->parseResult, baton->options, baton->astType);
+
     // Error Object
     if (baton->parseResult.report.error.code == snowcrash::Error::OK)
         argv[0] = NanNull();
     else
         argv[0] = SourceAnnotation::WrapSourceAnnotation(baton->parseResult.report.error);
-
-    argv[1] = Result::WrapResult(baton->parseResult, baton->options, baton->astType);
 
     TryCatch try_catch;
     Local<Function> callback = NanNew<Function>(baton->callback);

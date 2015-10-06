@@ -51,10 +51,12 @@ NAN_METHOD(protagonist::ParseSync) {
     snowcrash::ParseResult<snowcrash::Blueprint> parseResult;
     drafter::ParseBlueprint(*sourceData, options, parseResult);
 
+    Local<Object> result = Result::WrapResult(parseResult, options, astType);
+
     if (parseResult.report.error.code != snowcrash::Error::OK) {
         NanThrowError(SourceAnnotation::WrapSourceAnnotation(parseResult.report.error));
         NanReturnUndefined();
     }
 
-    NanReturnValue(Result::WrapResult(parseResult, options, astType));
+    NanReturnValue(result);
 }
