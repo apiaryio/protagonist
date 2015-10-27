@@ -6,7 +6,7 @@
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/uaa6ivk97urmoucr/branch/master?svg=true)](https://ci.appveyor.com/project/Apiary/protagonist)
 
 ### API Blueprint Parser for Node.js
-Protagonist is a Node.js wrapper for the [Snow Crash](https://github.com/apiaryio/snowcrash) library.
+Protagonist is a Node.js wrapper for the [Drafter](https://github.com/apiaryio/drafter) library.
 
 API Blueprint is Web API documentation language. You can find API Blueprint documentation on the [API Blueprint site](https://apiblueprint.org).
 
