@@ -26,10 +26,6 @@
       ],
       "dependencies": [
         "drafter/drafter.gyp:libdrafter",
-        "drafter/ext/snowcrash/snowcrash.gyp:libsnowcrash",
-        "drafter/ext/snowcrash/snowcrash.gyp:libmarkdownparser",
-        "drafter/ext/snowcrash/snowcrash.gyp:libsundown",
-        "drafter/drafter.gyp:libsos"
       ]
     }
   ]
