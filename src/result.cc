@@ -49,7 +49,7 @@ v8::Local<v8::Object> Result::WrapResult(snowcrash::ParseResult<snowcrash::Bluep
     sos::Object result;
 
     try {
-        result = drafter::WrapResult(parseResult, options, astType);
+        result = drafter::WrapResult(parseResult, drafter::WrapperOptions(astType, options & snowcrash::ExportSourcemapOption));
     }
     catch (snowcrash::Error& error) {
         parseResult.report.error = error;
