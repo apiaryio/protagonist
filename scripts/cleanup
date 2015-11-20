@@ -1,0 +1,8 @@
+var fs = require('fs');
+
+var ignoreFile = __dirname + "/../drafter/.npmignore";
+var ignoreTargetFile = __dirname + "/.ignore";
+
+if (fs.existsSync(ignoreTargetFile)) {
+  fs.renameSync(ignoreTargetFile, ignoreFile);
+}
