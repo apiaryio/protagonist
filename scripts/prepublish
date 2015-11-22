@@ -1,8 +1,15 @@
 var fs = require('fs');
 
 var ignoreFile = __dirname + "/../drafter/.npmignore";
-var ignoreTargetFile = __dirname + "/.ignore";
+var ignoreTargetFile = __dirname + "/.npmignore";
+
+var packageFile = __dirname + "/../drafter/package.json";
+var packageTargetFile = __dirname + "/package.json";
 
 if (fs.existsSync(ignoreFile)) {
   fs.renameSync(ignoreFile, ignoreTargetFile);
+}
+
+if (fs.existsSync(packageFile)) {
+  fs.renameSync(packageFile, packageTargetFile);
 }
