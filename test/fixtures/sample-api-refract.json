@@ -184,6 +184,18 @@
                                 "contentType": "application/json"
                               },
                               "content": "{\n  \"id\": 0,\n  \"message\": \"Hello World!\"\n}"
+                            },
+                            {
+                              "attributes": {
+                                 "contentType": "application/json"
+                              },
+                              "content": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"type\": \"object\"\n  }\n}",
+                              "element": "asset",
+                                "meta": {
+                                  "classes": [
+                                    "messageBodySchema"
+                                  ]
+                                }
                             }
                           ]
                         }
