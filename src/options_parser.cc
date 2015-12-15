@@ -7,6 +7,7 @@ using namespace protagonist;
 //static const std::string RenderDescriptionsOptionKey = "renderDescriptions";
 static const std::string RequireBlueprintNameOptionKey = "requireBlueprintName";
 static const std::string ExportSourcemapOptionKey = "exportSourcemap";
+static const std::string GenerateSourceMapOptionKey = "generateSourceMap";
 static const std::string TypeOptionKey = "type";
 
 static const std::string TypeOptionAst = "ast";
@@ -35,7 +36,7 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject) {
             else
                 optionsResult->options &= snowcrash::RequireBlueprintNameOption;
         }
-        else if (ExportSourcemapOptionKey == *strKey) {
+        else if (ExportSourcemapOptionKey == *strKey || GenerateSourceMapOptionKey == *strKey) {
             // ExportSourcemapOption
             if (value->IsTrue())
                 optionsResult->options |= snowcrash::ExportSourcemapOption;
@@ -64,7 +65,7 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject) {
             std::stringstream ss;
             ss << "unrecognized option '" << *strKey << "', expected: ";
             ss << "'" << RequireBlueprintNameOptionKey << "', '";
-            ss << ExportSourcemapOptionKey << "' or '" << TypeOptionKey << '"';
+            ss << GenerateSourceMapOptionKey << "' or '" << TypeOptionKey << '"';
 
             optionsResult->error = ss.str().c_str();
             return optionsResult;
