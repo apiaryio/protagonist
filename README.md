@@ -50,7 +50,7 @@ Options can be passed to the parser as an optional second argument to both the a
 
 ```js
 var options = {
-    exportSourcemap: true
+    generateSourceMap: true
 }
 protagonist.parse('# My API', options, callback);
 ```
@@ -60,7 +60,7 @@ The available options are:
 Name                   | Description
 ---------------------- | ----------------------------------------------------------
 `requireBlueprintName` | Require parsed blueprints have a title (default: false)
-`exportSourcemap`      | Enable sourcemap generation (default: false)
+`generateSourceMap`    | Enable sourcemap generation (default: false)
 `type`                 | Set the output structure type as either `ast` or `refract` (default: `refract`)
 
 ### Parsing Result

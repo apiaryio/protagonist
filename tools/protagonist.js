@@ -29,7 +29,7 @@ if (typeof args == 'undefined' || args.length !== 1) {
 fs.readFile(args[0], 'utf8', function (err, data) {
   if (err) throw err;
 
-  protagonist.parse(data, {exportSourcemap: true}, function (err, result) {
+  protagonist.parse(data, {generateSourceMap: true}, function (err, result) {
     if (err) {
         console.log(JSON.stringify(err, null, 2));
         process.exit(err.code);
