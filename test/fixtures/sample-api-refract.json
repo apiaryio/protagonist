@@ -186,16 +186,16 @@
                               "content": "{\n  \"id\": 0,\n  \"message\": \"Hello World!\"\n}"
                             },
                             {
-                              "attributes": {
-                                 "contentType": "application/json"
-                              },
-                              "content": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"type\": \"object\"\n  }\n}",
                               "element": "asset",
-                                "meta": {
-                                  "classes": [
-                                    "messageBodySchema"
-                                  ]
-                                }
+                              "meta": {
+                                "classes": [
+                                  "messageBodySchema"
+                                ]
+                              },
+                              "attributes": {
+                                "contentType": "application/json"
+                              },
+                              "content": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": {\n      \"type\": \"number\"\n    },\n    \"message\": {\n      \"type\": \"string\",\n      \"description\": \"The Message\"\n    }\n  }\n}"
                             }
                           ]
                         }

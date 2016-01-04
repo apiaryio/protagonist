@@ -68,7 +68,7 @@
                         }
                       ],
                       "body": "{\n  \"id\": 0,\n  \"message\": \"Hello World!\"\n}",
-                      "schema": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"type\": \"object\"\n  }\n}",
+                      "schema": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": {\n      \"type\": \"number\"\n    },\n    \"message\": {\n      \"type\": \"string\",\n      \"description\": \"The Message\"\n    }\n  }\n}",
                       "content": [
                         {
                           "element": "dataStructure",
@@ -221,7 +221,7 @@
                         }
                       ],
                       "body": "{\n  \"id\": 0,\n  \"message\": \"Hello World!\"\n}",
-                      "schema": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"type\": \"object\"\n  }\n}",
+                      "schema": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": {\n      \"type\": \"number\"\n    },\n    \"message\": {\n      \"type\": \"string\",\n      \"description\": \"The Message\"\n    }\n  }\n}",
                       "content": [
                         {
                           "element": "dataStructure",
