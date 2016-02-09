@@ -1,0 +1,13 @@
+circle.yml
+appveyor.yml
+Vagrantfile
+Dockerfile
+provisioning.sh
+scripts/
+drafter/emcc/
+drafter/tools/
+drafter/*.xc*
+drafter/features
+drafter/Gemfile*
+drafter/test/
+build/
