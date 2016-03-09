@@ -193,7 +193,7 @@
                                 ]
                               },
                               "attributes": {
-                                "contentType": "application/json"
+                                "contentType": "application/schema+json"
                               },
                               "content": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": {\n      \"type\": \"number\"\n    },\n    \"message\": {\n      \"type\": \"string\",\n      \"description\": \"The Message\"\n    }\n  }\n}"
                             }
