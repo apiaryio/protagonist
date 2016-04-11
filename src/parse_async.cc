@@ -105,7 +105,7 @@ void AsyncParse(uv_work_t* request) {
     snowcrash::ParseResult<snowcrash::Blueprint> parseResult;
 
     // Parse the source data
-    drafter::ParseBlueprint(baton->sourceData, baton->options, parseResult);
+    drafter::ParseBlueprint(baton->sourceData, baton->options | snowcrash::ExportSourcemapOption, parseResult);
 
     baton->parseResult = parseResult;
 }
