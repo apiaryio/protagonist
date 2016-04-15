@@ -1,6 +1,6 @@
 {
   "name": "protagonist",
-  "version": "1.3.0-pre.1",
+  "version": "1.3.0",
   "description": "API Blueprint Parser",
   "author": "Apiary.io <support@apiary.io>",
   "main": "./build/Release/protagonist",
