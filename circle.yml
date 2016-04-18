@@ -5,3 +5,10 @@ machine:
 checkout:
   post:
     - git submodule update --init --recursive
+
+deployment:
+  release:
+    tag: /v.*/
+    commands:
+      - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >.npmrc
+      - npm publish
