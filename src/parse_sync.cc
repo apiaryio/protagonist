@@ -1,5 +1,6 @@
 #include <string>
 #include <sstream>
+#include "v8_wrapper.h"
 #include "protagonist.h"
 #include "snowcrash.h"
 #include "drafter.h"
@@ -51,7 +52,7 @@ NAN_METHOD(protagonist::ParseSync) {
     snowcrash::ParseResult<snowcrash::Blueprint> parseResult;
     drafter::ParseBlueprint(*sourceData, options | snowcrash::ExportSourcemapOption, parseResult);
 
-    Local<Object> result = Result::WrapResult(parseResult, options, astType);
+    Local<Object> result = v8_wrap(Result::WrapResult(parseResult, options, astType))->ToObject();
 
     if (parseResult.report.error.code != snowcrash::Error::OK) {
         Nan::ThrowError((Local<Value>) SourceAnnotation::WrapSourceAnnotation(parseResult.report.error));

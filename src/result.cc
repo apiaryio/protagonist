@@ -1,6 +1,5 @@
 #include "protagonist.h"
 #include "SerializeResult.h"
-#include "v8_wrapper.h"
 #include "snowcrash.h"
 
 using namespace v8;
@@ -38,9 +37,9 @@ NAN_METHOD(Result::New)
     info.GetReturnValue().Set(info.This());
 }
 
-v8::Local<v8::Object> Result::WrapResult(snowcrash::ParseResult<snowcrash::Blueprint>& parseResult,
-                                         const snowcrash::BlueprintParserOptions& options,
-                                         const drafter::ASTType& astType)
+sos::Object Result::WrapResult(snowcrash::ParseResult<snowcrash::Blueprint>& parseResult,
+                               const snowcrash::BlueprintParserOptions& options,
+                               const drafter::ASTType& astType)
 {
     static const char* AstKey = "ast";
     static const char* ErrorKey = "error";
@@ -65,5 +64,5 @@ v8::Local<v8::Object> Result::WrapResult(snowcrash::ParseResult<snowcrash::Bluep
 
     result.unset(ErrorKey);
 
-    return v8_wrap(result)->ToObject();
+    return result;
 }

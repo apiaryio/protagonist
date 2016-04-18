@@ -1,5 +1,6 @@
 #include <string>
 #include <sstream>
+#include "v8_wrapper.h"
 #include "protagonist.h"
 #include "snowcrash.h"
 #include "drafter.h"
@@ -27,6 +28,7 @@ struct Baton {
 
     // Output
     snowcrash::ParseResult<snowcrash::Blueprint> parseResult;
+    sos::Object result;
 };
 
 NAN_METHOD(protagonist::Parse) {
@@ -102,12 +104,10 @@ NAN_METHOD(protagonist::Parse) {
 void AsyncParse(uv_work_t* request) {
     Baton* baton = static_cast<Baton*>(request->data);
 
-    snowcrash::ParseResult<snowcrash::Blueprint> parseResult;
-
     // Parse the source data
-    drafter::ParseBlueprint(baton->sourceData, baton->options | snowcrash::ExportSourcemapOption, parseResult);
+    drafter::ParseBlueprint(baton->sourceData, baton->options | snowcrash::ExportSourcemapOption, baton->parseResult);
 
-    baton->parseResult = parseResult;
+    baton->result = Result::WrapResult(baton->parseResult, baton->options, baton->astType);
 }
 
 void AsyncParseAfter(uv_work_t* request) {
@@ -118,7 +118,7 @@ void AsyncParseAfter(uv_work_t* request) {
     const unsigned argc = 2;
     Local<Value> argv[argc];
 
-    argv[1] = Result::WrapResult(baton->parseResult, baton->options, baton->astType);
+    argv[1] = v8_wrap(baton->result)->ToObject();
 
     // Error Object
     if (baton->parseResult.report.error.code == snowcrash::Error::OK)

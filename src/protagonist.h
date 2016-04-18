@@ -48,9 +48,9 @@ namespace protagonist {
 
         // Wraps snowcrash::Warnings and snowcrash:Blueprint into report object
         // Note: snowcrash::Result::Error is being sent separately as Error object
-        static v8::Local<v8::Object> WrapResult(snowcrash::ParseResult<snowcrash::Blueprint>& parseResult,
-                                                const snowcrash::BlueprintParserOptions& options,
-                                                const drafter::ASTType& astType);
+        static sos::Object WrapResult(snowcrash::ParseResult<snowcrash::Blueprint>& parseResult,
+                                      const snowcrash::BlueprintParserOptions& options,
+                                      const drafter::ASTType& astType);
 
     private:
         Result();
