@@ -10,5 +10,6 @@ deployment:
   release:
     tag: /v.*/
     commands:
+      - ruby -e "\`npm i -g npm@2\` if '`npm -v`'<'2.0.0'"
       - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >.npmrc
       - npm publish
