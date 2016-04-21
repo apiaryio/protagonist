@@ -12,7 +12,7 @@
     "node": ">=0.8.15"
   },
   "dependencies": {
-    "nan": "~2.0.9"
+    "nan": "~2.2.1"
   },
   "devDependencies": {
     "coffee-script": "~1.6.0",
