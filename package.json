@@ -21,8 +21,6 @@
     "chai": "~1.9.0"
   },
   "scripts": {
-    "prepublish": "node scripts/prepublish",
-    "postpublish": "node scripts/cleanup",
     "test": "mocha --compilers coffee:coffee-script -R spec ./test/*-test.coffee"
   },
   "license": "MIT"
