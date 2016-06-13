@@ -4,7 +4,6 @@ Vagrantfile
 Dockerfile
 provisioning.sh
 scripts/
-drafter/emcc/
 drafter/tools/
 drafter/*.xc*
 drafter/features

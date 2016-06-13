@@ -120,18 +120,7 @@
                       ],
                       "body": [],
                       "schema": [],
-                      "content": [
-                        {
-                          "name": [],
-                          "typeDefinition": [
-                            [
-                              321,
-                              21
-                            ]
-                          ],
-                          "sections": []
-                        }
-                      ]
+                      "content": []
                     }
                   ]
                 }
@@ -186,58 +175,7 @@
               "content": []
             }
           ],
-          "content": [
-            {
-              "name": [
-                [
-                  30,
-                  28
-                ]
-              ],
-              "typeDefinition": [],
-              "sections": [
-                [
-                  {
-                    "name": [
-                      [
-                        191,
-                        12
-                      ]
-                    ],
-                    "description": [],
-                    "valueDefinition": [
-                      [
-                        191,
-                        12
-                      ]
-                    ],
-                    "sections": []
-                  },
-                  {
-                    "name": [
-                      [
-                        209,
-                        45
-                      ]
-                    ],
-                    "description": [
-                      [
-                        209,
-                        45
-                      ]
-                    ],
-                    "valueDefinition": [
-                      [
-                        209,
-                        45
-                      ]
-                    ],
-                    "sections": []
-                  }
-                ]
-              ]
-            }
-          ]
+          "content": []
         }
       ]
     }
@@ -354,18 +292,7 @@
                       ],
                       "body": [],
                       "schema": [],
-                      "content": [
-                        {
-                          "name": [],
-                          "typeDefinition": [
-                            [
-                              321,
-                              21
-                            ]
-                          ],
-                          "sections": []
-                        }
-                      ]
+                      "content": []
                     }
                   ]
                 }
@@ -420,58 +347,7 @@
               "content": []
             }
           ],
-          "content": [
-            {
-              "name": [
-                [
-                  30,
-                  28
-                ]
-              ],
-              "typeDefinition": [],
-              "sections": [
-                [
-                  {
-                    "name": [
-                      [
-                        191,
-                        12
-                      ]
-                    ],
-                    "description": [],
-                    "valueDefinition": [
-                      [
-                        191,
-                        12
-                      ]
-                    ],
-                    "sections": []
-                  },
-                  {
-                    "name": [
-                      [
-                        209,
-                        45
-                      ]
-                    ],
-                    "description": [
-                      [
-                        209,
-                        45
-                      ]
-                    ],
-                    "valueDefinition": [
-                      [
-                        209,
-                        45
-                      ]
-                    ],
-                    "sections": []
-                  }
-                ]
-              ]
-            }
-          ]
+          "content": []
         }
       ]
     }
