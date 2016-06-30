@@ -105,8 +105,7 @@ void AsyncParse(uv_work_t* request) {
     Baton* baton = static_cast<Baton*>(request->data);
 
     // Parse the source data
-    drafter::ParseBlueprint(baton->sourceData, baton->options | snowcrash::ExportSourcemapOption, baton->parseResult);
-
+    snowcrash::parse(baton->sourceData, baton->options | snowcrash::ExportSourcemapOption, baton->parseResult);
     baton->result = Result::WrapResult(baton->parseResult, baton->options, baton->astType);
 }
 
