@@ -1,5 +1,21 @@
 # Protagonist Changelog
-## Master
+
+## 1.4.0
+
+This update now uses Drafter 3.0.0 Please see [Drafter
+3.0.0](https://github.com/apiaryio/drafter/releases/tag/v3.0.0) for the list of
+changes.
+
+### Breaking
+
+* Protagonist now uses C++11.
+
+  The following compiler versions are supported:
+
+  * Microsoft Visual C++ 2013 or higher
+  * GCC 4.8 or higher
+  * Clang 3.5 or higher
+
 
 ## 1.3.3
 

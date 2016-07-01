@@ -50,7 +50,7 @@ NAN_METHOD(protagonist::ParseSync) {
 
     // Parse the source data
     snowcrash::ParseResult<snowcrash::Blueprint> parseResult;
-    drafter::ParseBlueprint(*sourceData, options | snowcrash::ExportSourcemapOption, parseResult);
+    snowcrash::parse(*sourceData, options | snowcrash::ExportSourcemapOption, parseResult);
 
     Local<Object> result = v8_wrap(Result::WrapResult(parseResult, options, astType))->ToObject();
 
