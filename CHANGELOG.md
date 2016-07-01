@@ -1,5 +1,12 @@
 # Protagonist Changelog
 
+## 1.4.1
+
+### Bug Fixes
+
+- Fixes a problem when installing Protagonist on macOS.
+
+
 ## 1.4.0
 
 This update now uses Drafter 3.0.0 Please see [Drafter
