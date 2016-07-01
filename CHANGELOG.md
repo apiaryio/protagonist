@@ -1,6 +1,6 @@
 # Protagonist Changelog
 
-## Master
+## 1.4.1
 
 ### Bug Fixes
 
