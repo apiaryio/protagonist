@@ -11,6 +11,12 @@ Protagonist is a Node.js wrapper for the [Drafter](https://github.com/apiaryio/d
 API Blueprint is Web API documentation language. You can find API Blueprint documentation on the [API Blueprint site](https://apiblueprint.org).
 
 ## Install
+
+*NOTE:** *For general use we recommend that you use the [Drafter
+NPM](https://github.com/apiaryio/drafter-npm) package instead of Protagonist
+directly as Protagonist needs to be compiled which may not be possible in every
+situation*
+
 The best way to install Protagonist is by using its [NPM package](https://npmjs.org/package/protagonist).
 
 ```sh
