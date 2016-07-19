@@ -12,7 +12,7 @@ API Blueprint is Web API documentation language. You can find API Blueprint docu
 
 ## Install
 
-*NOTE:** *For general use we recommend that you use the [Drafter
+**NOTE:** *For general use we recommend that you use the [Drafter
 NPM](https://github.com/apiaryio/drafter-npm) package instead of Protagonist
 directly as Protagonist needs to be compiled which may not be possible in every
 situation*
