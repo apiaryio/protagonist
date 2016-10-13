@@ -1,6 +1,10 @@
 # Protagonist Changelog
 
-## Master
+## 1.5.2
+
+This update now uses Drafter 3.1.3. Please see [Drafter
+3.1.3](https://github.com/apiaryio/drafter/releases/tag/v3.1.3) for
+the list of changes.
 
 ## 1.5.1
 
