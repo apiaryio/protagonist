@@ -19,7 +19,7 @@ namespace protagonist {
       const char *error;
     };
 
-    OptionsResult* ParseOptionsObject(v8::Handle<v8::Object>);
+    OptionsResult* ParseOptionsObject(v8::Handle<v8::Object>, bool);
 
     //
     // SourceAnnotation
@@ -61,10 +61,30 @@ namespace protagonist {
     };
 
     //
+    // Validate
+    //
+    class Validate : public Nan::ObjectWrap {
+    public:
+        static void Init(v8::Handle<v8::Object> target);
+
+        static sos::Object Do(const mdp::ByteBuffer& sourceData,
+                              const snowcrash::BlueprintParserOptions& options);
+
+    private:
+        Validate();
+        ~Validate();
+
+        static NAN_METHOD(New);
+        static Nan::Persistent<v8::Function> constructor;
+    };
+
+    //
     // Parse function
     //
     extern NAN_METHOD(Parse);
     extern NAN_METHOD(ParseSync);
+    extern NAN_METHOD(Validate);
+    extern NAN_METHOD(ValidateSync);
 }
 
 #endif

@@ -1,0 +1,28 @@
+{
+  "element": "parseResult",
+  "content": [
+    {
+      "element": "annotation",
+      "meta": {
+        "classes": [
+          "warning"
+        ]
+      },
+      "attributes": {
+        "code": 6,
+        "sourceMap": [
+          {
+            "content": [
+              [
+                8,
+                8
+              ]
+            ],
+            "element": "sourceMap"
+          }
+        ]
+      },
+      "content": "action is missing a response"
+    }
+  ]
+}
