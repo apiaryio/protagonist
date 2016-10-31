@@ -1,6 +1,6 @@
 # Protagonist Changelog
 
-## Master
+## 1.6.0
 
 ### Enhancements
 
