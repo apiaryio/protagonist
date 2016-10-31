@@ -1,5 +1,12 @@
 # Protagonist Changelog
 
+## 1.6.0
+
+### Enhancements
+
+* Added `validate` and `validateSync` to just return the warnings and errors
+  after parsing a blueprint.
+
 ## 1.5.2
 
 This update now uses Drafter 3.1.3. Please see [Drafter

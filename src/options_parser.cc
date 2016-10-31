@@ -13,7 +13,7 @@ static const std::string TypeOptionKey = "type";
 static const std::string TypeOptionAst = "ast";
 static const std::string TypeOptionRefract = "refract";
 
-OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject) {
+OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, bool forValidate) {
     OptionsResult *optionsResult = (OptionsResult *) malloc(sizeof(OptionsResult));
 
     optionsResult->options = 0;
@@ -36,36 +36,47 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject) {
             else
                 optionsResult->options &= snowcrash::RequireBlueprintNameOption;
         }
-        else if (ExportSourcemapOptionKey == *strKey || GenerateSourceMapOptionKey == *strKey) {
-            // ExportSourcemapOption
-            if (value->IsTrue())
-                optionsResult->options |= snowcrash::ExportSourcemapOption;
-            else
-                optionsResult->options &= snowcrash::ExportSourcemapOption;
-        }
-        else if (TypeOptionKey == *strKey) {
-            // TypeOption
-            const String::Utf8Value strValue(value);
+        else if (!forValidate) {
+            if (ExportSourcemapOptionKey == *strKey || GenerateSourceMapOptionKey == *strKey) {
+                // ExportSourcemapOption
+                if (value->IsTrue())
+                    optionsResult->options |= snowcrash::ExportSourcemapOption;
+                else
+                    optionsResult->options &= snowcrash::ExportSourcemapOption;
+            }
+            else if (TypeOptionKey == *strKey) {
+                // TypeOption
+                const String::Utf8Value strValue(value);
 
-            if (TypeOptionAst == *strValue) {
-                optionsResult->astType = drafter::NormalASTType;
-            } else if (TypeOptionRefract == *strValue) {
-                optionsResult->astType = drafter::RefractASTType;
-            } else {
+                if (TypeOptionAst == *strValue) {
+                    optionsResult->astType = drafter::NormalASTType;
+                } else if (TypeOptionRefract == *strValue) {
+                    optionsResult->astType = drafter::RefractASTType;
+                } else {
+                    std::stringstream ss;
+                    ss << "unrecognized type '" << *strValue << "', expected '";
+                    ss << TypeOptionAst << "' or '" << TypeOptionRefract << "'";
+
+                    optionsResult->error = ss.str().c_str();
+                    return optionsResult;
+                }
+            }
+            else {
+                // Unrecognized option
                 std::stringstream ss;
-                ss << "unrecognized type '" << *strValue << "', expected '";
-                ss << TypeOptionAst << "' or '" << TypeOptionRefract << "'";
+                ss << "unrecognized option '" << *strKey << "', expected: ";
+                ss << "'" << RequireBlueprintNameOptionKey << "', '";
+                ss << GenerateSourceMapOptionKey << "' or '" << TypeOptionKey << '"';
 
                 optionsResult->error = ss.str().c_str();
                 return optionsResult;
             }
         }
         else {
-            // Unrecognized option
+            // Unrecognize option
             std::stringstream ss;
             ss << "unrecognized option '" << *strKey << "', expected: ";
-            ss << "'" << RequireBlueprintNameOptionKey << "', '";
-            ss << GenerateSourceMapOptionKey << "' or '" << TypeOptionKey << '"';
+            ss << "'" << RequireBlueprintNameOptionKey << '"';
 
             optionsResult->error = ss.str().c_str();
             return optionsResult;

@@ -36,7 +36,7 @@ NAN_METHOD(protagonist::ParseSync) {
     drafter::ASTType astType = drafter::RefractASTType;
 
     if (info.Length() == 2) {
-        OptionsResult *optionsResult = ParseOptionsObject(Handle<Object>::Cast(info[1]));
+        OptionsResult *optionsResult = ParseOptionsObject(Handle<Object>::Cast(info[1]), false);
 
         if (optionsResult->error != NULL) {
             Nan::ThrowTypeError(optionsResult->error);
@@ -54,6 +54,7 @@ NAN_METHOD(protagonist::ParseSync) {
 
     Local<Object> result = v8_wrap(Result::WrapResult(parseResult, options, astType))->ToObject();
 
+    // Error Object (FIXME: Don't have this once we remove AST)
     if (parseResult.report.error.code != snowcrash::Error::OK) {
         Nan::ThrowError((Local<Value>) SourceAnnotation::WrapSourceAnnotation(parseResult.report.error));
         return;

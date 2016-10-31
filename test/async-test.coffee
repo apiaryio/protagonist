@@ -1,7 +1,7 @@
 fs = require 'fs'
 path = require 'path'
-protagonist = require '../build/Release/protagonist'
 {assert} = require 'chai'
+protagonist = require '../build/Release/protagonist'
 
 describe 'Parser async parse', ->
 
@@ -9,7 +9,9 @@ describe 'Parser async parse', ->
 
     syncFinished = false
     sync_parsed = null
+
     data = fs.readFileSync(path.join(__dirname, './fixtures/sample-api.apib'), 'utf8')
+
     protagonist.parse data, (err, res) ->
       if syncFinished
         assert.deepEqual res, sync_parsed
