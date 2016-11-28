@@ -65,7 +65,7 @@ describe 'Blueprint AST', ->
         assert.isDefined ast.description
 
       it 'is "Lorem Ipsum"', ->
-        assert.strictEqual ast.description, 'Lorem Ipsum\n\n'
+        assert.strictEqual ast.description, 'Lorem Ipsum'
 
     describe 'resource group', ->
       it 'is defined', ->
