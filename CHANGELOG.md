@@ -1,5 +1,11 @@
 # Protagonist Changelog
 
+## master
+
+### Breaking
+
+* Drop support for node.js versions 0.10 and 0.12
+
 ## 1.6.3
 
 This update now uses Drafter 3.2.2. Please see [Drafter

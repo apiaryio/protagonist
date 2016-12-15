@@ -9,7 +9,7 @@
     "url": "https://github.com/apiaryio/protagonist.git"
   },
   "engines": {
-    "node": ">=0.8.15"
+    "node": ">=4"
   },
   "dependencies": {
     "nan": "~2.2.1"

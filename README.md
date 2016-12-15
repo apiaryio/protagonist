@@ -25,7 +25,7 @@ $ npm install protagonist
 
 **NOTE:** *Installing Protagonist depends on having Python 2 installed along with a compiler such as GCC, Clang or MSVC.*
 
-Tested with node.js 0.10.x, 0.12.x, 4, 6, 7
+Tested with node.js 4, 6, 7
 
 ## Getting started
 
