@@ -3,7 +3,7 @@
  *
  *  Run wiht fixtures:
  *
- *    node ../perf-protagonist.js fixture-1.apib fixture-1-ast.json fixture-2.apib fixture-2-ast.json 
+ *    node ../perf-protagonist.js fixture-1.apib fixture-1.json fixture-2.apib fixture-2.json 
  */ 
 
 var fs = require('fs');
