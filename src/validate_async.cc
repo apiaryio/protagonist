@@ -66,11 +66,10 @@ NAN_METHOD(protagonist::Validate) {
 
         if (optionsResult->error != NULL) {
             Nan::ThrowTypeError(optionsResult->error);
-            return;
         }
 
         options = optionsResult->options;
-        free(optionsResult);
+        FreeOptionsResult(&optionsResult);
     }
 
     // Get Callback

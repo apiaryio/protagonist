@@ -16,10 +16,11 @@ namespace protagonist {
     struct OptionsResult {
       snowcrash::BlueprintParserOptions options;
       drafter::ASTType astType;
-      const char *error;
+      char *error;
     };
 
     OptionsResult* ParseOptionsObject(v8::Handle<v8::Object>, bool);
+    void FreeOptionsResult(OptionsResult** optionsResult);
 
     //
     // SourceAnnotation
