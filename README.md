@@ -69,9 +69,6 @@ Name                   | Description
 ---------------------- | ----------------------------------------------------------
 `requireBlueprintName` | Require parsed blueprints have a title (default: false)
 `generateSourceMap`    | Enable sourcemap generation (default: false)
-`type`                 | Set the output structure type as either `ast` or `refract` (default: `refract`)
-
-**NOTE**: *The `ast` option is deprecated in favour of `refract`.*
 
 ### Parsing Result
 

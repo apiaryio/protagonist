@@ -41,11 +41,10 @@ NAN_METHOD(protagonist::ValidateSync) {
 
         if (optionsResult->error != NULL) {
             Nan::ThrowTypeError(optionsResult->error);
-            return;
         }
 
         options = optionsResult->options;
-        free(optionsResult);
+        FreeOptionsResult(&optionsResult);
     }
 
     sos::Object result = Validate::Do(*sourceData, options);

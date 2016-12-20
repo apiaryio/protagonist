@@ -5,7 +5,7 @@ protagonist = require '../build/Release/protagonist'
 
 describe "Parser sourcemap", ->
 
-  sourcemap_fixture = require './fixtures/sample-api-sourcemap.json'
+  sourcemap_fixture = require './fixtures/sample-api-refract-sourcemap.json'
   sourcemap_parsed = null
 
   # Read & parse blueprint fixture
@@ -16,19 +16,19 @@ describe "Parser sourcemap", ->
     fs.readFile fixture_path, 'utf8', (err, data) ->
       return done err if err
 
-      protagonist.parse data, { type: 'ast', generateSourceMap: true }, (err, result) ->
+      protagonist.parse data, generateSourceMap: true, (err, result) ->
         return done err if err
 
-        sourcemap_parsed = result.sourcemap
+        sourcemap_parsed = result
         done()
 
   # Parser Sourcemap should conform to recent source map serialization JSON media type
-  it '`sourcemap` field conforms to `vnd.apiblueprint.sourcemap+json; version=4.0`', ->
+  it '`sourcemap` field conforms to `refract`', ->
     assert.deepEqual sourcemap_fixture, sourcemap_parsed
 
-describe "Parser sourcemap with old option name", ->
+#describe "Parser sourcemap with old option name", ->
 
-  sourcemap_fixture = require './fixtures/sample-api-sourcemap.json'
+  sourcemap_fixture = require './fixtures/sample-api-refract-sourcemap.json'
   sourcemap_parsed = null
 
   # Read & parse blueprint fixture
@@ -39,12 +39,12 @@ describe "Parser sourcemap with old option name", ->
     fs.readFile fixture_path, 'utf8', (err, data) ->
       return done err if err
 
-      protagonist.parse data, { type: 'ast', exportSourcemap: true }, (err, result) ->
+      protagonist.parse data, exportSourcemap: true, (err, result) ->
         return done err if err
 
-        sourcemap_parsed = result.sourcemap
+        sourcemap_parsed = result
         done()
 
   # Parser Sourcemap should conform to recent source map serialization JSON media type
-  it '`sourcemap` field conforms to `vnd.apiblueprint.sourcemap+json; version=4.0`', ->
+  it '`sourcemap` field conforms to `refract`', ->
     assert.deepEqual sourcemap_fixture, sourcemap_parsed

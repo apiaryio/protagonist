@@ -8,10 +8,29 @@ using namespace protagonist;
 static const std::string RequireBlueprintNameOptionKey = "requireBlueprintName";
 static const std::string ExportSourcemapOptionKey = "exportSourcemap";
 static const std::string GenerateSourceMapOptionKey = "generateSourceMap";
-static const std::string TypeOptionKey = "type";
 
-static const std::string TypeOptionAst = "ast";
-static const std::string TypeOptionRefract = "refract";
+static char* AllocErrorMessageForUnrecognisedOption(const String::Utf8Value& key, const bool forValidate) {
+
+    std::stringstream ss;
+    ss << "unrecognized option '" << *key << "', expected: ";
+    ss << "'" << RequireBlueprintNameOptionKey << "'";
+
+    if (!forValidate) {
+        ss << ", '" << GenerateSourceMapOptionKey << "'";
+    }
+
+    return strdup(ss.str().c_str());
+}
+
+static void SetOption(snowcrash::BlueprintParserOptions& options, const Local<Value> value, const snowcrash::BlueprintParserOption flag) {
+
+    if (value->IsTrue()) {
+        options |= flag;
+    }
+    else {
+        options &= flag;
+    }
+}
 
 OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, bool forValidate) {
     OptionsResult *optionsResult = (OptionsResult *) malloc(sizeof(OptionsResult));
@@ -30,58 +49,35 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, boo
         const String::Utf8Value strKey(key);
 
         if (RequireBlueprintNameOptionKey == *strKey) {
-            // RequireBlueprintNameOption
-            if (value->IsTrue())
-                optionsResult->options |= snowcrash::RequireBlueprintNameOption;
-            else
-                optionsResult->options &= snowcrash::RequireBlueprintNameOption;
+            SetOption(optionsResult->options, value, snowcrash::RequireBlueprintNameOption);
         }
         else if (!forValidate) {
             if (ExportSourcemapOptionKey == *strKey || GenerateSourceMapOptionKey == *strKey) {
-                // ExportSourcemapOption
-                if (value->IsTrue())
-                    optionsResult->options |= snowcrash::ExportSourcemapOption;
-                else
-                    optionsResult->options &= snowcrash::ExportSourcemapOption;
-            }
-            else if (TypeOptionKey == *strKey) {
-                // TypeOption
-                const String::Utf8Value strValue(value);
-
-                if (TypeOptionAst == *strValue) {
-                    optionsResult->astType = drafter::NormalASTType;
-                } else if (TypeOptionRefract == *strValue) {
-                    optionsResult->astType = drafter::RefractASTType;
-                } else {
-                    std::stringstream ss;
-                    ss << "unrecognized type '" << *strValue << "', expected '";
-                    ss << TypeOptionAst << "' or '" << TypeOptionRefract << "'";
-
-                    optionsResult->error = ss.str().c_str();
-                    return optionsResult;
-                }
+                SetOption(optionsResult->options, value, snowcrash::ExportSourcemapOption);
             }
             else {
-                // Unrecognized option
-                std::stringstream ss;
-                ss << "unrecognized option '" << *strKey << "', expected: ";
-                ss << "'" << RequireBlueprintNameOptionKey << "', '";
-                ss << GenerateSourceMapOptionKey << "' or '" << TypeOptionKey << '"';
-
-                optionsResult->error = ss.str().c_str();
+                optionsResult->error = AllocErrorMessageForUnrecognisedOption(strKey, forValidate);
                 return optionsResult;
             }
         }
         else {
-            // Unrecognize option
-            std::stringstream ss;
-            ss << "unrecognized option '" << *strKey << "', expected: ";
-            ss << "'" << RequireBlueprintNameOptionKey << '"';
-
-            optionsResult->error = ss.str().c_str();
+            optionsResult->error = AllocErrorMessageForUnrecognisedOption(strKey, forValidate);
             return optionsResult;
         }
     }
 
     return optionsResult;
 }
+
+void protagonist::FreeOptionsResult(OptionsResult** optionsResult) {
+
+    if (*optionsResult != NULL) {
+        if ((*optionsResult)->error != NULL) {
+            free((*optionsResult)->error);
+        }
+        free(*optionsResult);
+    }
+    *optionsResult = NULL;
+
+}
+

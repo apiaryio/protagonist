@@ -69,12 +69,11 @@ NAN_METHOD(protagonist::Parse) {
 
         if (optionsResult->error != NULL) {
             Nan::ThrowTypeError(optionsResult->error);
-            return;
         }
 
         options = optionsResult->options;
         astType = optionsResult->astType;
-        free(optionsResult);
+        FreeOptionsResult(&optionsResult);
     }
 
     // Get Callback

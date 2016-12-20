@@ -18,10 +18,11 @@ describe 'MSON Refract', ->
     + name
     '''
 
-    protagonist.parse source, type: 'ast', (err, result) ->
+    protagonist.parse source, (err, result) ->
       return done err if err
-      attributes = result.ast.content[0].content[0].actions[0].examples[0].responses[0].content[0]
-      dataStructures = result.ast.content[1].content
+
+      attributes = result.content[0].content[0].content[0].content[0].content[0].content[1].content[0]
+      dataStructures = result.content[0].content[1].content
       done()
 
   describe 'Attributes', ->

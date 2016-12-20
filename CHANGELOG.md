@@ -4,7 +4,9 @@
 
 ### Breaking
 
-* Drop support for node.js versions 0.10 and 0.12
+- Removed the option to select AST Type. The ouput will be only refract
+
+- Drop support for node.js versions 0.10 and 0.12
 
 ## 1.6.3
 
