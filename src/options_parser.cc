@@ -8,10 +8,6 @@ using namespace protagonist;
 static const std::string RequireBlueprintNameOptionKey = "requireBlueprintName";
 static const std::string ExportSourcemapOptionKey = "exportSourcemap";
 static const std::string GenerateSourceMapOptionKey = "generateSourceMap";
-static const std::string TypeOptionKey = "type";
-
-static const std::string TypeOptionAst = "ast";
-static const std::string TypeOptionRefract = "refract";
 
 OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, bool forValidate) {
     OptionsResult *optionsResult = (OptionsResult *) malloc(sizeof(OptionsResult));
@@ -44,29 +40,12 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, boo
                 else
                     optionsResult->options &= snowcrash::ExportSourcemapOption;
             }
-            else if (TypeOptionKey == *strKey) {
-                // TypeOption
-                const String::Utf8Value strValue(value);
-
-                if (TypeOptionAst == *strValue) {
-                    optionsResult->astType = drafter::NormalASTType;
-                } else if (TypeOptionRefract == *strValue) {
-                    optionsResult->astType = drafter::RefractASTType;
-                } else {
-                    std::stringstream ss;
-                    ss << "unrecognized type '" << *strValue << "', expected '";
-                    ss << TypeOptionAst << "' or '" << TypeOptionRefract << "'";
-
-                    optionsResult->error = ss.str().c_str();
-                    return optionsResult;
-                }
-            }
             else {
                 // Unrecognized option
                 std::stringstream ss;
                 ss << "unrecognized option '" << *strKey << "', expected: ";
                 ss << "'" << RequireBlueprintNameOptionKey << "', '";
-                ss << GenerateSourceMapOptionKey << "' or '" << TypeOptionKey << '"';
+                ss << GenerateSourceMapOptionKey << "'";
 
                 optionsResult->error = ss.str().c_str();
                 return optionsResult;

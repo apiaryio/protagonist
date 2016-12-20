@@ -4,6 +4,8 @@
 
 ### Breaking
 
+* Drop support for Blueprint AST (in API)
+
 * Drop support for node.js versions 0.10 and 0.12
 
 ## 1.6.3
