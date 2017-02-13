@@ -15,15 +15,12 @@
         "<!(node -e \"require('nan')\")"
       ],
       "sources": [
-        "src/annotation.cc",
         "src/options_parser.cc",
         "src/parse_async.cc",
         "src/parse_sync.cc",
         "src/protagonist.cc",
         "src/protagonist.h",
-        "src/result.cc",
-        "src/v8_wrapper.cc",
-        "src/validate.cc",
+        "src/refract2v8.cc",
         "src/validate_async.cc",
         "src/validate_sync.cc"
       ],

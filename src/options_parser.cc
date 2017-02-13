@@ -1,5 +1,5 @@
+#include <sstream>
 #include "protagonist.h"
-#include "snowcrash.h"
 
 using namespace v8;
 using namespace protagonist;
@@ -22,21 +22,23 @@ static char* AllocErrorMessageForUnrecognisedOption(const String::Utf8Value& key
     return strdup(ss.str().c_str());
 }
 
-static void SetOption(snowcrash::BlueprintParserOptions& options, const Local<Value> value, const snowcrash::BlueprintParserOption flag) {
+struct SetOption {
+    template <typename O, typename F>
+    void operator()(O& options, const Local<Value> value, const F flag) {
 
-    if (value->IsTrue()) {
-        options |= flag;
+        if (value->IsTrue()) {
+            options |= flag;
+        }
+        else {
+            options &= ~flag;
+        }
     }
-    else {
-        options &= ~flag;
-    }
-}
+};
 
 OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, bool forValidate) {
     OptionsResult *optionsResult = (OptionsResult *) malloc(sizeof(OptionsResult));
 
-    optionsResult->options = 0;
-    optionsResult->astType = drafter::RefractASTType;
+    optionsResult->serializeOptions.format = DRAFTER_SERIALIZE_JSON;
     optionsResult->error = NULL;
 
     const Local<Array> properties = optionsObject->GetPropertyNames();
@@ -49,11 +51,11 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, boo
         const String::Utf8Value strKey(key);
 
         if (RequireBlueprintNameOptionKey == *strKey) {
-            SetOption(optionsResult->options, value, snowcrash::RequireBlueprintNameOption);
+            SetOption()(optionsResult->parseOptions.requireBlueprintName, value, true);
         }
         else if (!forValidate) {
             if (ExportSourcemapOptionKey == *strKey || GenerateSourceMapOptionKey == *strKey) {
-                SetOption(optionsResult->options, value, snowcrash::ExportSourcemapOption);
+                SetOption()(optionsResult->serializeOptions.sourcemap, value, true);
             }
             else {
                 optionsResult->error = AllocErrorMessageForUnrecognisedOption(strKey, forValidate);
