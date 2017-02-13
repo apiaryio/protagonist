@@ -32,14 +32,8 @@
               ]
             },
             "content": {
-              "key": {
-                "element": "string",
-                "content": "FORMAT"
-              },
-              "value": {
-                "element": "string",
-                "content": "1A"
-              }
+              "key": "FORMAT",
+              "value": "1A"
             }
           }
         ]
@@ -438,14 +432,8 @@
                                     ]
                                   },
                                   "content": {
-                                    "key": {
-                                      "element": "string",
-                                      "content": "Content-Type"
-                                    },
-                                    "value": {
-                                      "element": "string",
-                                      "content": "application/json"
-                                    }
+                                    "key": "Content-Type",
+                                    "value": "application/json"
                                   }
                                 }
                               ]

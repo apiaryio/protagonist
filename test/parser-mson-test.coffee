@@ -36,10 +36,10 @@ describe 'MSON Refract', ->
       assert.equal attributes.content[0].element, 'object'
 
     it 'object has a single member', ->
-      assert.equal attributes.content[0].content.length, 1
+      assert.equal attributes.content.length, 1
 
     it 'member is `id`', ->
-      assert.equal attributes.content[0].content[0].content.key.content, 'id'
+      assert.property attributes.content[0], 'id'
 
   describe 'Data structures', ->
     it 'are defined', ->
@@ -52,4 +52,4 @@ describe 'MSON Refract', ->
       assert.equal dataStructures[0].content[0].meta.id, 'Person'
 
     it 'Person has a `name` member', ->
-      assert.equal dataStructures[0].content[0].content[0].content.key.content, 'name'
+      assert.equal dataStructures[0].content[0].content[0].content.key, 'name'
