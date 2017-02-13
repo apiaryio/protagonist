@@ -1,5 +1,5 @@
+#include <sstream>
 #include "protagonist.h"
-#include "snowcrash.h"
 
 using namespace v8;
 using namespace protagonist;
@@ -22,22 +22,9 @@ static char* AllocErrorMessageForUnrecognisedOption(const String::Utf8Value& key
     return strdup(ss.str().c_str());
 }
 
-static void SetOption(snowcrash::BlueprintParserOptions& options, const Local<Value> value, const snowcrash::BlueprintParserOption flag) {
-
-    if (value->IsTrue()) {
-        options |= flag;
-    }
-    else {
-        options &= flag;
-    }
-}
-
 OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, bool forValidate) {
-    OptionsResult *optionsResult = (OptionsResult *) malloc(sizeof(OptionsResult));
-
-    optionsResult->options = 0;
-    optionsResult->astType = drafter::RefractASTType;
-    optionsResult->error = NULL;
+    OptionsResult *optionsResult = (OptionsResult *) calloc(1, sizeof(OptionsResult));
+    optionsResult->serializeOptions.format = DRAFTER_SERIALIZE_JSON;
 
     const Local<Array> properties = optionsObject->GetPropertyNames();
     const uint32_t length = properties->Length();
@@ -49,11 +36,15 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, boo
         const String::Utf8Value strKey(key);
 
         if (RequireBlueprintNameOptionKey == *strKey) {
-            SetOption(optionsResult->options, value, snowcrash::RequireBlueprintNameOption);
+            if (value->IsTrue()) {
+                optionsResult->parseOptions.requireBlueprintName = true;
+            }
         }
         else if (!forValidate) {
             if (ExportSourcemapOptionKey == *strKey || GenerateSourceMapOptionKey == *strKey) {
-                SetOption(optionsResult->options, value, snowcrash::ExportSourcemapOption);
+                if (value->IsTrue()) {
+                    optionsResult->serializeOptions.sourcemap = true;
+                }
             }
             else {
                 optionsResult->error = AllocErrorMessageForUnrecognisedOption(strKey, forValidate);

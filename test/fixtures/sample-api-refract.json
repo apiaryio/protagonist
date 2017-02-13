@@ -19,14 +19,8 @@
               ]
             },
             "content": {
-              "key": {
-                "element": "string",
-                "content": "FORMAT"
-              },
-              "value": {
-                "element": "string",
-                "content": "1A"
-              }
+              "key": "FORMAT",
+              "value": "1A"
             }
           }
         ]
@@ -62,25 +56,13 @@
                         ]
                       },
                       "content": {
-                        "key": {
-                          "element": "string",
-                          "content": "id"
-                        },
+                        "key": "id",
                         "value": {
                           "element": "enum",
                           "content": [
-                            {
-                              "element": "string",
-                              "content": "1"
-                            },
-                            {
-                              "element": "string",
-                              "content": "2"
-                            },
-                            {
-                              "element": "string",
-                              "content": "3"
-                            }
+                            "1",
+                            "2",
+                            "3"
                           ]
                         }
                       }
@@ -101,13 +83,8 @@
                         {
                           "element": "member",
                           "content": {
-                            "key": {
-                              "element": "string",
-                              "content": "id"
-                            },
-                            "value": {
-                              "element": "number"
-                            }
+                            "key": "id",
+                            "value": 0
                           }
                         },
                         {
@@ -116,14 +93,8 @@
                             "description": "The Message"
                           },
                           "content": {
-                            "key": {
-                              "element": "string",
-                              "content": "message"
-                            },
-                            "value": {
-                              "element": "string",
-                              "content": "Hello World!"
-                            }
+                            "key":"message",
+                            "value":"Hello World!"
                           }
                         }
                       ]
@@ -156,14 +127,8 @@
                                 {
                                   "element": "member",
                                   "content": {
-                                    "key": {
-                                      "element": "string",
-                                      "content": "Content-Type"
-                                    },
-                                    "value": {
-                                      "element": "string",
-                                      "content": "application/json"
-                                    }
+                                    "key": "Content-Type",
+                                    "value":  "application/json"
                                   }
                                 }
                               ]
