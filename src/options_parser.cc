@@ -34,7 +34,7 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, boo
             if (value->IsTrue())
                 optionsResult->options |= snowcrash::RequireBlueprintNameOption;
             else
-                optionsResult->options &= snowcrash::RequireBlueprintNameOption;
+                optionsResult->options &= ~snowcrash::RequireBlueprintNameOption;
         }
         else if (!forValidate) {
             if (ExportSourcemapOptionKey == *strKey || GenerateSourceMapOptionKey == *strKey) {
@@ -42,7 +42,7 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, boo
                 if (value->IsTrue())
                     optionsResult->options |= snowcrash::ExportSourcemapOption;
                 else
-                    optionsResult->options &= snowcrash::ExportSourcemapOption;
+                    optionsResult->options &= ~snowcrash::ExportSourcemapOption;
             }
             else if (TypeOptionKey == *strKey) {
                 // TypeOption
