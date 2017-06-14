@@ -1,6 +1,5 @@
 circle.yml
 appveyor.yml
-Vagrantfile
 Dockerfile
 provisioning.sh
 scripts/
