@@ -28,7 +28,7 @@ static void SetOption(snowcrash::BlueprintParserOptions& options, const Local<Va
         options |= flag;
     }
     else {
-        options &= flag;
+        options &= ~flag;
     }
 }
 

@@ -8,6 +8,40 @@
 
 - Drop support for node.js versions 0.10 and 0.12
 
+## 1.6.8
+
+This update now uses Drafter 3.2.7. Please see [Drafter
+3.2.7](https://github.com/apiaryio/drafter/releases/tag/v3.2.7) for
+the list of changes.
+
+### Bug Fixes
+
+* Fixed a bug where an option when set to false overrides the previous options.
+
+## 1.6.7
+
+This update now uses Drafter 3.2.6. Please see [Drafter
+3.2.6](https://github.com/apiaryio/drafter/releases/tag/v3.2.6) for
+the list of changes.
+
+## 1.6.6
+
+This update now uses Drafter 3.2.5. Please see [Drafter
+3.2.5](https://github.com/apiaryio/drafter/releases/tag/v3.2.5) for
+the list of changes.
+
+## 1.6.5
+
+This update now uses Drafter 3.2.4. Please see [Drafter
+3.2.4](https://github.com/apiaryio/drafter/releases/tag/v3.2.4) for
+the list of changes.
+
+## 1.6.4
+
+This update now uses Drafter 3.2.3. Please see [Drafter
+3.2.3](https://github.com/apiaryio/drafter/releases/tag/v3.2.3) for
+the list of changes.
+
 ## 1.6.3
 
 This update now uses Drafter 3.2.2. Please see [Drafter
