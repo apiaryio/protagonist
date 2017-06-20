@@ -126,7 +126,7 @@ void AsyncParseAfter(uv_work_t* request) {
         argv[0] = Nan::Null();
     }
     else {
-        argv[0] = annotations2v8(baton->result, baton->serializeOptions);
+        argv[0] = annotations2v8(baton->result);
     }
 
     TryCatch try_catch;
