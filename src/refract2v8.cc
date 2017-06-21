@@ -48,27 +48,6 @@ const std::set<std::string> basic_elements = {
     "member"
 };
 
-struct IsFullRender {
-    typedef const IElement* first_argument_type;
-    typedef const bool second_argument_type;
-    typedef const bool result_type;
-
-    bool operator()(const IElement* e, const bool sourcemap, const bool nonbasic = true) const {
-        return true;
-
-        if (basic_elements.find(e->element()) == basic_elements.end() && nonbasic) return true;
-
-        IElement::MemberElementCollection::const_iterator it = e->attributes.find("sourceMap");
-        // is there sourceMap in attributes
-        if (it != e->attributes.end()) {
-            // don't count sourceMap as attribute
-            return sourcemap ? true : e->meta.size() || (e->attributes.size() - 1);
-        }
-        return e->meta.size() || e->attributes.size();
-    }
-};
-
-
 Local<Value> v8_string(const std::string& value)
 {
     return Nan::New<String>(value.c_str()).ToLocalChecked();
@@ -171,89 +150,49 @@ Local<Value> v8RefElement(const ObjectElement& e, bool sourcemap)
     typedef ObjectElement::ValueType::const_iterator iterator;
     Local<Object> obj = v8Element(e, sourcemap);
 
-    if(IsFullRender()(&e, sourcemap, false)) {
-        Local<Array> array = Nan::New<Array>();
-        size_t i = 0;
+    Local<Array> array = Nan::New<Array>();
+    size_t i = 0;
 
-        for (iterator it = e.value.begin(); it != e.value.end(); ++i, ++it) {
-            array->Set(i, ElementToObject(*it, sourcemap));
-        }
-        obj->Set(v8_string("content"), array);
+    for (iterator it = e.value.begin(); it != e.value.end(); ++i, ++it) {
+        array->Set(i, ElementToObject(*it, sourcemap));
     }
-    else {
-        Local<Object> content = Nan::New<Object>();
-        Local<Value> key;
-        Local<Value> value;
-        for (iterator it = e.value.begin(); it != e.value.end(); ++it) {
-            MemberElement *m = dynamic_cast<MemberElement*>(*it);
-            if (m->value.first) {
-                key = ElementToObject(m->value.first, sourcemap);
-            }
-
-            if (m->value.second) {
-                value = ElementToObject(m->value.second, sourcemap);
-            }
-
-            content->Set(key, value);
-        }
-        obj->Set(v8_string("content"), content);
-    }
+    obj->Set(v8_string("content"), array);
 
     return obj;
 }
 
 void v8Wrapper::operator()(const NullElement& e)
 {
-    if (IsFullRender()(&e, sourcemap)) {
-        Local<Object> obj = v8Element(e, sourcemap);
-        obj->Set(v8_string("content"), Nan::Null());
-        v8_value = obj;
-    }
-    else {
-        v8_value =  Nan::Null();
-    }
+    Local<Object> obj = v8Element(e, sourcemap);
+    obj->Set(v8_string("content"), Nan::Null());
+    v8_value = obj;
 }
 
 void v8Wrapper::operator()(const StringElement& e)
 {
-    if (IsFullRender()(&e, sourcemap)) {
-        Local<Object> obj = v8Element(e, sourcemap);
-        if (!e.empty()) {
-            obj->Set(v8_string("content"), v8_string(e.value));
-        }
-        v8_value = obj;
+    Local<Object> obj = v8Element(e, sourcemap);
+    if (!e.empty()) {
+        obj->Set(v8_string("content"), v8_string(e.value));
     }
-    else {
-        v8_value = Nan::New<String>(e.value).ToLocalChecked();
-    }
+    v8_value = obj;
 }
 
 void v8Wrapper::operator()(const NumberElement& e)
 {
-    if (IsFullRender()(&e, sourcemap)) {
-        Local<Object> obj = v8Element(e, sourcemap);
-        if (!e.empty()) {
-            obj->Set(v8_string("content"), Nan::New<Number>(e.value));
-        }
-        v8_value = obj;
+    Local<Object> obj = v8Element(e, sourcemap);
+    if (!e.empty()) {
+        obj->Set(v8_string("content"), Nan::New<Number>(e.value));
     }
-    else {
-        v8_value =  Nan::New<Number>(e.value);
-    }
+    v8_value = obj;
 }
 
 void v8Wrapper::operator()(const BooleanElement& e)
 {
-    if (IsFullRender()(&e, sourcemap)) {
-        Local<Object> obj = v8Element(e, sourcemap);
-        if (!e.empty()) {
-            obj->Set(v8_string("content"), Nan::New<Boolean>(e.value));
-        }
-        v8_value = obj;
+    Local<Object> obj = v8Element(e, sourcemap);
+    if (!e.empty()) {
+        obj->Set(v8_string("content"), Nan::New<Boolean>(e.value));
     }
-    else {
-        v8_value =  Nan::New<Boolean>(e.value);
-    }
+    v8_value = obj;
 }
 
 void v8Wrapper::operator()(const MemberElement& e)
@@ -292,16 +231,12 @@ void v8Wrapper::operator()(const ArrayElement& e)
             array->Set(i, ElementToObject(*it, sourcemap));
         }
     }
-    if (IsFullRender()(&e, sourcemap)) {
-        Local<Object> res = v8Element(e, sourcemap);
-        if (!e.empty()) {
-            res->Set(v8_string("content"), array);
-        }
-        v8_value = res;
+
+    Local<Object> res = v8Element(e, sourcemap);
+    if (!e.empty()) {
+        res->Set(v8_string("content"), array);
     }
-    else {
-        v8_value = array;
-    }
+    v8_value = res;
 }
 
 void v8Wrapper::operator()(const EnumElement& e)
@@ -337,7 +272,7 @@ void v8Wrapper::operator()(const ObjectElement& e)
 
     Local<Object> obj = v8Element(e, sourcemap);
 
-    if(IsFullRender()(&e, sourcemap) && !e.value.empty()) {
+    if(!e.value.empty()) {
 
         if (!e.empty()) {
 
@@ -349,25 +284,6 @@ void v8Wrapper::operator()(const ObjectElement& e)
             }
 
             obj->Set(v8_string("content"), array);
-        }
-    }
-    else {
-
-        for (iterator it = e.value.begin(); it != e.value.end(); ++it) {
-
-            Local<Value> key;
-            Local<Value> value;
-            MemberElement *m = dynamic_cast<MemberElement*>(*it);
-
-            if (m->value.first) {
-                key = ElementToObject(m->value.first, sourcemap);
-            }
-
-            if (m->value.second) {
-                value = ElementToObject(m->value.second, sourcemap);
-            }
-
-            obj->Set(key, value);
         }
     }
 

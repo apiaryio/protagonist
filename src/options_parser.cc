@@ -22,23 +22,12 @@ static char* AllocErrorMessageForUnrecognisedOption(const String::Utf8Value& key
     return strdup(ss.str().c_str());
 }
 
-struct SetOption {
-    template <typename O, typename F>
-    void operator()(O& options, const Local<Value> value, const F flag) {
-
-        if (value->IsTrue()) {
-            options |= flag;
-        }
-        else {
-            options &= ~flag;
-        }
-    }
-};
-
 OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, bool forValidate) {
     OptionsResult *optionsResult = (OptionsResult *) malloc(sizeof(OptionsResult));
 
     optionsResult->serializeOptions.format = DRAFTER_SERIALIZE_JSON;
+    optionsResult->serializeOptions.sourcemap = false;
+    optionsResult->parseOptions.requireBlueprintName = false;
     optionsResult->error = NULL;
 
     const Local<Array> properties = optionsObject->GetPropertyNames();
@@ -51,11 +40,11 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, boo
         const String::Utf8Value strKey(key);
 
         if (RequireBlueprintNameOptionKey == *strKey) {
-            SetOption()(optionsResult->parseOptions.requireBlueprintName, value, true);
+            optionsResult->parseOptions.requireBlueprintName = value->IsTrue();
         }
         else if (!forValidate) {
             if (ExportSourcemapOptionKey == *strKey || GenerateSourceMapOptionKey == *strKey) {
-                SetOption()(optionsResult->serializeOptions.sourcemap, value, true);
+                optionsResult->serializeOptions.sourcemap = value->IsTrue();
             }
             else {
                 optionsResult->error = AllocErrorMessageForUnrecognisedOption(strKey, forValidate);
