@@ -130,7 +130,7 @@ Local<Object> v8ValueList(const T& e, bool sourcemap)
 {
     Local<Object> obj = v8Element(e, sourcemap);
 
-    if (!e.value.empty()) {
+    if (!e.empty()) {
         size_t i = 0;
         Local<Array> array = Nan::New<Array>();
         typedef typename T::ValueType::const_iterator iterator;
