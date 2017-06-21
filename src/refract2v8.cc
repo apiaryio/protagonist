@@ -54,6 +54,7 @@ struct IsFullRender {
     typedef const bool result_type;
 
     bool operator()(const IElement* e, const bool sourcemap, const bool nonbasic = true) const {
+        return true;
 
         if (basic_elements.find(e->element()) == basic_elements.end() && nonbasic) return true;
 
@@ -94,14 +95,18 @@ Local<Object> v8ElementCollection(const IElement::MemberElementCollection& colle
         Local<Value> key;
         Local<Value> value;
 
+        StringElement* str = TypeQueryVisitor::as<StringElement>((*it)->value.first);
+
         if (!sourcemap) {
-            StringElement* str = TypeQueryVisitor::as<StringElement>((*it)->value.first);
             if (str && str->value == "sourceMap"){
                 continue;
             }
         }
 
-        if ((*it)->value.first) {
+        if (str) {
+            key = v8_string(str->value);
+        }
+        else if ((*it)->value.first) {
             key = ElementToObject((*it)->value.first, sourcemap);
         }
 
@@ -213,7 +218,9 @@ void v8Wrapper::operator()(const StringElement& e)
 {
     if (IsFullRender()(&e, sourcemap)) {
         Local<Object> obj = v8Element(e, sourcemap);
-        obj->Set(v8_string("content"), Nan::New<String>(e.value).ToLocalChecked());
+        if (!e.empty()) {
+            obj->Set(v8_string("content"), v8_string(e.value));
+        }
         v8_value = obj;
     }
     else {
@@ -225,7 +232,7 @@ void v8Wrapper::operator()(const NumberElement& e)
 {
     if (IsFullRender()(&e, sourcemap)) {
         Local<Object> obj = v8Element(e, sourcemap);
-        if (e.value) {
+        if (!e.empty()) {
             obj->Set(v8_string("content"), Nan::New<Number>(e.value));
         }
         v8_value = obj;
@@ -239,7 +246,9 @@ void v8Wrapper::operator()(const BooleanElement& e)
 {
     if (IsFullRender()(&e, sourcemap)) {
         Local<Object> obj = v8Element(e, sourcemap);
-        obj->Set(v8_string("content"), Nan::New<Boolean>(e.value));
+        if (!e.empty()) {
+            obj->Set(v8_string("content"), Nan::New<Boolean>(e.value));
+        }
         v8_value = obj;
     }
     else {
@@ -285,7 +294,9 @@ void v8Wrapper::operator()(const ArrayElement& e)
     }
     if (IsFullRender()(&e, sourcemap)) {
         Local<Object> res = v8Element(e, sourcemap);
-        res->Set(v8_string("content"), array);
+        if (!e.empty()) {
+            res->Set(v8_string("content"), array);
+        }
         v8_value = res;
     }
     else {
@@ -328,14 +339,17 @@ void v8Wrapper::operator()(const ObjectElement& e)
 
     if(IsFullRender()(&e, sourcemap) && !e.value.empty()) {
 
-        Local<Array> array = Nan::New<Array>();
-        size_t i = 0;
+        if (!e.empty()) {
 
-        for (iterator it = e.value.begin(); it != e.value.end(); ++i, ++it) {
-            array->Set(i, ElementToObject(*it, sourcemap));
+            Local<Array> array = Nan::New<Array>();
+            size_t i = 0;
+
+            for (iterator it = e.value.begin(); it != e.value.end(); ++i, ++it) {
+                array->Set(i, ElementToObject(*it, sourcemap));
+            }
+
+            obj->Set(v8_string("content"), array);
         }
-
-        obj->Set(v8_string("content"), array);
     }
     else {
 
