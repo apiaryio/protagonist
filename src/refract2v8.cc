@@ -32,6 +32,7 @@ struct v8Wrapper {
     void operator()(const SelectElement& e);
     void operator()(const ObjectElement& e);
     void operator()(const IElement& e) {};
+    void operator()(const RefElement& e);
     template<typename T>
     void operator()(const T& e) {
         static_assert(sizeof(T) == 0, "Unknown Element in v8Wrapper");
@@ -145,18 +146,12 @@ Local<Object> v8ValueList(const T& e, bool sourcemap)
 }
 
 
-Local<Value> v8RefElement(const ObjectElement& e, bool sourcemap)
+Local<Value> v8RefElement(const RefElement& e, bool sourcemap)
 {
-    typedef ObjectElement::ValueType::const_iterator iterator;
+    typedef RefElement::ValueType::const_iterator iterator;
     Local<Object> obj = v8Element(e, sourcemap);
 
-    Local<Array> array = Nan::New<Array>();
-    size_t i = 0;
-
-    for (iterator it = e.value.begin(); it != e.value.end(); ++i, ++it) {
-        array->Set(i, ElementToObject(*it, sourcemap));
-    }
-    obj->Set(v8_string("content"), array);
+    obj->Set(v8_string("content"), v8_string(e.value));
 
     return obj;
 }
@@ -259,16 +254,14 @@ void v8Wrapper::operator()(const SelectElement& e)
     v8_value = v8ValueList(e, sourcemap);
 }
 
+void v8Wrapper::operator()(const RefElement& e)
+{
+    v8_value = v8RefElement(e, sourcemap);
+}
+
 void v8Wrapper::operator()(const ObjectElement& e)
 {
     typedef ObjectElement::ValueType::const_iterator iterator;
-
-    // RefElement is not yet implemented in refract so we treat it as
-    // a special ObjectElement.
-    if (e.element() == "ref") {
-        v8_value = v8RefElement(e, sourcemap);
-        return;
-    }
 
     Local<Object> obj = v8Element(e, sourcemap);
 
