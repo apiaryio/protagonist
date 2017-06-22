@@ -33,6 +33,8 @@ struct v8Wrapper {
     void operator()(const ObjectElement& e);
     void operator()(const IElement& e) {};
     void operator()(const RefElement& e);
+    void operator()(const HolderElement& e);
+
     template<typename T>
     void operator()(const T& e) {
         static_assert(sizeof(T) == 0, "Unknown Element in v8Wrapper");
@@ -257,6 +259,21 @@ void v8Wrapper::operator()(const SelectElement& e)
 void v8Wrapper::operator()(const RefElement& e)
 {
     v8_value = v8RefElement(e, sourcemap);
+}
+
+void v8Wrapper::operator()(const HolderElement& e)
+{
+
+
+    Local<Object> obj = v8Element(e, sourcemap);
+
+    Local<Array> array = Nan::New<Array>();
+
+    array->Set(0, ElementToObject(e.value, sourcemap));
+
+    obj->Set(v8_string("content"), array);
+
+    v8_value = obj;
 }
 
 void v8Wrapper::operator()(const ObjectElement& e)
