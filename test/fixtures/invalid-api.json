@@ -4,23 +4,44 @@
     {
       "element": "annotation",
       "meta": {
-        "classes": [
-          "warning"
-        ]
+        "classes": {
+          "element": "array",
+          "content": [
+            {
+              "element": "string",
+              "content": "warning"
+            }
+          ]
+        }
       },
       "attributes": {
-        "code": 6,
-        "sourceMap": [
-          {
-            "content": [
-              [
-                8,
-                8
+        "code": {
+          "element": "number",
+          "content": 6
+        },
+        "sourceMap": {
+          "element": "array",
+          "content": [
+            {
+              "element": "sourceMap",
+              "content": [
+                {
+                  "element": "array",
+                  "content": [
+                    {
+                      "element": "number",
+                      "content": 8
+                    },
+                    {
+                      "element": "number",
+                      "content": 8
+                    }
+                  ]
+                }
               ]
-            ],
-            "element": "sourceMap"
-          }
-        ]
+            }
+          ]
+        }
       },
       "content": "action is missing a response"
     }

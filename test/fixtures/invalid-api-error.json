@@ -4,46 +4,88 @@
     {
       "element": "annotation",
       "meta": {
-        "classes": [
-          "error"
-        ]
+        "classes": {
+          "element": "array",
+          "content": [
+            {
+              "element": "string",
+              "content": "error"
+            }
+          ]
+        }
       },
       "attributes": {
-        "code": 2,
-        "sourceMap": [
-          {
-            "content": [
-              [
-                0,
-                8
+        "code": {
+          "element": "number",
+          "content": 2
+        },
+        "sourceMap": {
+          "element": "array",
+          "content": [
+            {
+              "element": "sourceMap",
+              "content": [
+                {
+                  "element": "array",
+                  "content": [
+                    {
+                      "element": "number",
+                      "content": 0
+                    },
+                    {
+                      "element": "number",
+                      "content": 8
+                    }
+                  ]
+                }
               ]
-            ],
-            "element": "sourceMap"
-          }
-        ]
+            }
+          ]
+        }
       },
       "content": "expected API name, e.g. '# <API Name>'"
     },
     {
       "element": "annotation",
       "meta": {
-        "classes": [
-          "warning"
-        ]
+        "classes": {
+          "element": "array",
+          "content": [
+            {
+              "element": "string",
+              "content": "warning"
+            }
+          ]
+        }
       },
-       "attributes": {
-        "code": 6,
-        "sourceMap": [
-          {
-            "content": [
-              [
-                0,
-                8
+      "attributes": {
+        "code": {
+          "element": "number",
+          "content": 6
+        },
+        "sourceMap": {
+          "element": "array",
+          "content": [
+            {
+              "element": "sourceMap",
+              "content": [
+                {
+                  "element": "array",
+                  "content": [
+                    {
+                      "element": "number",
+                      "content": 0
+                    },
+                    {
+                      "element": "number",
+                      "content": 8
+                    }
+                  ]
+                }
               ]
-            ],
-            "element": "sourceMap"
-          }
-        ]
+            }
+          ]
+        }
       },
       "content": "action is missing a response"
     }

@@ -5,14 +5,53 @@ protagonist = require '../build/Release/protagonist'
 
 fixture_path = path.join __dirname, './fixtures/sample-api.apib'
 expected_err = {
-  code: 2,
-  location: [
+  "content": [
     {
-      index: 0,
-      length: 12
+      "attributes": {
+        "code": {
+          "content": 2,
+          "element": "number"
+        },
+        "sourceMap": {
+          "content": [
+            {
+              "content": [
+                {
+                  "content": [
+                    {
+                      "content": 0,
+                      "element": "number"
+                    },
+                    {
+                      "content": 12,
+                      "element": "number"
+                    }
+                  ],
+                  "element": "array"
+                }
+              ],
+              "element": "sourceMap"
+            }
+          ],
+          "element": "array"
+        }
+      },
+      "content": "expected API name, e.g. '# <API Name>'",
+      "element": "annotation",
+      "meta": {
+        "classes": {
+          "content": [
+            {
+              "content": "error",
+              "element": "string"
+            }
+          ],
+          "element": "array"
+        }
+      }
     }
   ],
-  message: "expected API name, e.g. '# <API Name>'"
+  "element": "parseResult"
 }
 
 describe "Requiring Blueprint name with sourcemaps", ->
