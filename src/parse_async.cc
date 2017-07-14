@@ -1,7 +1,7 @@
 #include <string>
 #include "protagonist.h"
 #include "drafter.h"
-#include "refract2v8.h"
+#include "refractToV8.h"
 
 using std::string;
 using namespace v8;

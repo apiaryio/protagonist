@@ -20,7 +20,7 @@
         "src/parse_sync.cc",
         "src/protagonist.cc",
         "src/protagonist.h",
-        "src/refract2v8.cc",
+        "src/refractToV8.cc",
         "src/validate_async.cc",
         "src/validate_sync.cc"
       ],

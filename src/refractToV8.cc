@@ -1,7 +1,7 @@
 #include <set>
 #include "drafter.h"
 #include "nan.h"
-#include "refract2v8.h"
+#include "refractToV8.h"
 #include "refract/Element.h"
 #include "refract/VisitorUtils.h" // TypeQuery and GetValue<T>
 #include "refract/FilterVisitor.h" // Filtering just annotations
