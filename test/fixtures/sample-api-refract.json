@@ -4,62 +4,104 @@
     {
       "element": "category",
       "meta": {
-        "classes": [
-          "api"
-        ],
-        "title": ""
+        "classes": {
+          "element": "array",
+          "content": [
+            {
+              "element": "string",
+              "content": "api"
+            }
+          ]
+        },
+        "title": {
+          "element": "string",
+          "content": ""
+        }
       },
       "attributes": {
-        "meta": [
-          {
-            "element": "member",
-            "meta": {
-              "classes": [
-                "user"
-              ]
-            },
-            "content": {
-              "key": {
-                "element": "string",
-                "content": "FORMAT"
+        "metadata": {
+          "element": "array",
+          "content": [
+            {
+              "element": "member",
+              "meta": {
+                "classes": {
+                  "element": "array",
+                  "content": [
+                    {
+                      "element": "string",
+                      "content": "user"
+                    }
+                  ]
+                }
               },
-              "value": {
-                "element": "string",
-                "content": "1A"
+              "content": {
+                "key": {
+                  "element": "string",
+                  "content": "FORMAT"
+                },
+                "value": {
+                  "element": "string",
+                  "content": "1A"
+                }
               }
             }
-          }
-        ]
+          ]
+        }
       },
       "content": [
         {
           "element": "category",
           "meta": {
-            "classes": [
-              "resourceGroup"
-            ],
-            "title": "Messages"
+            "classes": {
+              "element": "array",
+              "content": [
+                {
+                  "element": "string",
+                  "content": "resourceGroup"
+                }
+              ]
+            },
+            "title": {
+              "element": "string",
+              "content": "Messages"
+            }
           },
           "content": [
             {
               "element": "resource",
               "meta": {
-                "title": "Message"
+                "title": {
+                  "element": "string",
+                  "content": "Message"
+                }
               },
               "attributes": {
-                "href": "/messages/{id}",
+                "href": {
+                  "element": "string",
+                  "content": "/messages/{id}"
+                },
                 "hrefVariables": {
                   "element": "hrefVariables",
                   "content": [
                     {
                       "element": "member",
                       "meta": {
-                        "description": "Id of a message"
+                        "description": {
+                          "element": "string",
+                          "content": "Id of a message"
+                        }
                       },
                       "attributes": {
-                        "typeAttributes": [
-                          "required"
-                        ]
+                        "typeAttributes": {
+                          "element": "array",
+                          "content": [
+                            {
+                              "element": "string",
+                              "content": "required"
+                            }
+                          ]
+                        }
                       },
                       "content": {
                         "key": {
@@ -95,7 +137,10 @@
                     {
                       "element": "object",
                       "meta": {
-                        "id": "Message"
+                        "id": {
+                          "element": "string",
+                          "content": "Message"
+                        }
                       },
                       "content": [
                         {
@@ -113,7 +158,10 @@
                         {
                           "element": "member",
                           "meta": {
-                            "description": "The Message"
+                            "description": {
+                              "element": "string",
+                              "content": "The Message"
+                            }
                           },
                           "content": {
                             "key": {
@@ -133,7 +181,10 @@
                 {
                   "element": "transition",
                   "meta": {
-                    "title": "Retrieve Message"
+                    "title": {
+                      "element": "string",
+                      "content": "Retrieve Message"
+                    }
                   },
                   "content": [
                     {
@@ -142,14 +193,20 @@
                         {
                           "element": "httpRequest",
                           "attributes": {
-                            "method": "GET"
+                            "method": {
+                              "element": "string",
+                              "content": "GET"
+                            }
                           },
                           "content": []
                         },
                         {
                           "element": "httpResponse",
                           "attributes": {
-                            "statusCode": "200",
+                            "statusCode": {
+                              "element": "string",
+                              "content": "200"
+                            },
                             "headers": {
                               "element": "httpHeaders",
                               "content": [
@@ -181,24 +238,42 @@
                             {
                               "element": "asset",
                               "meta": {
-                                "classes": [
-                                  "messageBody"
-                                ]
+                                "classes": {
+                                  "element": "array",
+                                  "content": [
+                                    {
+                                      "element": "string",
+                                      "content": "messageBody"
+                                    }
+                                  ]
+                                }
                               },
                               "attributes": {
-                                "contentType": "application/json"
+                                "contentType": {
+                                  "element": "string",
+                                  "content": "application/json"
+                                }
                               },
                               "content": "{\n  \"id\": 0,\n  \"message\": \"Hello World!\"\n}"
                             },
                             {
                               "element": "asset",
                               "meta": {
-                                "classes": [
-                                  "messageBodySchema"
-                                ]
+                                "classes": {
+                                  "element": "array",
+                                  "content": [
+                                    {
+                                      "element": "string",
+                                      "content": "messageBodySchema"
+                                    }
+                                  ]
+                                }
                               },
                               "attributes": {
-                                "contentType": "application/schema+json"
+                                "contentType": {
+                                  "element": "string",
+                                  "content": "application/schema+json"
+                                }
                               },
                               "content": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": {\n      \"type\": \"number\"\n    },\n    \"message\": {\n      \"type\": \"string\",\n      \"description\": \"The Message\"\n    }\n  }\n}"
                             }
@@ -211,7 +286,10 @@
                 {
                   "element": "transition",
                   "meta": {
-                    "title": "Delete Message"
+                    "title": {
+                      "element": "string",
+                      "content": "Delete Message"
+                    }
                   },
                   "content": [
                     {
@@ -220,14 +298,20 @@
                         {
                           "element": "httpRequest",
                           "attributes": {
-                            "method": "DELETE"
+                            "method": {
+                              "element": "string",
+                              "content": "DELETE"
+                            }
                           },
                           "content": []
                         },
                         {
                           "element": "httpResponse",
                           "attributes": {
-                            "statusCode": "204"
+                            "statusCode": {
+                              "element": "string",
+                              "content": "204"
+                            }
                           },
                           "content": []
                         }

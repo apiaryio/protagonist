@@ -1,8 +1,6 @@
 #include <string>
-#include <sstream>
-#include "v8_wrapper.h"
 #include "protagonist.h"
-#include "snowcrash.h"
+#include "refractToV8.h"
 
 using std::string;
 using namespace v8;
@@ -17,16 +15,24 @@ void AsyncValidateAfter(uv_work_t* request);
 // Threadpooling libuv baton
 struct ValidateBaton {
 
+    ~ValidateBaton(){
+        if (sourceData) {
+            delete sourceData;
+        }
+        if (result) {
+            drafter_free_result(result);
+        }
+    }
     // Callback
     Nan::Persistent<Function> callback;
 
     // Input
-    snowcrash::BlueprintParserOptions options;
-    mdp::ByteBuffer sourceData;
+    drafter_parse_options parseOptions;
+    Nan::Utf8String *sourceData;
 
     // Output
-    snowcrash::ParseResult<snowcrash::Blueprint> parseResult;
-    sos::Object result;
+    drafter_result *result;
+    int parse_err_code;
 };
 
 NAN_METHOD(protagonist::Validate) {
@@ -59,7 +65,7 @@ NAN_METHOD(protagonist::Validate) {
     String::Utf8Value sourceData(info[0]->ToString());
 
     // Prepare options
-    snowcrash::BlueprintParserOptions options = 0;
+    drafter_parse_options parseOptions = {false};
 
     if (info.Length() == 3) {
         OptionsResult *optionsResult = ParseOptionsObject(Handle<Object>::Cast(info[1]), true);
@@ -68,7 +74,7 @@ NAN_METHOD(protagonist::Validate) {
             Nan::ThrowTypeError(optionsResult->error);
         }
 
-        options = optionsResult->options;
+        parseOptions = optionsResult->parseOptions;
         FreeOptionsResult(&optionsResult);
     }
 
@@ -77,8 +83,8 @@ NAN_METHOD(protagonist::Validate) {
 
     // Prepare threadpool baton
     ValidateBaton* baton = ::new ValidateBaton();
-    baton->options = options;
-    baton->sourceData = *sourceData;
+    baton->parseOptions = parseOptions;
+    baton->sourceData = new Nan::Utf8String(info[0]);
     baton->callback.Reset(callback);
 
     // This creates the work request struct.
@@ -98,7 +104,9 @@ NAN_METHOD(protagonist::Validate) {
 void AsyncValidate(uv_work_t* request) {
     ValidateBaton* baton = static_cast<ValidateBaton*>(request->data);
 
-    baton->result = Validate::Do(baton->sourceData, baton->options);
+    baton->parse_err_code = drafter_check_blueprint(*(*baton->sourceData),
+                                                    &baton->result,
+                                                    baton->parseOptions);
 }
 
 void AsyncValidateAfter(uv_work_t* request) {
@@ -110,12 +118,28 @@ void AsyncValidateAfter(uv_work_t* request) {
     Local<Value> argv[argc];
 
     // Error Object
-    argv[0] = Nan::Null();
-
-    if (baton->result.empty())
+    switch (baton->parse_err_code) {
+    case DRAFTER_EUNKNOWN:
+        argv[0] = Nan::Error("Parser: Unknown Error");
         argv[1] = Nan::Null();
-    else
-        argv[1] = v8_wrap(baton->result)->ToObject();
+        break;
+    case DRAFTER_EINVALID_INPUT:
+        argv[0] = Nan::Error("Parser: Invalid Input");
+        argv[1] = Nan::Null();
+        break;
+    case DRAFTER_EINVALID_OUTPUT:
+        argv[0] = Nan::Error("Parser: Invalid Output");
+        argv[1] = Nan::Null();
+        break;
+    default:
+        argv[0] = Nan::Null();
+        if (baton->result) {
+            argv[1] = refract2v8(baton->result, {true, DRAFTER_SERIALIZE_JSON});
+        }
+        else {
+            argv[1] = Nan::Null();
+        }
+    }
 
     TryCatch try_catch;
     Local<Function> callback = Nan::New<Function>(baton->callback);

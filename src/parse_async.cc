@@ -1,9 +1,7 @@
 #include <string>
-#include <sstream>
-#include "v8_wrapper.h"
 #include "protagonist.h"
-#include "snowcrash.h"
 #include "drafter.h"
+#include "refractToV8.h"
 
 using std::string;
 using namespace v8;
@@ -18,17 +16,25 @@ void AsyncParseAfter(uv_work_t* request);
 // Threadpooling libuv baton
 struct ParseBaton {
 
+    ~ParseBaton(){
+        if (sourceData) {
+            delete sourceData;
+        }
+        if (result) {
+            drafter_free_result(result);
+        }
+    }
     // Callback
     Nan::Persistent<Function> callback;
 
     // Input
-    snowcrash::BlueprintParserOptions options;
-    drafter::ASTType astType;
-    mdp::ByteBuffer sourceData;
+    drafter_parse_options parseOptions;
+    drafter_serialize_options serializeOptions;
+    Nan::Utf8String *sourceData;
 
     // Output
-    snowcrash::ParseResult<snowcrash::Blueprint> parseResult;
-    sos::Object result;
+    drafter_result *result;
+    int parse_err_code;
 };
 
 NAN_METHOD(protagonist::Parse) {
@@ -57,12 +63,9 @@ NAN_METHOD(protagonist::Parse) {
         return;
     }
 
-    // Get source data
-    String::Utf8Value sourceData(info[0]->ToString());
-
     // Prepare options
-    snowcrash::BlueprintParserOptions options = 0;
-    drafter::ASTType astType = drafter::RefractASTType;
+    drafter_parse_options parseOptions = {false};
+    drafter_serialize_options serializeOptions = {false, DRAFTER_SERIALIZE_JSON};
 
     if (info.Length() == 3) {
         OptionsResult *optionsResult = ParseOptionsObject(Handle<Object>::Cast(info[1]), false);
@@ -71,8 +74,8 @@ NAN_METHOD(protagonist::Parse) {
             Nan::ThrowTypeError(optionsResult->error);
         }
 
-        options = optionsResult->options;
-        astType = optionsResult->astType;
+        parseOptions = optionsResult->parseOptions;
+        serializeOptions = optionsResult->serializeOptions;
         FreeOptionsResult(&optionsResult);
     }
 
@@ -81,9 +84,9 @@ NAN_METHOD(protagonist::Parse) {
 
     // Prepare threadpool baton
     ParseBaton* baton = ::new ParseBaton();
-    baton->options = options;
-    baton->astType = astType;
-    baton->sourceData = *sourceData;
+    baton->parseOptions = parseOptions;
+    baton->serializeOptions = serializeOptions;
+    baton->sourceData = new Nan::Utf8String(info[0]);
     baton->callback.Reset(callback);
 
     // This creates the work request struct.
@@ -104,8 +107,9 @@ void AsyncParse(uv_work_t* request) {
     ParseBaton* baton = static_cast<ParseBaton*>(request->data);
 
     // Parse the source data
-    snowcrash::parse(baton->sourceData, baton->options | snowcrash::ExportSourcemapOption, baton->parseResult);
-    baton->result = Result::WrapResult(baton->parseResult, baton->options, baton->astType);
+    baton->parse_err_code = drafter_parse_blueprint(*(*baton->sourceData),
+                                                    &baton->result,
+                                                    baton->parseOptions);
 }
 
 void AsyncParseAfter(uv_work_t* request) {
@@ -116,13 +120,14 @@ void AsyncParseAfter(uv_work_t* request) {
     const unsigned argc = 2;
     Local<Value> argv[argc];
 
-    argv[1] = v8_wrap(baton->result)->ToObject();
+    argv[1] = refract2v8(baton->result, baton->serializeOptions);
 
-    // Error Object (FIXME: Don't have this once we remove AST)
-    if (baton->parseResult.report.error.code == snowcrash::Error::OK)
+    if (0 == baton->parse_err_code) {
         argv[0] = Nan::Null();
-    else
-        argv[0] = SourceAnnotation::WrapSourceAnnotation(baton->parseResult.report.error);
+    }
+    else {
+        argv[0] = annotations2v8(baton->result);
+    }
 
     TryCatch try_catch;
     Local<Function> callback = Nan::New<Function>(baton->callback);

@@ -1,5 +1,5 @@
+#include <sstream>
 #include "protagonist.h"
-#include "snowcrash.h"
 
 using namespace v8;
 using namespace protagonist;
@@ -22,21 +22,12 @@ static char* AllocErrorMessageForUnrecognisedOption(const String::Utf8Value& key
     return strdup(ss.str().c_str());
 }
 
-static void SetOption(snowcrash::BlueprintParserOptions& options, const Local<Value> value, const snowcrash::BlueprintParserOption flag) {
-
-    if (value->IsTrue()) {
-        options |= flag;
-    }
-    else {
-        options &= ~flag;
-    }
-}
-
 OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, bool forValidate) {
     OptionsResult *optionsResult = (OptionsResult *) malloc(sizeof(OptionsResult));
 
-    optionsResult->options = 0;
-    optionsResult->astType = drafter::RefractASTType;
+    optionsResult->serializeOptions.format = DRAFTER_SERIALIZE_JSON;
+    optionsResult->serializeOptions.sourcemap = false;
+    optionsResult->parseOptions.requireBlueprintName = false;
     optionsResult->error = NULL;
 
     const Local<Array> properties = optionsObject->GetPropertyNames();
@@ -49,11 +40,11 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, boo
         const String::Utf8Value strKey(key);
 
         if (RequireBlueprintNameOptionKey == *strKey) {
-            SetOption(optionsResult->options, value, snowcrash::RequireBlueprintNameOption);
+            optionsResult->parseOptions.requireBlueprintName = value->IsTrue();
         }
         else if (!forValidate) {
             if (ExportSourcemapOptionKey == *strKey || GenerateSourceMapOptionKey == *strKey) {
-                SetOption(optionsResult->options, value, snowcrash::ExportSourcemapOption);
+                optionsResult->serializeOptions.sourcemap = value->IsTrue();
             }
             else {
                 optionsResult->error = AllocErrorMessageForUnrecognisedOption(strKey, forValidate);

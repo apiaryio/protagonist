@@ -1,11 +1,7 @@
 #include <string>
-#include <sstream>
-#include "v8_wrapper.h"
 #include "protagonist.h"
-#include "drafter_private.h"
-#include "snowcrash.h"
-#include "RefractDataStructure.h"
-#include "ConversionContext.h"
+#include "drafter.h"
+#include "refractToV8.h"
 
 using std::string;
 using namespace v8;
@@ -34,7 +30,7 @@ NAN_METHOD(protagonist::ValidateSync) {
     String::Utf8Value sourceData(info[0]->ToString());
 
     // Prepare options
-    snowcrash::BlueprintParserOptions options = 0;
+    drafter_parse_options parseOptions = {false};
 
     if (info.Length() == 2) {
         OptionsResult *optionsResult = ParseOptionsObject(Handle<Object>::Cast(info[1]), true);
@@ -43,16 +39,26 @@ NAN_METHOD(protagonist::ValidateSync) {
             Nan::ThrowTypeError(optionsResult->error);
         }
 
-        options = optionsResult->options;
+        parseOptions = optionsResult->parseOptions;
         FreeOptionsResult(&optionsResult);
     }
 
-    sos::Object result = Validate::Do(*sourceData, options);
+    // Parse the source data
+    drafter_result *result;
+    int err_code = drafter_check_blueprint(*sourceData,
+                                           &result,
+                                           parseOptions);
+    if (err_code < 0) {
+        Nan::ThrowError("Parsing failed");
+        return;
+    }
 
-    if (result.empty()) {
-        info.GetReturnValue().Set(Nan::Null());
+    if (result) {
+        Local<Value> v8result = refract2v8(result, {true, DRAFTER_SERIALIZE_JSON});
+        drafter_free_result(result);
+        info.GetReturnValue().Set(v8result);
     }
     else {
-        info.GetReturnValue().Set(v8_wrap(result)->ToObject());
+        info.GetReturnValue().Set(Nan::Null());
     }
 }

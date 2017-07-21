@@ -1,9 +1,7 @@
 #include <string>
-#include <sstream>
-#include "v8_wrapper.h"
 #include "protagonist.h"
-#include "snowcrash.h"
 #include "drafter.h"
+#include "refractToV8.h"
 
 using std::string;
 using namespace v8;
@@ -32,8 +30,8 @@ NAN_METHOD(protagonist::ParseSync) {
     String::Utf8Value sourceData(info[0]->ToString());
 
     // Prepare options
-    snowcrash::BlueprintParserOptions options = 0;
-    drafter::ASTType astType = drafter::RefractASTType;
+    drafter_parse_options parseOptions = {false};
+    drafter_serialize_options serializeOptions = {false, DRAFTER_SERIALIZE_JSON};
 
     if (info.Length() == 2) {
         OptionsResult *optionsResult = ParseOptionsObject(Handle<Object>::Cast(info[1]), false);
@@ -42,22 +40,30 @@ NAN_METHOD(protagonist::ParseSync) {
             Nan::ThrowTypeError(optionsResult->error);
         }
 
-        options = optionsResult->options;
-        astType = optionsResult->astType;
+        parseOptions = optionsResult->parseOptions;
+        serializeOptions = optionsResult->serializeOptions;
         FreeOptionsResult(&optionsResult);
     }
 
     // Parse the source data
-    snowcrash::ParseResult<snowcrash::Blueprint> parseResult;
-    snowcrash::parse(*sourceData, options | snowcrash::ExportSourcemapOption, parseResult);
-
-    Local<Object> result = v8_wrap(Result::WrapResult(parseResult, options, astType))->ToObject();
-
-    // Error Object (FIXME: Don't have this once we remove AST)
-    if (parseResult.report.error.code != snowcrash::Error::OK) {
-        Nan::ThrowError((Local<Value>) SourceAnnotation::WrapSourceAnnotation(parseResult.report.error));
-        return;
+    drafter_result *result;
+    int err_code = drafter_parse_blueprint(*sourceData,
+                                           &result,
+                                           parseOptions);
+    switch (err_code) {
+    case DRAFTER_EUNKNOWN:
+        Nan::ThrowError("Parser: Unknown Error");
+        break;
+    case DRAFTER_EINVALID_INPUT:
+        Nan::ThrowError("Parser: Invalid Input");
+        break;
+    case DRAFTER_EINVALID_OUTPUT:
+        Nan::ThrowError("Parser: Invalid Output");
+        break;
+    default:
+        break;
     }
 
-    info.GetReturnValue().Set(result);
+    Local<Value> v8result = refract2v8(result, serializeOptions);
+    info.GetReturnValue().Set(v8result);
 }
