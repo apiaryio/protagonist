@@ -129,12 +129,12 @@ void AsyncParseAfter(uv_work_t* request) {
         argv[0] = annotations2v8(baton->result);
     }
 
-    TryCatch try_catch;
+    TryCatch try_catch(v8::Isolate::GetCurrent());
     Local<Function> callback = Nan::New<Function>(baton->callback);
     callback->Call(Nan::GetCurrentContext()->Global(), argc, argv);
 
     if (try_catch.HasCaught()) {
-        node::FatalException(try_catch);
+        node::FatalException(v8::Isolate::GetCurrent(), try_catch);
     }
 
     baton->callback.Reset();
