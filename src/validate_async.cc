@@ -141,12 +141,12 @@ void AsyncValidateAfter(uv_work_t* request) {
         }
     }
 
-    TryCatch try_catch;
+    TryCatch try_catch(v8::Isolate::GetCurrent());
     Local<Function> callback = Nan::New<Function>(baton->callback);
     callback->Call(Nan::GetCurrentContext()->Global(), argc, argv);
 
     if (try_catch.HasCaught()) {
-        node::FatalException(try_catch);
+        node::FatalException(v8::Isolate::GetCurrent(), try_catch);
     }
 
     baton->callback.Reset();
