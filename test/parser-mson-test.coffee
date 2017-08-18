@@ -24,8 +24,6 @@ describe 'MSON Refract', ->
       attributes = result.content[0].content[0].content[0].content[0].content[0].content[1].content[0]
       dataStructures = result.content[0].content[1].content
 
-      console.log(JSON.stringify(dataStructures[0].content[0].content[0].content.key.content, null, 2));
-
       done()
 
   describe 'Attributes', ->
