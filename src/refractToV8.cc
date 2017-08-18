@@ -150,7 +150,6 @@ Local<Object> v8ValueList(const T& e, bool sourcemap)
 
 Local<Value> v8RefElement(const RefElement& e, bool sourcemap)
 {
-    typedef RefElement::ValueType::const_iterator iterator;
     Local<Object> obj = v8Element(e, sourcemap);
 
     obj->Set(v8_string("content"), v8_string(e.value));
