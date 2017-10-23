@@ -260,95 +260,100 @@
                         },
                         "value": {
                           "element": "enum",
-                          "content": [
-                            {
-                              "element": "string",
-                              "attributes": {
-                                "sourceMap": {
-                                  "element": "array",
-                                  "content": [
-                                    {
-                                      "element": "sourceMap",
+                          "attributes": {
+                            "enumerations": {
+                              "element": "array",
+                              "content": [
+                                {
+                                  "element": "string",
+                                  "attributes": {
+                                    "sourceMap": {
+                                      "element": "array",
                                       "content": [
                                         {
-                                          "element": "array",
+                                          "element": "sourceMap",
                                           "content": [
                                             {
-                                              "element": "number",
-                                              "content": 129
-                                            },
-                                            {
-                                              "element": "number",
-                                              "content": 6
+                                              "element": "array",
+                                              "content": [
+                                                {
+                                                  "element": "number",
+                                                  "content": 129
+                                                },
+                                                {
+                                                  "element": "number",
+                                                  "content": 6
+                                                }
+                                              ]
                                             }
                                           ]
                                         }
                                       ]
                                     }
-                                  ]
-                                }
-                              },
-                              "content": "1"
-                            },
-                            {
-                              "element": "string",
-                              "attributes": {
-                                "sourceMap": {
-                                  "element": "array",
-                                  "content": [
-                                    {
-                                      "element": "sourceMap",
+                                  },
+                                  "content": "1"
+                                },
+                                {
+                                  "element": "string",
+                                  "attributes": {
+                                    "sourceMap": {
+                                      "element": "array",
                                       "content": [
                                         {
-                                          "element": "array",
+                                          "element": "sourceMap",
                                           "content": [
                                             {
-                                              "element": "number",
-                                              "content": 147
-                                            },
-                                            {
-                                              "element": "number",
-                                              "content": 6
+                                              "element": "array",
+                                              "content": [
+                                                {
+                                                  "element": "number",
+                                                  "content": 147
+                                                },
+                                                {
+                                                  "element": "number",
+                                                  "content": 6
+                                                }
+                                              ]
                                             }
                                           ]
                                         }
                                       ]
                                     }
-                                  ]
-                                }
-                              },
-                              "content": "2"
-                            },
-                            {
-                              "element": "string",
-                              "attributes": {
-                                "sourceMap": {
-                                  "element": "array",
-                                  "content": [
-                                    {
-                                      "element": "sourceMap",
+                                  },
+                                  "content": "2"
+                                },
+                                {
+                                  "element": "string",
+                                  "attributes": {
+                                    "sourceMap": {
+                                      "element": "array",
                                       "content": [
                                         {
-                                          "element": "array",
+                                          "element": "sourceMap",
                                           "content": [
                                             {
-                                              "element": "number",
-                                              "content": 165
-                                            },
-                                            {
-                                              "element": "number",
-                                              "content": 6
+                                              "element": "array",
+                                              "content": [
+                                                {
+                                                  "element": "number",
+                                                  "content": 165
+                                                },
+                                                {
+                                                  "element": "number",
+                                                  "content": 6
+                                                }
+                                              ]
                                             }
                                           ]
                                         }
                                       ]
                                     }
-                                  ]
+                                  },
+                                  "content": "3"
                                 }
-                              },
-                              "content": "3"
+                              ]
                             }
-                          ]
+                          }
                         }
                       }
                     }
@@ -358,200 +363,223 @@
               "content": [
                 {
                   "element": "dataStructure",
-                  "content": [
-                    {
-                      "element": "object",
-                      "meta": {
-                        "id": {
-                          "element": "string",
-                          "attributes": {
-                            "sourceMap": {
-                              "element": "array",
-                              "content": [
-                                {
-                                  "element": "sourceMap",
-                                  "content": [
-                                    {
-                                      "element": "array",
-                                      "content": [
-                                        {
-                                          "element": "number",
-                                          "content": 30
-                                        },
-                                        {
-                                          "element": "number",
-                                          "content": 28
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          },
-                          "content": "Message"
-                        }
-                      },
-                      "attributes": {
-                        "sourceMap": {
-                          "element": "array",
-                          "content": [
-                            {
-                              "element": "sourceMap",
-                              "content": [
-                                {
-                                  "element": "array",
-                                  "content": [
-                                    {
-                                      "element": "number",
-                                      "content": 174
-                                    },
-                                    {
-                                      "element": "number",
-                                      "content": 11
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      },
-                      "content": [
-                        {
-                          "element": "member",
-                          "content": {
-                            "key": {
-                              "element": "string",
-                              "attributes": {
-                                "sourceMap": {
-                                  "element": "array",
-                                  "content": [
-                                    {
-                                      "element": "sourceMap",
-                                      "content": [
-                                        {
-                                          "element": "array",
-                                          "content": [
-                                            {
-                                              "element": "number",
-                                              "content": 191
-                                            },
-                                            {
-                                              "element": "number",
-                                              "content": 12
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              },
-                              "content": "id"
+                  "content": {
+                    "element": "object",
+                    "meta": {
+                      "id": {
+                        "element": "string",
+                        "attributes": {
+                          "sourceMap": {
+                            "element": "array",
+                            "content": [
+                              {
+                                "element": "sourceMap",
+                                "content": [
+                                  {
+                                    "element": "array",
+                                    "content": [
+                                      {
+                                        "element": "number",
+                                        "content": 30
+                                      },
+                                      {
+                                        "element": "number",
+                                        "content": 28
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "content": "Message"
+                      }
+                    },
+                    "attributes": {
+                      "sourceMap": {
+                        "element": "array",
+                        "content": [
+                          {
+                            "element": "sourceMap",
+                            "content": [
+                              {
+                                "element": "array",
+                                "content": [
+                                  {
+                                    "element": "number",
+                                    "content": 174
+                                  },
+                                  {
+                                    "element": "number",
+                                    "content": 11
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "content": [
+                      {
+                        "element": "member",
+                        "content": {
+                          "key": {
+                            "element": "string",
+                            "attributes": {
+                              "sourceMap": {
+                                "element": "array",
+                                "content": [
+                                  {
+                                    "element": "sourceMap",
+                                    "content": [
+                                      {
+                                        "element": "array",
+                                        "content": [
+                                          {
+                                            "element": "number",
+                                            "content": 191
+                                          },
+                                          {
+                                            "element": "number",
+                                            "content": 12
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
                             },
-                            "value": {
-                              "element": "number",
-                              "attributes": {
-                                "sourceMap": {
-                                  "element": "array",
-                                  "content": [
-                                    {
-                                      "element": "sourceMap",
-                                      "content": [
-                                        {
-                                          "element": "array",
-                                          "content": [
-                                            {
-                                              "element": "number",
-                                              "content": 191
-                                            },
-                                            {
-                                              "element": "number",
-                                              "content": 12
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
+                            "content": "id"
+                          },
+                          "value": {
+                            "element": "number",
+                            "attributes": {
+                              "sourceMap": {
+                                "element": "array",
+                                "content": [
+                                  {
+                                    "element": "sourceMap",
+                                    "content": [
+                                      {
+                                        "element": "array",
+                                        "content": [
+                                          {
+                                            "element": "number",
+                                            "content": 191
+                                          },
+                                          {
+                                            "element": "number",
+                                            "content": 12
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
                               }
                             }
                           }
-                        },
-                        {
-                          "element": "member",
-                          "meta": {
-                            "description": {
-                              "element": "string",
-                              "content": "The Message"
-                            }
-                          },
-                          "content": {
-                            "key": {
-                              "element": "string",
-                              "attributes": {
-                                "sourceMap": {
-                                  "element": "array",
-                                  "content": [
-                                    {
-                                      "element": "sourceMap",
-                                      "content": [
-                                        {
-                                          "element": "array",
-                                          "content": [
-                                            {
-                                              "element": "number",
-                                              "content": 209
-                                            },
-                                            {
-                                              "element": "number",
-                                              "content": 45
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              },
-                              "content": "message"
+                        }
+                      },
+                      {
+                        "element": "member",
+                        "meta": {
+                          "description": {
+                            "element": "string",
+                            "attributes": {
+                              "sourceMap": {
+                                "element": "array",
+                                "content": [
+                                  {
+                                    "element": "sourceMap",
+                                    "content": [
+                                      {
+                                        "element": "array",
+                                        "content": [
+                                          {
+                                            "element": "number",
+                                            "content": 209
+                                          },
+                                          {
+                                            "element": "number",
+                                            "content": 45
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
                             },
-                            "value": {
-                              "element": "string",
-                              "attributes": {
-                                "sourceMap": {
-                                  "element": "array",
-                                  "content": [
-                                    {
-                                      "element": "sourceMap",
-                                      "content": [
-                                        {
-                                          "element": "array",
-                                          "content": [
-                                            {
-                                              "element": "number",
-                                              "content": 209
-                                            },
-                                            {
-                                              "element": "number",
-                                              "content": 45
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              },
-                              "content": "Hello World!"
-                            }
+                            "content": "The Message"
+                          }
+                        },
+                        "content": {
+                          "key": {
+                            "element": "string",
+                            "attributes": {
+                              "sourceMap": {
+                                "element": "array",
+                                "content": [
+                                  {
+                                    "element": "sourceMap",
+                                    "content": [
+                                      {
+                                        "element": "array",
+                                        "content": [
+                                          {
+                                            "element": "number",
+                                            "content": 209
+                                          },
+                                          {
+                                            "element": "number",
+                                            "content": 45
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "content": "message"
+                          },
+                          "value": {
+                            "element": "string",
+                            "attributes": {
+                              "sourceMap": {
+                                "element": "array",
+                                "content": [
+                                  {
+                                    "element": "sourceMap",
+                                    "content": [
+                                      {
+                                        "element": "array",
+                                        "content": [
+                                          {
+                                            "element": "number",
+                                            "content": 209
+                                          },
+                                          {
+                                            "element": "number",
+                                            "content": 45
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "content": "Hello World!"
                           }
                         }
-                      ]
-                    }
-                  ]
+                      }
+                    ]
+                  }
                 },
                 {
                   "element": "transition",
@@ -727,36 +755,34 @@
                           "content": [
                             {
                               "element": "dataStructure",
-                              "content": [
-                                {
-                                  "element": "Message",
-                                  "attributes": {
-                                    "sourceMap": {
-                                      "element": "array",
-                                      "content": [
-                                        {
-                                          "element": "sourceMap",
-                                          "content": [
-                                            {
-                                              "element": "array",
-                                              "content": [
-                                                {
-                                                  "element": "number",
-                                                  "content": 321
-                                                },
-                                                {
-                                                  "element": "number",
-                                                  "content": 21
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
+                              "content": {
+                                "element": "Message",
+                                "attributes": {
+                                  "sourceMap": {
+                                    "element": "array",
+                                    "content": [
+                                      {
+                                        "element": "sourceMap",
+                                        "content": [
+                                          {
+                                            "element": "array",
+                                            "content": [
+                                              {
+                                                "element": "number",
+                                                "content": 321
+                                              },
+                                              {
+                                                "element": "number",
+                                                "content": 21
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
                                   }
                                 }
-                              ]
+                              }
                             },
                             {
                               "element": "asset",
@@ -948,3 +974,4 @@
     }
   ]
 }
+

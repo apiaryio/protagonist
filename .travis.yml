@@ -9,16 +9,12 @@ addons:
     sources:
     - ubuntu-toolchain-r-test
     packages:
-    - gcc-4.8
-    - g++-4.8
-env: CXX="g++-4.8" CC="gcc-4.8"
+    - gcc-5
+    - g++-5
+env: CXX="g++-5" CC="gcc-5"
 before_install:
 - git submodule update --init --recursive
 notifications:
-  email:
-    recipients:
-    - z@apiary.io
-    on_success: change
-    on_failure: always
+  email: false
   slack:
     secure: Kw0lRYBknqm2a+N94lfi6Jo9941yYjsmCvNOnrjlsinTjlN47Yog0va97/3OWflz+LbAZ5dJgeIK2/XvDqDNppynjDdJJikAM5G7OAWCzwmF8u97PONLLL9CnQECF9ZC8j4jIpnkSPPrJCor02EbJA9Uz7wjscrEjT7Dd529TP0=

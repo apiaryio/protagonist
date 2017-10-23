@@ -110,20 +110,25 @@
                         },
                         "value": {
                           "element": "enum",
-                          "content": [
-                            {
-                              "element": "string",
-                              "content": "1"
-                            },
-                            {
-                              "element": "string",
-                              "content": "2"
-                            },
-                            {
-                              "element": "string",
-                              "content": "3"
+                          "attributes": {
+                            "enumerations": {
+                              "element": "array",
+                              "content": [
+                                {
+                                  "element": "string",
+                                  "content": "1"
+                                },
+                                {
+                                  "element": "string",
+                                  "content": "2"
+                                },
+                                {
+                                  "element": "string",
+                                  "content": "3"
+                                }
+                              ]
                             }
-                          ]
+                          }
                         }
                       }
                     }
@@ -133,50 +138,48 @@
               "content": [
                 {
                   "element": "dataStructure",
-                  "content": [
-                    {
-                      "element": "object",
-                      "meta": {
-                        "id": {
-                          "element": "string",
-                          "content": "Message"
+                  "content": {
+                    "element": "object",
+                    "meta": {
+                      "id": {
+                        "element": "string",
+                        "content": "Message"
+                      }
+                    },
+                    "content": [
+                      {
+                        "element": "member",
+                        "content": {
+                          "key": {
+                            "element": "string",
+                            "content": "id"
+                          },
+                          "value": {
+                            "element": "number"
+                          }
                         }
                       },
-                      "content": [
-                        {
-                          "element": "member",
-                          "content": {
-                            "key": {
-                              "element": "string",
-                              "content": "id"
-                            },
-                            "value": {
-                              "element": "number"
-                            }
+                      {
+                        "element": "member",
+                        "meta": {
+                          "description": {
+                            "element": "string",
+                            "content": "The Message"
                           }
                         },
-                        {
-                          "element": "member",
-                          "meta": {
-                            "description": {
-                              "element": "string",
-                              "content": "The Message"
-                            }
+                        "content": {
+                          "key": {
+                            "element": "string",
+                            "content": "message"
                           },
-                          "content": {
-                            "key": {
-                              "element": "string",
-                              "content": "message"
-                            },
-                            "value": {
-                              "element": "string",
-                              "content": "Hello World!"
-                            }
+                          "value": {
+                            "element": "string",
+                            "content": "Hello World!"
                           }
                         }
-                      ]
-                    }
-                  ]
+                      }
+                    ]
+                  }
                 },
                 {
                   "element": "transition",
@@ -229,11 +232,9 @@
                           "content": [
                             {
                               "element": "dataStructure",
-                              "content": [
-                                {
-                                  "element": "Message"
-                                }
-                              ]
+                              "content": {
+                                "element": "Message"
+                              }
                             },
                             {
                               "element": "asset",
@@ -327,3 +328,4 @@
     }
   ]
 }
+

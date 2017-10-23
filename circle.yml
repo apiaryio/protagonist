@@ -4,12 +4,17 @@ machine:
 
 checkout:
   post:
+    - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test && sudo apt-get update
+    - sudo apt-get install -y gcc-5 g++-5
     - git submodule update --init --recursive
+
+dependencies:
+  override:
+    - env CC="gcc-5" CXX="g++-5" npm install
 
 deployment:
   release:
     tag: /v.*/
     commands:
-      - ruby -e "\`npm i -g npm@2\` if '`npm -v`'<'2.0.0'"
       - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >.npmrc
       - npm publish

@@ -141,6 +141,7 @@ Local<Object> v8ValueList(const T& e, bool sourcemap)
         for (iterator it = e.value.begin(); it != e.value.end(); ++i, ++it) {
             array->Set(i, ElementToObject(*it, sourcemap));
         }
+
         obj->Set(v8_string("content"), array);
     }
 
@@ -150,7 +151,6 @@ Local<Object> v8ValueList(const T& e, bool sourcemap)
 
 Local<Value> v8RefElement(const RefElement& e, bool sourcemap)
 {
-    typedef RefElement::ValueType::const_iterator iterator;
     Local<Object> obj = v8Element(e, sourcemap);
 
     obj->Set(v8_string("content"), v8_string(e.value));
@@ -238,7 +238,13 @@ void v8Wrapper::operator()(const ArrayElement& e)
 
 void v8Wrapper::operator()(const EnumElement& e)
 {
-    v8_value = v8ValueList(e, sourcemap);
+    Local<Object> obj = v8Element(e, sourcemap);
+
+    if (!e.empty()) {
+        obj->Set(v8_string("content"), ElementToObject(e.value, sourcemap));
+    }
+
+    v8_value = obj;
 }
 
 void v8Wrapper::operator()(const ExtendElement& e)
@@ -263,15 +269,11 @@ void v8Wrapper::operator()(const RefElement& e)
 
 void v8Wrapper::operator()(const HolderElement& e)
 {
-
-
     Local<Object> obj = v8Element(e, sourcemap);
 
-    Local<Array> array = Nan::New<Array>();
-
-    array->Set(0, ElementToObject(e.value, sourcemap));
-
-    obj->Set(v8_string("content"), array);
+    if (!e.empty()) {
+        obj->Set(v8_string("content"), ElementToObject(e.value, sourcemap));
+    }
 
     v8_value = obj;
 }

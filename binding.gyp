@@ -1,6 +1,6 @@
 {
   "includes": [
-    "common.gypi"
+    "drafter/common.gypi"
   ],
   "targets": [
     {
