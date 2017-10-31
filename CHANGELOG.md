@@ -1,6 +1,12 @@
 # Protagonist Changelog
 
-## master
+## 2.0.0-pre0
+
+This update now uses Drafter 4.0.0-pre0. Please see [Drafter
+4.0.0-pre0](https://github.com/apiaryio/drafter/releases/tag/v4.0.0-pre0) for
+the list of changes.
+
+- updated Async call to use Nan::AsyncQueue instead of node v8 functionality directly
 
 ### Breaking
 
