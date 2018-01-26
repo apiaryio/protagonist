@@ -3,6 +3,8 @@
 
 #include <node.h>
 #include <v8.h>
+#include <refract/ElementIfc.h>
+#include <drafter.h>
 
 v8::Local<v8::Value> refract2v8(const refract::IElement* res, drafter_serialize_options serializeOptions);
 v8::Local<v8::Value> annotations2v8(const refract::IElement* res);
