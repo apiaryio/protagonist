@@ -18,11 +18,16 @@ describe 'MSON Refract', ->
     + name
     '''
 
-    protagonist.parse source, (err, result) ->
+    protagonist.parse source, (err, parseResult) ->
       return done err if err
 
-      attributes = result.content[0].content[0].content[0].content[0].content[0].content[1].content[0]
-      dataStructures = result.content[0].content[1].content
+      api = parseResult.content[0]
+      resource = api.content[0]
+      transition = resource.content[0]
+      transaction = transition.content[0]
+      response = transaction.content[1]
+      attributes = response.content[0]
+      dataStructures = api.content[1].content
 
       done()
 
