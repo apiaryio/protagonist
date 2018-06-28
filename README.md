@@ -74,9 +74,9 @@ Name                   | Description
 
 Parsing this blueprint:
 
-```
-# GET /1
-+ response
+```apib
+# GET /
++ Response 204
 ```
 
 will produce the following object (`result` variable):
@@ -88,54 +88,67 @@ will produce the following object (`result` variable):
     {
       "element": "category",
       "meta": {
-        "classes": [
-          "api"
-        ],
-        "title": ""
+        "classes": {
+          "element": "array",
+          "content": [
+            {
+              "element": "string",
+              "content": "api"
+            }
+          ]
+        },
+        "title": {
+          "element": "string",
+          "content": ""
+        }
       },
       "content": [
         {
-          "element": "category",
+          "element": "resource",
           "meta": {
-            "classes": [
-              "resourceGroup"
-            ],
-            "title": ""
+            "title": {
+              "element": "string",
+              "content": ""
+            }
+          },
+          "attributes": {
+            "href": {
+              "element": "string",
+              "content": "/"
+            }
           },
           "content": [
             {
-              "element": "resource",
+              "element": "transition",
               "meta": {
-                "title": ""
-              },
-              "attributes": {
-                "href": "/1"
+                "title": {
+                  "element": "string",
+                  "content": ""
+                }
               },
               "content": [
                 {
-                  "element": "transition",
-                  "meta": {
-                    "title": ""
-                  },
+                  "element": "httpTransaction",
                   "content": [
                     {
-                      "element": "httpTransaction",
-                      "content": [
-                        {
-                          "element": "httpRequest",
-                          "attributes": {
-                            "method": "GET"
-                          },
-                          "content": []
-                        },
-                        {
-                          "element": "httpResponse",
-                          "attributes": {
-                            "statusCode": "200"
-                          },
-                          "content": []
+                      "element": "httpRequest",
+                      "attributes": {
+                        "method": {
+                          "element": "string",
+                          "content": "GET"
                         }
-                      ]
+                      },
+                      "content": []
+                    },
+                    {
+                      "element": "httpResponse",
+                      "attributes": {
+                        "statusCode": {
+                          "element": "string",
+                          "content": "204"
+                        }
+                      },
+                      "content": []
                     }
                   ]
                 }
