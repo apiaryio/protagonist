@@ -3,7 +3,7 @@ version: 2
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/node:8
+    - image: circleci/node:10
 
 jobs:
   test:
@@ -12,7 +12,6 @@ jobs:
       - run:
           name: Installing Compiler
           command: |
-            sudo id
             sudo sh -c 'echo "deb http://ftp.us.debian.org/debian unstable main contrib non-free" > /etc/apt/sources.list.d/unstable.list'
             sudo apt-get update
             sudo apt-get install -y -t unstable gcc-7 g++-7
