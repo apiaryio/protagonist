@@ -7,11 +7,6 @@
       "target_name": "protagonist",
       "include_dirs": [
         "drafter/src",
-        "drafter/ext/snowcrash/src",
-        "drafter/ext/snowcrash/ext/markdown-parser/src",
-        "drafter/ext/snowcrash/ext/markdown-parser/ext/sundown/src",
-        "drafter/ext/snowcrash/ext/markdown-parser/ext/sundown/html",
-        "drafter/ext/sos/src",
         "<!(node -e \"require('nan')\")"
       ],
       "sources": [
