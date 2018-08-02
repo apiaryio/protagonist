@@ -1,4 +1,4 @@
-protagonist = require '../build/Release/protagonist'
+protagonist = require './protagonist'
 {assert} = require 'chai'
 
 describe 'MSON Refract', ->
