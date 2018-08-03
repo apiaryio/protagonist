@@ -1,7 +1,7 @@
 fs = require 'fs'
 path = require 'path'
 {assert} = require 'chai'
-protagonist = require '../build/Release/protagonist'
+protagonist = require './protagonist'
 
 describe "Parser sourcemap", ->
 
