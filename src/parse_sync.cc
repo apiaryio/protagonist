@@ -65,5 +65,6 @@ NAN_METHOD(protagonist::ParseSync) {
     }
 
     Local<Value> v8result = refract2v8(result, serializeOptions);
+    drafter_free_result(result);
     info.GetReturnValue().Set(v8result);
 }
