@@ -45,7 +45,7 @@ struct v8Wrapper {
 const std::set<std::string> basic_elements = {
     "null", "string", "number", "boolean", "array", "object", "member"};
 
-Local<Value> v8_string(const std::string& value)
+Local<String> v8_string(const std::string& value)
 {
     return Nan::New<String>(value.c_str()).ToLocalChecked();
 }
@@ -159,7 +159,9 @@ void v8Wrapper::operator()(const NumberElement& e)
 {
     Local<Object> obj = v8Element(e, sourcemap);
     if (!e.empty()) {
-        obj->Set(v8_string("content"), Nan::New<Number>(e.get()));
+        Nan::JSON NanJSON;
+        obj->Set(v8_string("content"),
+                 NanJSON.Parse(v8_string(e.get().get())).ToLocalChecked());
     }
     v8_value = obj;
 }
