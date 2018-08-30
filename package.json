@@ -1,6 +1,6 @@
 {
   "name": "protagonist",
-  "version": "2.0.0-pre.0",
+  "version": "2.0.0-pre.1",
   "description": "API Blueprint Parser",
   "author": "Apiary.io <support@apiary.io>",
   "main": "./build/Release/protagonist",
@@ -12,14 +12,14 @@
     "node": ">=4"
   },
   "dependencies": {
-    "nan": "^2.6.2"
+    "nan": "^2.11.0"
   },
   "devDependencies": {
     "async": "^2.4.1",
-    "chai": "^3.5.0",
+    "chai": "^4.1.2",
     "coffee-script": "~1.6.0",
     "glob": "^7.1.2",
-    "mocha": "^3.4.1"
+    "mocha": "^5.2.0"
   },
   "scripts": {
     "test": "mocha --compilers coffee:coffee-script -R spec test"

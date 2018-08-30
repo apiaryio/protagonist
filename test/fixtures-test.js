@@ -12,11 +12,6 @@ describe('Parsing Drafter Test Fixtures', () => {
       return;
     }
 
-    // TODO: Remove these exceptions after they are fixed in drafter
-    if (fixture === 'drafter/test/fixtures/render/nullable.apib' || fixture === 'drafter/test/fixtures/schema/enum-nullable.apib') {
-      return;
-    }
-
     it(`parsing ${fixture}`, () => {
       // Find the parse result fixture(s).
       // Some test fixtures are with source maps and others are not.
