@@ -85,3 +85,29 @@ describe "Requiring Blueprint name without sourcemaps", ->
 
   it 'conforms to the refract spec', ->
     assert.deepEqual refract_err, expected_err
+
+describe "Requiring Blueprint name with sourcemaps using sync", ->
+  refract_err = null
+
+  before (done) ->
+    fs.readFile fixture_path, 'utf8', (err, data) ->
+      return done err if err
+
+      refract_err = protagonist.parseSync data, { requireBlueprintName: true, generateSourceMap: true }
+      done()
+
+  it 'conforms to the refract spec', ->
+    assert.deepEqual refract_err, expected_err
+
+describe "Requiring Blueprint name without sourcemaps using sync", ->
+  refract_err = null
+
+  before (done) ->
+    fs.readFile fixture_path, 'utf8', (err, data) ->
+      return done err if err
+
+      refract_err = protagonist.parseSync data, { requireBlueprintName: true, generateSourceMap: false }
+      done()
+
+  it 'conforms to the refract spec', ->
+    assert.deepEqual refract_err, expected_err
