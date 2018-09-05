@@ -17,7 +17,7 @@
       "attributes": {
         "code": {
           "element": "number",
-          "content": 2
+          "content": 4
         },
         "sourceMap": {
           "element": "array",
@@ -30,11 +30,11 @@
                   "content": [
                     {
                       "element": "number",
-                      "content": 0
+                      "content": 18
                     },
                     {
                       "element": "number",
-                      "content": 8
+                      "content": 9
                     }
                   ]
                 }
@@ -43,51 +43,7 @@
           ]
         }
       },
-      "content": "expected API name, e.g. '# <API Name>'"
-    },
-    {
-      "element": "annotation",
-      "meta": {
-        "classes": {
-          "element": "array",
-          "content": [
-            {
-              "element": "string",
-              "content": "warning"
-            }
-          ]
-        }
-      },
-      "attributes": {
-        "code": {
-          "element": "number",
-          "content": 6
-        },
-        "sourceMap": {
-          "element": "array",
-          "content": [
-            {
-              "element": "sourceMap",
-              "content": [
-                {
-                  "element": "array",
-                  "content": [
-                    {
-                      "element": "number",
-                      "content": 0
-                    },
-                    {
-                      "element": "number",
-                      "content": 8
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      },
-      "content": "action is missing a response"
+      "content": "base type 'A' circularly referencing itself"
     }
   ]
 }
