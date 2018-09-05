@@ -3,25 +3,41 @@ path = require 'path'
 {assert} = require 'chai'
 protagonist = require './protagonist'
 
-describe "Validate invalid Blueprint - Sync", ->
+valid_fixture = path.join __dirname, './fixtures/sample-api.apib'
+warning_fixture = path.join __dirname, './fixtures/invalid-api-warning.apib'
+error_fixture = path.join __dirname, './fixtures/invalid-api-error.apib'
 
-  fixture = require './fixtures/invalid-api.json'
+warning_refract = require './fixtures/invalid-api-warning.json'
+error_refract = require './fixtures/invalid-api-error.json'
+
+describe "Validate Blueprint with error - Sync", ->
+
   parsed = null
 
-  # Read & parse blueprint fixture
   before (done) ->
-
-    fixture_path = path.join __dirname, './fixtures/invalid-api.apib'
-
-    fs.readFile fixture_path, 'utf8', (err, data) ->
+    fs.readFile error_fixture, 'utf8', (err, data) ->
       return done err if err
 
-      parsed = protagonist.validateSync(data, { requireBlueprintName: true })
+      parsed = protagonist.validateSync(data)
       done()
 
-  # Result should contain annotations only
   it 'Result contains annotations only', ->
-    assert.deepEqual parsed, fixture
+    assert.deepEqual parsed, error_refract
+
+
+describe "Validate Blueprint with warning - Sync", ->
+
+  parsed = null
+
+  before (done) ->
+    fs.readFile warning_fixture, 'utf8', (err, data) ->
+      return done err if err
+
+      parsed = protagonist.validateSync(data)
+      done()
+
+  it 'Result contains annotations only', ->
+    assert.deepEqual parsed, warning_refract
 
 
 describe "Validate valid Blueprint - Sync", ->
@@ -29,10 +45,7 @@ describe "Validate valid Blueprint - Sync", ->
   parsed = 1
 
   before (done) ->
-
-    fixture_path = path.join __dirname, './fixtures/sample-api.apib'
-
-    fs.readFile fixture_path, 'utf8', (err, data) ->
+    fs.readFile valid_fixture, 'utf8', (err, data) ->
       return done err if err
 
       parsed = protagonist.validateSync(data)
@@ -44,37 +57,66 @@ describe "Validate valid Blueprint - Sync", ->
 
 describe "Validate Blueprint with error - Async", ->
 
-  it 'will return error', (done) ->
+  parsed = null
 
-    parsed = require './fixtures/invalid-api-error.json'
-    data = fs.readFileSync(path.join(__dirname, './fixtures/invalid-api-error.apib'), 'utf8')
+  before (done) ->
+    fs.readFile error_fixture, 'utf8', (err, data) ->
+      return done err if err
 
-    protagonist.validate data, { requireBlueprintName: true }, (err, res) ->
-      assert.deepEqual res, parsed
-      assert.isNull err
-      done()
+      protagonist.validate data, (err, res) ->
+        return done err if err
+
+        parsed = res
+        done()
+
+  it 'Result contains annotations only', ->
+    assert.deepEqual parsed, error_refract
+
+
+describe "Validate Blueprint with warning - Async", ->
+
+  parsed = null
+
+  before (done) ->
+    fs.readFile warning_fixture, 'utf8', (err, data) ->
+      return done err if err
+
+      protagonist.validate data, (err, res) ->
+        return done err if err
+
+        parsed = res
+        done()
+
+  it 'Result contains annotations only', ->
+    assert.deepEqual parsed, warning_refract
 
 
 describe "Validate valid Blueprint - Async", ->
 
-  it 'will return null', (done) ->
+  parsed = 1
 
-    data = fs.readFileSync(path.join(__dirname, './fixtures/sample-api.apib'), 'utf8')
+  before (done) ->
+    fs.readFile valid_fixture, 'utf8', (err, data) ->
+      return done err if err
 
-    protagonist.validate data, (err, res) ->
-      assert.isNull err
-      assert.isNull res
-      done()
+      protagonist.validate data, (err, res) ->
+        return done err if err
+
+        parsed = res
+        done()
+
+  it 'will return null', ->
+    assert.isNull parsed
 
 
-describe "Validate invalid Blueprint - Async", ->
+describe "Validate Blueprint - Async", ->
 
   it 'will finish after the sync', (done) ->
 
     syncFinished = false
     sync_parsed = null
 
-    data = fs.readFileSync(path.join(__dirname, './fixtures/invalid-api.apib'), 'utf8')
+    data = fs.readFileSync(valid_fixture, 'utf8')
 
     protagonist.validate data, (err, res) ->
       if syncFinished

@@ -17,7 +17,7 @@
       "attributes": {
         "code": {
           "element": "number",
-          "content": 4
+          "content": 2
         },
         "sourceMap": {
           "element": "array",
@@ -30,11 +30,11 @@
                   "content": [
                     {
                       "element": "number",
-                      "content": 18
+                      "content": 0
                     },
                     {
                       "element": "number",
-                      "content": 9
+                      "content": 12
                     }
                   ]
                 }
@@ -43,7 +43,7 @@
           ]
         }
       },
-      "content": "base type 'A' circularly referencing itself"
+      "content": "expected API name, e.g. '# <API Name>'"
     }
   ]
 }
