@@ -1,9 +1,15 @@
 version: 2
 
-defaults: &defaults
-  working_directory: ~/repo
-  docker:
-    - image: circleci/node:10
+aliases:
+  - &defaults
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:10
+
+  - &tag-filter
+    filters:
+      tags:
+        only: /^v.*/
 
 jobs:
   test:
@@ -50,8 +56,8 @@ workflows:
   version: 2
   test-publish:
     jobs:
-      - test
-      - test-macos
+      - test: *tag-filter
+      - test-macos: *tag-filter
       - publish:
           requires:
             - test
