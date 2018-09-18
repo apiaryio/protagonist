@@ -1,22 +1,15 @@
-  var assert, error_fixture, error_refract, fs, path, protagonist, valid_fixture, warning_fixture, warning_refract;
 
-  fs = require('fs');
+const fs = require('fs');
+const path = require('path');
+const assert = require('chai').assert;
+const protagonist = require('./protagonist');
 
-  path = require('path');
+const valid_fixture = path.join(__dirname, 'fixtures', 'sample-api.apib');
+const warning_fixture = path.join(__dirname, 'fixtures', 'invalid-api-warning.apib');
+const error_fixture = path.join(__dirname, 'fixtures', 'invalid-api-error.apib');
 
-  assert = require('chai').assert;
-
-  protagonist = require('./protagonist');
-
-  valid_fixture = path.join(__dirname, './fixtures/sample-api.apib');
-
-  warning_fixture = path.join(__dirname, './fixtures/invalid-api-warning.apib');
-
-  error_fixture = path.join(__dirname, './fixtures/invalid-api-error.apib');
-
-  warning_refract = require('./fixtures/invalid-api-warning.json');
-
-  error_refract = require('./fixtures/invalid-api-error.json');
+const warning_refract = require('./fixtures/invalid-api-warning.json');
+const error_refract = require('./fixtures/invalid-api-error.json');
 
 describe("Validate Blueprint async with promise", () => {
 
