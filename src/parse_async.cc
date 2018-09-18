@@ -12,75 +12,84 @@ using Nan::AsyncWorker;
 using Nan::Callback;
 using Nan::HandleScope;
 
-namespace {
+namespace
+{
 
-class ParseWorker : public AsyncWorker {
-    drafter_parse_options parseOptions;
-    drafter_serialize_options serializeOptions;
-    Nan::Utf8String *sourceData;
-    Nan::Persistent<v8::Promise::Resolver>* persistent;
+    class ParseWorker : public AsyncWorker
+    {
+        drafter_parse_options parseOptions;
+        drafter_serialize_options serializeOptions;
+        Nan::Utf8String* sourceData;
 
-    // Output
-    drafter_result *result;
-    int parse_err_code;
+        Nan::Persistent<v8::Promise::Resolver>* persistent;
 
-   public:
-    ParseWorker(Callback *callback, Nan::Persistent<v8::Promise::Resolver>* persistent, drafter_parse_options parseOptions,
-                drafter_serialize_options serializeOptions,
-                Nan::Utf8String *sourceData)
-        : AsyncWorker(callback),
-          parseOptions(parseOptions),
-          serializeOptions(serializeOptions),
-          sourceData(sourceData),
-	  persistent(persistent),
-          result(nullptr),
-          parse_err_code(-1) {}
+        // Output
+        drafter_result* result;
+        int parse_err_code;
 
-    void Execute() {
-        parse_err_code =
-            drafter_parse_blueprint(*(*sourceData), &result, parseOptions);
-    }
-
-    void HandleOKCallback() {
-
-
-        Nan::HandleScope scope;
-
-	if (persistent) {
-          auto resolver = Nan::New(*persistent);
-   	  resolver->Resolve(refract2v8(result, serializeOptions));
-	  return;
-	}
-	else if (callback) {
-		v8::Local<v8::Value> argv[] = {Nan::Null(),
-					       refract2v8(result, serializeOptions)};
-
-		if (0 != parse_err_code) {
-		    argv[0] = annotations2v8(result);
-                 }
-
-
-        	callback->Call(2, argv);
-		return;
-	}
-        Nan::ThrowTypeError(
-            "not handled OKCallback");
-	
-
-    }
-
-    virtual ~ParseWorker() {
-        if (result) {
-            drafter_free_result(result);
-            result = nullptr;
+    public:
+        ParseWorker(Callback* callback,
+            Nan::Persistent<v8::Promise::Resolver>* persistent,
+            drafter_parse_options parseOptions,
+            drafter_serialize_options serializeOptions,
+            Nan::Utf8String* sourceData)
+            : AsyncWorker(callback)
+            , parseOptions(parseOptions)
+            , serializeOptions(serializeOptions)
+            , sourceData(sourceData)
+            , persistent(persistent)
+            , result(nullptr)
+            , parse_err_code(-1)
+        {
         }
 
-        if (sourceData) {
-            delete sourceData;
-            sourceData = nullptr;
+        void Execute()
+        {
+            parse_err_code = drafter_parse_blueprint(*(*sourceData), &result, parseOptions);
         }
-    }
-};
+
+        void HandleOKCallback()
+        {
+
+            Nan::HandleScope scope;
+
+            if (persistent) {
+                auto resolver = Nan::New(*persistent);
+
+                if (!parse_err_code) {
+                    resolver->Resolve(Nan::GetCurrentContext(), refract2v8(result, serializeOptions));
+                } else {
+                    resolver->Reject(Nan::GetCurrentContext(), refract2v8(result, serializeOptions));
+                }
+                v8::Isolate::GetCurrent()->RunMicrotasks();
+                return;
+            } else if (callback) {
+
+                v8::Local<v8::Value> argv[] = {Nan::Null(), refract2v8(result, serializeOptions)};
+
+                if (0 != parse_err_code) {
+                    argv[0] = annotations2v8(result);
+                }
+
+                callback->Call(2, argv);
+                return;
+            }
+            Nan::ThrowTypeError("not handled OKCallback");
+        }
+
+        virtual ~ParseWorker()
+        {
+            if (result) {
+                drafter_free_result(result);
+                result = nullptr;
+            }
+
+            if (sourceData) {
+                delete sourceData;
+                sourceData = nullptr;
+            }
+        }
+    };
 }
 
 /**
@@ -91,76 +100,82 @@ class ParseWorker : public AsyncWorker {
  * (source, option, callback) -> callback
  */
 
-NAN_METHOD(protagonist::Parse) {
+static bool isLastParamCallback(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+    return info[info.Length()-1]->IsFunction();
+}
+
+NAN_METHOD(protagonist::Parse)
+{
     Nan::HandleScope scope;
-  Nan::Persistent<v8::Promise::Resolver> *persistent = nullptr;
-  v8::Local<v8::Promise::Resolver> resolver;
+    Nan::Persistent<v8::Promise::Resolver>* persistent = nullptr;
+    Callback* callback = nullptr;
+    v8::Local<v8::Promise::Resolver> resolver;
 
     // Check arguments
+
+    size_t optionIndex = 0;
+    size_t callbackIndex = 0;
+
     if (info.Length() < 1 || info.Length() > 3) {
-        Nan::ThrowTypeError(
-            "wrong number of arguments, `parse(string, options, callback)` "
-            "expected");
+        Nan::ThrowTypeError("wrong number of arguments, `parse(string, options, callback)` expected");
         return;
     }
 
     if (!info[0]->IsString()) {
-        Nan::ThrowTypeError(
-            "wrong 1st argument - string expected, `parse(string, options, "
-            "callback)`");
+        Nan::ThrowTypeError("wrong 1st argument - string expected");
         return;
     }
 
-    if ((info.Length() == 2 && !info[1]->IsFunction()) ||
-        (info.Length() == 3 && !info[2]->IsFunction())) {
-        Nan::ThrowTypeError(
-            "wrong argument - callback expected, `parse(string, options, "
-            "callback)`");
-        return;
+    if (isLastParamCallback(info)) { // last arg is callback funtion
+        if (info.Length() == 3) {
+            optionIndex = 1;
+        }
+        callbackIndex = info.Length() - 1;
+    } else { // is Promise
+        if (info.Length() == 2) {
+            optionIndex = 1;
+        } else if (info.Length() > 2) { // promise shoud not have more than 2 params
+            Nan::ThrowSyntaxError("wrong number of arguments, `parse(string, [options])` expected");
+            return;
+        }
     }
 
-    if (info.Length() == 3 && !info[1]->IsObject()) {
-        Nan::ThrowTypeError(
-            "wrong argument - object expected, `parse(string, options, "
-            "callback)`");
+    if (optionIndex && !info[optionIndex]->IsObject()) {
+        Nan::ThrowTypeError("wrong 2nd argument - `options` expected `parse(string[, options][, callback])`");
         return;
-    }
-
-    if (info.Length() == 1) { // let use promise
-	  resolver = v8::Promise::Resolver::New(info.GetIsolate());
-	  persistent = new Nan::Persistent<v8::Promise::Resolver>(resolver);
-
-        //info.GetReturnValue().Set(resolver->GetPromise());
     }
 
     // Prepare options
-    drafter_parse_options parseOptions = {false};
-    drafter_serialize_options serializeOptions = {false,
-                                                  DRAFTER_SERIALIZE_JSON};
+    drafter_parse_options parseOptions = { false };
+    drafter_serialize_options serializeOptions = { false, DRAFTER_SERIALIZE_JSON };
 
-    if (info.Length() == 3) {
-        OptionsResult *optionsResult =
-            ParseOptionsObject(Handle<Object>::Cast(info[1]), false);
+    if (optionIndex) {
+        OptionsResult* optionsResult = ParseOptionsObject(Handle<Object>::Cast(info[optionIndex]), false);
 
         if (optionsResult->error != NULL) {
-            Nan::ThrowTypeError(optionsResult->error);
+            Nan::TypeError(optionsResult->error);
+            return;
+        } else {
+            parseOptions = optionsResult->parseOptions;
+            serializeOptions = optionsResult->serializeOptions;
+            FreeOptionsResult(&optionsResult);
         }
 
-        parseOptions = optionsResult->parseOptions;
-        serializeOptions = optionsResult->serializeOptions;
-        FreeOptionsResult(&optionsResult);
     }
 
-    Callback *callback = nullptr;
-    
-    if (!persistent) {
-        callback = new Callback(info.Length() == 3 ? info[2].As<Function>() : info[1].As<Function>());
+    if (callbackIndex) {
+        callback = new Callback(info[callbackIndex].As<Function>());
+    } else {
+        resolver = v8::Promise::Resolver::New(info.GetIsolate());
+        persistent = new Nan::Persistent<v8::Promise::Resolver>(resolver);
     }
 
-    AsyncQueueWorker(new ParseWorker(callback, persistent, parseOptions, serializeOptions,
-                                     new Nan::Utf8String(info[0])));
+    AsyncQueueWorker(
+        new ParseWorker(callback, persistent, parseOptions, serializeOptions, new Nan::Utf8String(info[0])));
 
-    if (persistent) {
+    if (!callbackIndex) {
         info.GetReturnValue().Set(resolver->GetPromise());
     }
+
 }
