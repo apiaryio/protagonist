@@ -1,48 +1,11 @@
-var assert, fs, path, protagonist;
-
-fs = require('fs');
-path = require('path');
-assert = require('chai').assert;
-protagonist = require('./protagonist');
+const fs = require('fs');
+const path = require('path');
+const assert = require('chai').assert;
+const protagonist = require('./protagonist');
 
 const data = fs.readFileSync(path.join(__dirname, './fixtures/sample-api.apib'), 'utf8');
 const sync_parsed = protagonist.parseSync(data)
 const sync_parsed_sm = protagonist.parseSync(data, { exportSourcemap : true })
-
-describe('Async parse', () => {
-
-  it('will parse with callback', function(done) {
-    protagonist.parse(data, function (err, res) {
-      assert.isNull(err)
-      assert.deepEqual(res, sync_parsed);
-      done()
-    })
-  })
-
-  it('will parse with promise', function() {
-    protagonist.parse(data)
-      .then(res => {
-        assert.deepEqual(res, sync_parsed);
-      })
-      .catch(err => {
-        assert.fail()
-      })
-
-  })
-
-  it('will parse with await/async', async function() {
-    let res
-
-    try {
-      res = await protagonist.parse(data)
-    } catch (err) {
-      assert.fail()
-    }
-    assert.deepEqual(res, sync_parsed);
-
-  })
-
-})
 
 describe('Async parse correctly handling options', () => {
 
@@ -81,8 +44,8 @@ describe('Async parse correctly handling options', () => {
 
 describe('Async parsing - accepted parameters', () => {
 
-  let source = '# API\n ## GET /\n+ Response 200 (text/plain)\n        Hello world\n'
-  let opt = {}
+  const source = '# API\n ## GET /\n+ Response 200 (text/plain)\n        Hello world\n'
+  var opt = {}
 
   describe('Promise', () => {
     it('will accept source only', (done) => {
