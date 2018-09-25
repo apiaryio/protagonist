@@ -5,7 +5,7 @@ path = require('path');
 assert = require('chai').assert;
 protagonist = require('./protagonist');
 
-const data = fs.readFileSync(path.join(__dirname, './fixtures/sample-api.apib'), 'utf8');
+const data = fs.readFileSync(path.join(__dirname, './fixtures/valid.apib'), 'utf8');
 const sync_parsed = protagonist.parseSync(data)
 const sync_parsed_sm = protagonist.parseSync(data, { exportSourcemap : true })
 

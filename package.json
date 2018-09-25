@@ -24,7 +24,7 @@
   },
   "scripts": {
     "build": "node-gyp build",
-    "test:exclude-await": "mocha --exclude test/async-test-await.js --compilers coffee:coffee-script -R spec test",
+    "test:exclude-await": "mocha --exclude test/await-test.js --compilers coffee:coffee-script -R spec test",
     "test:await": "mocha --compilers coffee:coffee-script -R spec test",
     "test": "node --version | grep -q -E \"v(4|6)\" && npm run test:exclude-await || npm run test:await"
   },

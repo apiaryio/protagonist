@@ -3,9 +3,9 @@ const path = require('path');
 const assert = require('chai').assert;
 const protagonist = require('./protagonist');
 
-const data = fs.readFileSync(path.join(__dirname, 'fixtures', 'sample-api.apib'), 'utf8');
-const sync_parsed = fs.readFileSync(path.join(__dirname, 'fixtures', 'sample-api-refract.json'), 'utf8');
-const sync_parsed_sm = fs.readFileSync(path.join(__dirname, 'fixtures', 'sample-api-refract-sourcemap.json'), 'utf8');
+const data = fs.readFileSync(path.join(__dirname, 'fixtures', 'valid.apib'), 'utf8');
+const sync_parsed = fs.readFileSync(path.join(__dirname, 'fixtures', 'valid.parse.json'), 'utf8');
+const sync_parsed_sm = fs.readFileSync(path.join(__dirname, 'fixtures', 'valid.parse.sourcemap.json'), 'utf8');
 
 describe('Async parse correctly handling options', () => {
 

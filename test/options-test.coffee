@@ -3,8 +3,8 @@ path = require 'path'
 {assert} = require 'chai'
 protagonist = require './protagonist'
 
-fixture_path = path.join __dirname, './fixtures/sample-api.apib'
-expected_err = require './fixtures/sample-api-error.json'
+fixture_path = path.join __dirname, './fixtures/valid.apib'
+expected_err = require './fixtures/require-name.json'
 
 describe "Requiring Blueprint name with sourcemaps", ->
   refract_err = null

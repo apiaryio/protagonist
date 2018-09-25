@@ -3,12 +3,12 @@ path = require 'path'
 {assert} = require 'chai'
 protagonist = require './protagonist'
 
-valid_fixture = path.join __dirname, './fixtures/sample-api.apib'
-warning_fixture = path.join __dirname, './fixtures/invalid-api-warning.apib'
-error_fixture = path.join __dirname, './fixtures/invalid-api-error.apib'
+valid_fixture = path.join __dirname, './fixtures/valid.apib'
+warning_fixture = path.join __dirname, './fixtures/warning.apib'
+error_fixture = path.join __dirname, './fixtures/error.apib'
 
-warning_refract = require './fixtures/invalid-api-warning.json'
-error_refract = require './fixtures/invalid-api-error.json'
+warning_refract = require './fixtures/warning.validate.json'
+error_refract = require './fixtures/error.json'
 
 describe "Validate Blueprint with error - Sync", ->
 

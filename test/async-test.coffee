@@ -10,7 +10,7 @@ describe 'Parser async parse', ->
     syncFinished = false
     sync_parsed = null
 
-    data = fs.readFileSync(path.join(__dirname, './fixtures/sample-api.apib'), 'utf8')
+    data = fs.readFileSync(path.join(__dirname, './fixtures/valid.apib'), 'utf8')
 
     protagonist.parse data, (err, res) ->
       if syncFinished

@@ -5,13 +5,13 @@ protagonist = require './protagonist'
 
 describe "Parser sourcemap", ->
 
-  sourcemap_fixture = require './fixtures/sample-api-refract-sourcemap.json'
+  sourcemap_fixture = require './fixtures/valid.parse.sourcemap.json'
   sourcemap_parsed = null
 
   # Read & parse blueprint fixture
   before (done) ->
 
-    fixture_path = path.join __dirname, './fixtures/sample-api.apib'
+    fixture_path = path.join __dirname, './fixtures/valid.apib'
 
     fs.readFile fixture_path, 'utf8', (err, data) ->
       return done err if err
@@ -28,13 +28,13 @@ describe "Parser sourcemap", ->
 
 #describe "Parser sourcemap with old option name", ->
 
-  sourcemap_fixture = require './fixtures/sample-api-refract-sourcemap.json'
+  sourcemap_fixture = require './fixtures/valid.parse.sourcemap.json'
   sourcemap_parsed = null
 
   # Read & parse blueprint fixture
   before (done) ->
 
-    fixture_path = path.join __dirname, './fixtures/sample-api.apib'
+    fixture_path = path.join __dirname, './fixtures/valid.apib'
 
     fs.readFile fixture_path, 'utf8', (err, data) ->
       return done err if err
