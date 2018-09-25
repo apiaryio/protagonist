@@ -3,9 +3,9 @@ const path = require('path');
 const assert = require('chai').assert;
 const protagonist = require('./protagonist');
 
-const data = fs.readFileSync(path.join(__dirname, './fixtures/sample-api.apib'), 'utf8');
-const sync_parsed = protagonist.parseSync(data)
-const sync_parsed_sm = protagonist.parseSync(data, { exportSourcemap : true })
+const data = fs.readFileSync(path.join(__dirname, 'fixtures', 'sample-api.apib'), 'utf8');
+const sync_parsed = fs.readFileSync(path.join(__dirname, 'fixtures', 'sample-api-refract.json'), 'utf8');
+const sync_parsed_sm = fs.readFileSync(path.join(__dirname, 'fixtures', 'sample-api-refract-sourcemap.json'), 'utf8');
 
 describe('Async parse correctly handling options', () => {
 
@@ -29,7 +29,7 @@ describe('Async parse correctly handling options', () => {
       })
   })
 
-  it('will not accept empty options', function() {
+  it('will accept empty options', function() {
     protagonist.parse(data, {})
       .then(res => {
         assert.deepEqual(res, sync_parsed);
@@ -45,14 +45,13 @@ describe('Async parse correctly handling options', () => {
 describe('Async parsing - accepted parameters', () => {
 
   const source = '# API\n ## GET /\n+ Response 200 (text/plain)\n        Hello world\n'
-  var opt = {}
 
   describe('Promise', () => {
     it('will accept source only', (done) => {
-        protagonist.parse(data)
+      protagonist.parse(data)
         .then(res => {
-           assert.isNotNull(res)
-           done()
+          assert.isNotNull(res)
+          done()
         })
         .catch(err => {
           done(err)
@@ -62,18 +61,18 @@ describe('Async parsing - accepted parameters', () => {
     it('will accept source with options', (done) => {
       protagonist.parse(source, {exportSourcemap : true})
         .then(res => {
-            assert.isNotNull(res)
-            done()
+          assert.isNotNull(res)
+          done()
         })
         .catch(err => {
-            done(err)
+          done(err)
         })
     })
 
     it('will not accept swapped params', (done) => {
       try {
         protagonist.parse({exportSourcemap : true}, source)
-        .then(res => { assert.fail() })
+          .then(res => { assert.fail() })
       } catch (err) {
         assert.equal(err, 'TypeError: wrong 1st argument - string expected')
         done()
@@ -83,7 +82,7 @@ describe('Async parsing - accepted parameters', () => {
     it('will not accept no params', (done) => {
       try {
         protagonist.parse()
-        .then(res => { assert.fail() })
+          .then(res => { assert.fail() })
       } catch (err) {
         assert.match(err, /TypeError: wrong number of arguments/)
         done()
@@ -93,7 +92,7 @@ describe('Async parsing - accepted parameters', () => {
     it('will not accept too much params', (done) => {
       try {
         protagonist.parse('a','b','c', 'd')
-        .then(res => { assert.fail() })
+          .then(res => { assert.fail() })
       } catch (err) {
         assert.match(err, /TypeError: wrong number of arguments/)
         done()
@@ -103,9 +102,9 @@ describe('Async parsing - accepted parameters', () => {
     it('will not accept wrong wrong type for options', (done) => {
       try {
         protagonist.parse('a','b')
-        .then(res => { assert.fail() })
+          .then(res => { assert.fail() })
       } catch (err) {
-        assert.match(err, /TypeError: wrong 2nd argument - `options` expected/)
+        assert.match(err, /TypeError: wrong 2nd argument - object expected/)
         done()
       }
     })
@@ -136,9 +135,9 @@ describe('Async parsing - accepted parameters', () => {
           assert.fail()
         }, source)
       } catch (err) {
-          assert.equal(err, 'TypeError: wrong 1st argument - string expected')
-          done()
-        }
+        assert.equal(err, 'TypeError: wrong 1st argument - string expected')
+        done()
+      }
     })
 
     it('will not accept just callback without source', (done) => {
@@ -153,15 +152,15 @@ describe('Async parsing - accepted parameters', () => {
     })
 
     it('will not accept wrong type for options', (done) => {
-        try {
-          protagonist.parse('a','b',function (err, res) {
-              assert.isNull(res)
-          })
-        }
-        catch (err) {
-          assert.match(err, /TypeError: wrong 2nd argument - `options` expected/)
-          done()
-        }
+      try {
+        protagonist.parse('a','b',function (err, res) {
+          assert.isNull(res)
+        })
+      }
+      catch (err) {
+        assert.match(err, /TypeError: wrong 2nd argument - object expected/)
+        done()
+      }
     })
   })
 })

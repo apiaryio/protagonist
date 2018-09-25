@@ -2,6 +2,8 @@
 #include "protagonist.h"
 #include "refractToV8.h"
 
+#include <assert.h>
+
 using std::string;
 using namespace v8;
 using namespace protagonist;
@@ -47,50 +49,48 @@ namespace
         {
             Nan::HandleScope scope;
 
-            // Callback args
+            auto error = Nan::Error("Parser: Unknown Error");
+
+            switch (parse_err_code) {
+                case DRAFTER_EINVALID_INPUT:
+                    error = Nan::Error("Parser: Invalid Input");
+                    break;
+                case DRAFTER_EINVALID_OUTPUT:
+                    error = Nan::Error("Parser: Invalid Output");
+                    break;
+                default:
+                    // do nothing
+                    ;
+            }
+
+            Local<Value> v8refract = Nan::Null();
+            if (result) {
+                v8refract = refract2v8(result, { true, DRAFTER_SERIALIZE_JSON });
+            }
 
             if (persistent) {
                 auto resolver = Nan::New(*persistent);
-                Local<Value> v8refract = Nan::Null();
-                if (result) {
-                    v8refract = refract2v8(result, { true, DRAFTER_SERIALIZE_JSON });
-                }
 
                 if (!parse_err_code) {
                     resolver->Resolve(Nan::GetCurrentContext(), v8refract);
                 } else {
-                    resolver->Reject(Nan::GetCurrentContext(), v8refract);
+                    resolver->Reject(Nan::GetCurrentContext(), error);
                 }
                 v8::Isolate::GetCurrent()->RunMicrotasks();
                 return;
             } else if (callback) {
-                Local<Value> argv[2];
+                v8::Local<v8::Value> argv[] = { Nan::Null(), v8refract };
 
-                switch (parse_err_code) {
-                    case DRAFTER_EUNKNOWN:
-                        argv[0] = Nan::Error("Parser: Unknown Error");
-                        argv[1] = Nan::Null();
-                        break;
-                    case DRAFTER_EINVALID_INPUT:
-                        argv[0] = Nan::Error("Parser: Invalid Input");
-                        argv[1] = Nan::Null();
-                        break;
-                    case DRAFTER_EINVALID_OUTPUT:
-                        argv[0] = Nan::Error("Parser: Invalid Output");
-                        argv[1] = Nan::Null();
-                        break;
-                    default:
-                        argv[0] = Nan::Null();
-                        if (result) {
-                            argv[1] = refract2v8(result, { true, DRAFTER_SERIALIZE_JSON });
-                        } else {
-                            argv[1] = Nan::Null();
-                        }
+                if (parse_err_code) {
+                    argv[0] = error;
                 }
+
                 callback->Call(2, argv);
                 return;
             }
-            Nan::ThrowTypeError("not handled OKCallback");
+
+            // this should never happen unless sent nullptr to `callback` and `persitent` from calling function
+            assert(0);
         }
 
         virtual ~ValidateWorker()
@@ -144,13 +144,13 @@ NAN_METHOD(protagonist::Validate)
         if (info.Length() == 2) {
             optionIndex = 1;
         } else if (info.Length() > 2) { // promise shoud not have more than 2 params
-            Nan::ThrowSyntaxError("wrong number of arguments, `parse(string, [options])` expected");
+            Nan::ThrowTypeError("wrong number of arguments, `parse(string, options)` expected");
             return;
         }
     }
 
     if (optionIndex && !info[optionIndex]->IsObject()) {
-        Nan::ThrowTypeError("wrong 2nd argument - `options` expected `parse(string[, options][, callback])`");
+        Nan::ThrowTypeError("wrong 2nd argument - object expected `parse(string, options, [callback])`");
         return;
     }
 
@@ -161,6 +161,7 @@ NAN_METHOD(protagonist::Validate)
 
         if (optionsResult->error != NULL) {
             Nan::ThrowTypeError(optionsResult->error);
+            return;
         }
 
         parseOptions = optionsResult->parseOptions;
