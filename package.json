@@ -12,7 +12,8 @@
     "node": ">=4"
   },
   "dependencies": {
-    "nan": "^2.11.0"
+    "nan": "^2.11.0",
+    "node-gyp": "^3.8.0"
   },
   "devDependencies": {
     "async": "^2.4.1",
@@ -22,7 +23,10 @@
     "mocha": "^5.2.0"
   },
   "scripts": {
-    "test": "mocha --compilers coffee:coffee-script -R spec test"
+    "build": "node-gyp build",
+    "test:exclude-await": "mocha --exclude test/async-test-await.js --compilers coffee:coffee-script -R spec test",
+    "test:await": "mocha --compilers coffee:coffee-script -R spec test",
+    "test": "node --version | grep -q -E \"v(4|6)\" && npm run test:exclude-await || npm run test:await"
   },
   "license": "MIT"
 }

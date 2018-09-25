@@ -14,7 +14,7 @@ describe "Requiring Blueprint name with sourcemaps", ->
       return done err if err
 
       protagonist.parse data, { requireBlueprintName: true, generateSourceMap: true }, (err, result) ->
-        # return done err if err
+        return done err if err
 
         refract_err = result
         done()
@@ -30,7 +30,7 @@ describe "Requiring Blueprint name without sourcemaps", ->
       return done err if err
 
       protagonist.parse data, { requireBlueprintName: true, generateSourceMap: false }, (err, result) ->
-        # return done err if err
+        return done err if err
 
         refract_err = result
         done()
