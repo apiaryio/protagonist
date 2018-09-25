@@ -48,10 +48,13 @@ namespace
         void HandleOKCallback()
         {
             Nan::HandleScope scope;
-
-            auto error = Nan::Error("Parser: Unknown Error");
+            Local<Value> error = Nan::Null();
+            Local<Value> v8refract = Nan::Null();
 
             switch (parse_err_code) {
+                case DRAFTER_EUNKNOWN:
+                    error = Nan::Error("Parser: Unknown Error");
+                    break;
                 case DRAFTER_EINVALID_INPUT:
                     error = Nan::Error("Parser: Invalid Input");
                     break;
@@ -63,7 +66,6 @@ namespace
                     ;
             }
 
-            Local<Value> v8refract = Nan::Null();
             if (result) {
                 v8refract = refract2v8(result, { true, DRAFTER_SERIALIZE_JSON });
             }
@@ -71,17 +73,20 @@ namespace
             if (persistent) {
                 auto resolver = Nan::New(*persistent);
 
-                if (!parse_err_code) {
+                if (parse_err_code >= 0) {
                     resolver->Resolve(Nan::GetCurrentContext(), v8refract);
                 } else {
                     resolver->Reject(Nan::GetCurrentContext(), error);
                 }
+
                 v8::Isolate::GetCurrent()->RunMicrotasks();
                 return;
             } else if (callback) {
-                v8::Local<v8::Value> argv[] = { Nan::Null(), v8refract };
+                Local<Value> argv[] = { Nan::Null(), Nan::Null() };
 
-                if (parse_err_code) {
+                if (parse_err_code >= 0) {
+                    argv[1] = v8refract;
+                } else {
                     argv[0] = error;
                 }
 

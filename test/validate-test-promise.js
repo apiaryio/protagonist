@@ -21,12 +21,12 @@ describe("Validate Blueprint async with promise", () => {
 
       protagonist.validate(data)
         .then(res => {
-          assert.fail()
+          assert.deepEqual(res, error_refract);
+          done()
         })
         .catch(err => {
-          assert.deepEqual(err, error_refract);
-          done()
-        }) 
+          done(err)
+        })
     });
   });
 
@@ -43,7 +43,7 @@ describe("Validate Blueprint async with promise", () => {
         })
         .catch(err => {
           done(err)
-        }) 
+        })
     });
   });
 
@@ -60,7 +60,7 @@ describe("Validate Blueprint async with promise", () => {
         })
         .catch(err => {
           done(err)
-        }) 
+        })
     });
   });
 

@@ -52,12 +52,14 @@ namespace
 
         void HandleOKCallback()
         {
-
             Nan::HandleScope scope;
-
-            auto error = Nan::Error("Parser: Unknown Error");
+            Local<Value> error = Nan::Null();
+            Local<Value> v8refract = Nan::Null();
 
             switch (parse_err_code) {
+                case DRAFTER_EUNKNOWN:
+                    error = Nan::Error("Parser: Unknown Error");
+                    break;
                 case DRAFTER_EINVALID_INPUT:
                     error = Nan::Error("Parser: Invalid Input");
                     break;
@@ -69,11 +71,15 @@ namespace
                     ;
             }
 
+            if (result) {
+                v8refract = refract2v8(result, serializeOptions);
+            }
+
             if (persistent) {
                 auto resolver = Nan::New(*persistent);
 
-                if (!parse_err_code) {
-                    resolver->Resolve(Nan::GetCurrentContext(), refract2v8(result, serializeOptions));
+                if (parse_err_code >= 0) {
+                    resolver->Resolve(Nan::GetCurrentContext(), v8refract);
                 } else {
                     resolver->Reject(Nan::GetCurrentContext(), error);
                 }
@@ -81,11 +87,10 @@ namespace
                 v8::Isolate::GetCurrent()->RunMicrotasks();
                 return;
             } else if (callback) {
+                Local<Value> argv[] = { Nan::Null(), Nan::Null() };
 
-                v8::Local<v8::Value> argv[] = { Nan::Null(), Nan::Null() };
-
-                if (!parse_err_code) {
-                    argv[1] = refract2v8(result, serializeOptions);
+                if (parse_err_code >= 0) {
+                    argv[1] = v8refract;
                 } else {
                     argv[0] = error;
                 }
@@ -152,6 +157,7 @@ NAN_METHOD(protagonist::Parse)
         if (info.Length() == 3) {
             optionIndex = 1;
         }
+
         callbackIndex = info.Length() - 1;
     } else { // is Promise
         if (info.Length() == 2) {
