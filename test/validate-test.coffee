@@ -55,60 +55,6 @@ describe "Validate valid Blueprint - Sync", ->
     assert.isNull parsed
 
 
-describe "Validate Blueprint with error - Async", ->
-
-  parsed = null
-
-  before (done) ->
-    fs.readFile error_fixture, 'utf8', (err, data) ->
-      return done err if err
-
-      protagonist.validate data, (err, res) ->
-        return done err if err
-
-        parsed = res
-        done()
-
-  it 'Result contains annotations only', ->
-    assert.deepEqual parsed, error_refract
-
-
-describe "Validate Blueprint with warning - Async", ->
-
-  parsed = null
-
-  before (done) ->
-    fs.readFile warning_fixture, 'utf8', (err, data) ->
-      return done err if err
-
-      protagonist.validate data, (err, res) ->
-        return done err if err
-
-        parsed = res
-        done()
-
-  it 'Result contains annotations only', ->
-    assert.deepEqual parsed, warning_refract
-
-
-describe "Validate valid Blueprint - Async", ->
-
-  parsed = 1
-
-  before (done) ->
-    fs.readFile valid_fixture, 'utf8', (err, data) ->
-      return done err if err
-
-      protagonist.validate data, (err, res) ->
-        return done err if err
-
-        parsed = res
-        done()
-
-  it 'will return null', ->
-    assert.isNull parsed
-
-
 describe "Validate Blueprint - Async", ->
 
   it 'will finish after the sync', (done) ->
