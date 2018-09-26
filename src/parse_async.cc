@@ -149,7 +149,7 @@ NAN_METHOD(protagonist::Parse)
     }
 
     if (!info[0]->IsString()) {
-        Nan::ThrowTypeError("wrong 1st argument - string expected");
+        Nan::ThrowTypeError("wrong 1st argument - string expected `parse(string, options, [callback])`");
         return;
     }
 

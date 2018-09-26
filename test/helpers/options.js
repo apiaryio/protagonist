@@ -3,8 +3,6 @@ const path = require('path');
 const fs = require('fs');
 
 const valid_fixture = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'valid.apib'), 'utf8');
-const warning_fixture = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'warning.apib'), 'utf8');
-const error_fixture = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'error.apib'), 'utf8');
 
 const valid_refract = require('../fixtures/valid.parse.json');
 const valid_sourcemap_refract = require('../fixtures/valid.parse.sourcemap.json');
@@ -12,21 +10,24 @@ const require_name = require('../fixtures/require-name.json');
 
 module.exports = (parser) => {
   describe('Options containing', () => {
-    // it('unsupported option when parsing should throw error', () => {
-    //   parser.parse(valid_fixture, { type: 'refract' })
-    //     .then(assert.isNull)
-    //     .catch((err) => {
-    //       assert.deepEqual(err.message, `unrecognized option 'type', expected: 'requireBlueprintName', 'generateSourceMap'`);
-    //     });
-    // });
+    it('unsupported option when parsing should throw', () => {
+      assert.throws(() => {
+        parser.parse(valid_fixture, { type: 'refract' });
+      }, `unrecognized option 'type', expected: 'requireBlueprintName', 'generateSourceMap'`);
+    });
 
-    // it('unsupported option when validating should throw error', () => {
-    //   parser.validate(valid_fixture, { type: 'refract' })
-    //     .then(assert.isNull)
-    //     .catch((err) => {
-    //       assert.deepEqual(err.message, `unrecognized option 'type', expected: 'requireBlueprintName'`);
-    //     });
-    // });
+    it('unsupported option when validating should throw', () => {
+      assert.throws(() => {
+        parser.validate(valid_fixture, { type: 'refract' });
+      }, `unrecognized option 'type', expected: 'requireBlueprintName'`);
+    });
+
+    it('sourcemap option set to false should work', () => {
+      parser.parse(valid_fixture, { generateSourceMap: false })
+        .then((refract) => {
+          assert.deepEqual(refract, valid_refract);
+        }).catch(assert.isNull);
+    });
 
     it('old sourcemap option should work', () => {
       parser.parse(valid_fixture, { exportSourcemap: true })
@@ -49,7 +50,7 @@ module.exports = (parser) => {
             .then((refract) => {
               assert.deepEqual(refract, require_name);
             }).catch(assert.isNull);
-        })
+        });
       });
 
       it('when validating should work', () => {
