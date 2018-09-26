@@ -18,14 +18,13 @@
   "devDependencies": {
     "async": "^2.4.1",
     "chai": "^4.1.2",
-    "coffee-script": "~1.6.0",
     "glob": "^7.1.2",
     "mocha": "^5.2.0"
   },
   "scripts": {
     "build": "node-gyp build",
-    "test:exclude-await": "mocha --exclude test/await-test.js --compilers coffee:coffee-script -R spec test",
-    "test:await": "mocha --compilers coffee:coffee-script -R spec test",
+    "test:exclude-await": "mocha --exclude test/await-test.js",
+    "test:await": "mocha",
     "test": "node --version | grep -q -E \"v(4|6)\" && npm run test:exclude-await || npm run test:await"
   },
   "license": "MIT"

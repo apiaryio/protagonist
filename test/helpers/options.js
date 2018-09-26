@@ -14,7 +14,7 @@ module.exports = (parser) => {
   describe('Options containing', () => {
     // it('unsupported option when parsing should throw error', () => {
     //   parser.parse(valid_fixture, { type: 'refract' })
-    //     .then(assert.fail)
+    //     .then(assert.isNull)
     //     .catch((err) => {
     //       assert.deepEqual(err.message, `unrecognized option 'type', expected: 'requireBlueprintName', 'generateSourceMap'`);
     //     });
@@ -22,9 +22,9 @@ module.exports = (parser) => {
 
     // it('unsupported option when validating should throw error', () => {
     //   parser.validate(valid_fixture, { type: 'refract' })
-    //     .then(assert.fail)
+    //     .then(assert.isNull)
     //     .catch((err) => {
-    //       assert.deepEqual(err.message, `unrecognized option 'type', expected: 'requireBlueprintName', 'generateSourceMap'`);
+    //       assert.deepEqual(err.message, `unrecognized option 'type', expected: 'requireBlueprintName'`);
     //     });
     // });
 
