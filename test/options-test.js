@@ -1,4 +1,4 @@
 const optionsHelper = require('./helpers/options');
-const protagonist = require('./protagonist');
+const protagonist = require('./helpers/protagonist');
 
 optionsHelper(protagonist);

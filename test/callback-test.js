@@ -1,4 +1,4 @@
 const callbackHelper = require('./helpers/callback');
-const protagonist = require('./protagonist');
+const protagonist = require('./helpers/protagonist');
 
 callbackHelper(protagonist);

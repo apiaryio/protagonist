@@ -1,4 +1,4 @@
 const paramsHelper = require('./helpers/params');
-const protagonist = require('./protagonist');
+const protagonist = require('./helpers/protagonist');
 
 paramsHelper(protagonist);

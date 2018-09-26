@@ -1,7 +1,7 @@
 const assert = require('chai').assert;
 const path = require('path');
 const fs = require('fs');
-const protagonist = require('./protagonist');
+const protagonist = require('./helpers/protagonist');
 
 const valid_fixture = fs.readFileSync(path.join(__dirname, 'fixtures', 'valid.apib'), 'utf8');
 

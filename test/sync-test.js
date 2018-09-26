@@ -1,4 +1,4 @@
 const syncHelper = require('./helpers/sync');
-const protagonist = require('./protagonist');
+const protagonist = require('./helpers/protagonist');
 
 syncHelper(protagonist);

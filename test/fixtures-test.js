@@ -2,7 +2,7 @@ const fs = require('fs');
 const expect = require('chai').expect;
 const glob = require('glob');
 
-const protagonist = require('./protagonist');
+const protagonist = require('./helpers/protagonist');
 
 describe('Parsing Drafter Test Fixtures', () => {
   const fixtures = glob.sync('drafter/test/fixtures/*/*.apib');
