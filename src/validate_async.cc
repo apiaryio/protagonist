@@ -136,7 +136,7 @@ NAN_METHOD(protagonist::Validate)
     }
 
     if (!info[0]->IsString()) {
-        Nan::ThrowTypeError("wrong 1st argument - string expected `validate(string, options, [callback])`");
+        Nan::ThrowTypeError("wrong 1st argument - string expected, `validate(string, options, [callback])`");
         return;
     }
 
@@ -155,7 +155,7 @@ NAN_METHOD(protagonist::Validate)
     }
 
     if (optionIndex && !info[optionIndex]->IsObject()) {
-        Nan::ThrowTypeError("wrong 2nd argument - object expected `validate(string, options, [callback])`");
+        Nan::ThrowTypeError("wrong 2nd argument - object expected, `validate(string, options, [callback])`");
         return;
     }
 

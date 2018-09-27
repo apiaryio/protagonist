@@ -17,12 +17,12 @@ NAN_METHOD(protagonist::ValidateSync) {
     }
 
     if (!info[0]->IsString()) {
-        Nan::ThrowTypeError("wrong argument - string expected, `validateSync(string, options)`");
+        Nan::ThrowTypeError("wrong 1st argument - string expected, `validateSync(string, options)`");
         return;
     }
 
     if (info.Length() == 2 && !info[1]->IsObject()) {
-        Nan::ThrowTypeError("wrong argument - object expected, `validateSync(string, options)`");
+        Nan::ThrowTypeError("wrong 2nd argument - object expected, `validateSync(string, options)`");
         return;
     }
 
