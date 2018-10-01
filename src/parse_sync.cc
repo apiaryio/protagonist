@@ -17,12 +17,12 @@ NAN_METHOD(protagonist::ParseSync) {
     }
 
     if (!info[0]->IsString()) {
-        Nan::ThrowTypeError("wrong argument - string expected, `parseSync(string, options)`");
+        Nan::ThrowTypeError("wrong 1st argument - string expected, `parseSync(string, options)`");
         return;
     }
 
     if (info.Length() == 2 && !info[1]->IsObject()) {
-        Nan::ThrowTypeError("wrong argument - object expected, `parseSync(string, options)`");
+        Nan::ThrowTypeError("wrong 2nd argument - object expected, `parseSync(string, options)`");
         return;
     }
 

@@ -149,7 +149,7 @@ NAN_METHOD(protagonist::Parse)
     }
 
     if (!info[0]->IsString()) {
-        Nan::ThrowTypeError("wrong 1st argument - string expected");
+        Nan::ThrowTypeError("wrong 1st argument - string expected, `parse(string, options, [callback])`");
         return;
     }
 
@@ -169,7 +169,7 @@ NAN_METHOD(protagonist::Parse)
     }
 
     if (optionIndex && !info[optionIndex]->IsObject()) {
-        Nan::ThrowTypeError("wrong 2nd argument - object expected `parse(string, options, [callback])`");
+        Nan::ThrowTypeError("wrong 2nd argument - object expected, `parse(string, options, [callback])`");
         return;
     }
 

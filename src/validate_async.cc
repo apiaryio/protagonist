@@ -131,12 +131,12 @@ NAN_METHOD(protagonist::Validate)
     size_t callbackIndex = 0;
 
     if (info.Length() < 1 || info.Length() > 3) {
-        Nan::ThrowTypeError("wrong number of arguments, `parse(string, options, callback)` expected");
+        Nan::ThrowTypeError("wrong number of arguments, `validate(string, options, callback)` expected");
         return;
     }
 
     if (!info[0]->IsString()) {
-        Nan::ThrowTypeError("wrong 1st argument - string expected");
+        Nan::ThrowTypeError("wrong 1st argument - string expected, `validate(string, options, [callback])`");
         return;
     }
 
@@ -149,13 +149,13 @@ NAN_METHOD(protagonist::Validate)
         if (info.Length() == 2) {
             optionIndex = 1;
         } else if (info.Length() > 2) { // promise shoud not have more than 2 params
-            Nan::ThrowTypeError("wrong number of arguments, `parse(string, options)` expected");
+            Nan::ThrowTypeError("wrong number of arguments, `validate(string, options)` expected");
             return;
         }
     }
 
     if (optionIndex && !info[optionIndex]->IsObject()) {
-        Nan::ThrowTypeError("wrong 2nd argument - object expected `parse(string, options, [callback])`");
+        Nan::ThrowTypeError("wrong 2nd argument - object expected, `validate(string, options, [callback])`");
         return;
     }
 
