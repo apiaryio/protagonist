@@ -22,42 +22,52 @@ module.exports = (parser) => {
       }, `unrecognized option 'type', expected: 'requireBlueprintName'`);
     });
 
-    it('sourcemap option set to false should work', () => {
+    it('sourcemap option set to false should work', (done) => {
       parser.parse(valid_fixture, { generateSourceMap: false })
         .then((refract) => {
           assert.deepEqual(refract, valid_refract);
-        }).catch(assert.isNull);
-    });
+          done();
+        })
+        .catch(done);
+    })
 
-    it('old sourcemap option should work', () => {
+    it('old sourcemap option should work', (done) => {
       parser.parse(valid_fixture, { exportSourcemap: true })
         .then((refract) => {
           assert.deepEqual(refract, valid_sourcemap_refract);
-        }).catch(assert.isNull);
+          done();
+        })
+        .catch(done);
     });
 
     describe('requireBlueprintName', () => {
       describe('when parsing', () => {
-        it('should work', () => {
+        it('should work', (done) => {
           parser.parse(valid_fixture, { requireBlueprintName: true })
             .then((refract) => {
               assert.deepEqual(refract, require_name);
-            }).catch(assert.isNull);
+              done();
+            })
+            .catch(done);
         });
 
-        it('along with sourcemap should work', () => {
+        it('along with sourcemap should work', (done) => {
           parser.parse(valid_fixture, { requireBlueprintName: true, generateSourceMap: true })
             .then((refract) => {
               assert.deepEqual(refract, require_name);
-            }).catch(assert.isNull);
-        });
+              done();
+            })
+            .catch(done);
+        })
       });
 
-      it('when validating should work', () => {
+      it('when validating should work', (done) => {
         parser.validate(valid_fixture, { requireBlueprintName: true })
           .then((refract) => {
             assert.deepEqual(refract, require_name);
-          }).catch(assert.isNull);
+            done();
+          })
+          .catch(done);
       });
     });
   });

@@ -14,62 +14,78 @@ const error_refract = require('../fixtures/error.json');
 
 module.exports = (parser) => {
   describe('Parse with promise', () => {
-    it('valid fixture without options should return parse result', () => {
+    it('valid fixture without options should return parse result', (done) => {
       parser.parse(valid_fixture)
         .then(refract => {
           assert.deepEqual(refract, valid_refract);
-        }).catch(assert.isNull);
+          done();
+        })
+        .catch(done);
     });
 
-    it('valid fixture with options should return parse result', () => {
+    it('valid fixture with options should return parse result', (done) => {
       parser.parse(valid_fixture, { generateSourceMap: true })
         .then(refract => {
           assert.deepEqual(refract, valid_sourcemap_refract);
-        }).catch(assert.isNull);
+          done();
+        })
+        .catch(done);
     });
 
-    it('error fixture without options should return parse result', () => {
+    it('error fixture without options should return parse result', (done) => {
       parser.parse(error_fixture)
         .then(refract => {
           assert.deepEqual(refract, error_refract);
-        }).catch(assert.isNull);
+          done();
+        })
+        .catch(done);
     });
 
-    it('warning fixture without options should return parse result', () => {
+    it('warning fixture without options should return parse result', (done) => {
       parser.parse(warning_fixture)
         .then(refract => {
           assert.deepEqual(refract, warning_parse_refract);
-        }).catch(assert.isNull);
+          done();
+        })
+        .catch(done);
     });
   });
 
   describe('Validate with promise', () => {
-    it('valid fixture without options should return null', () => {
+    it('valid fixture without options should return null', (done) => {
       parser.validate(valid_fixture)
         .then(refract => {
           assert.isNull(refract);
-        }).catch(assert.isNull);
+          done();
+        })
+        .catch(done);
     });
 
-    it('valid fixture with options should return null', () => {
+    it('valid fixture with options should return null', (done) => {
       parser.validate(valid_fixture, {})
         .then(refract => {
           assert.isNull(refract);
-        }).catch(assert.isNull);
+          done();
+        })
+        .catch(done);
     });
 
-    it('error fixture without options should return annotations', () => {
+    it('error fixture without options should return annotations', (done) => {
       parser.validate(error_fixture)
         .then(refract => {
           assert.deepEqual(refract, error_refract);
-        }).catch(assert.isNull);
+          done();
+        })
+        .catch(done);
     });
 
-    it('warning fixture without options should return annotations', () => {
+    it('warning fixture without options should return annotations', (done) => {
       parser.validate(warning_fixture)
         .then(refract => {
           assert.deepEqual(refract, warning_validate_refract);
-        }).catch(assert.isNull);
+          done();
+        })
+        .catch(done);
     });
   });
 };
