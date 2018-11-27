@@ -1,5 +1,11 @@
 # Protagonist Changelog
 
+## master
+
+### Bug fixes
+
+* Fixed segfault while parsing options 
+
 ## 2.0.0-pre.2
 
 This update now uses Drafter 4.0.0-pre.2. Please see [Drafter
