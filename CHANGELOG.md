@@ -1,10 +1,11 @@
 # Protagonist Changelog
 
-## master
+## 2.0.0-pre.3
 
-### Bug fixes
+### Bug Fixes
 
-* Fixed segfault while parsing options 
+* Fixed a segfault while handling invalid options that contains unsupported
+  properties with unsupported types.
 
 ## 2.0.0-pre.2
 
