@@ -35,9 +35,12 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, boo
 
     for (uint32_t i = 0 ; i < length ; ++i) {
         const Local<Value> key = properties->Get(i);
-        const Local<Value> value = optionsObject->Get(key);
-
         const String::Utf8Value strKey(key);
+
+        v8::MaybeLocal<v8::Value> maybeValue = optionsObject->Get(Nan::GetCurrentContext(), key);
+
+        // all options are boolean w/ false value default
+        const Local<Value> value = maybeValue.FromMaybe(Local<Value>(False(Isolate::GetCurrent())));
 
         if (RequireBlueprintNameOptionKey == *strKey) {
             optionsResult->parseOptions.requireBlueprintName = value->IsTrue();
