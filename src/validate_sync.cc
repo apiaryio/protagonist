@@ -27,7 +27,7 @@ NAN_METHOD(protagonist::ValidateSync) {
     }
 
     // Get source data
-    String::Utf8Value sourceData(info[0]->ToString());
+    Nan::Utf8String sourceData(info[0]->ToString());
 
     // Prepare options
     drafter_parse_options parseOptions = {false};
