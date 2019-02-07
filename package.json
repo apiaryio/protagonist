@@ -1,6 +1,6 @@
 {
   "name": "protagonist",
-  "version": "2.0.0-pre.3",
+  "version": "2.0.0-pre.4",
   "description": "API Blueprint Parser",
   "author": "Apiary.io <support@apiary.io>",
   "main": "./build/Release/protagonist",
@@ -12,11 +12,11 @@
     "node": ">=4"
   },
   "dependencies": {
-    "nan": "^2.11.0",
+    "nan": "^2.12.1",
     "node-gyp": "^3.8.0"
   },
   "devDependencies": {
-    "async": "^2.4.1",
+    "async": "^2.6.1",
     "chai": "^4.1.2",
     "glob": "^7.1.2",
     "mocha": "^5.2.0"

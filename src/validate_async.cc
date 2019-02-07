@@ -176,7 +176,7 @@ NAN_METHOD(protagonist::Validate)
     if (callbackIndex) {
         callback = new Callback(info[callbackIndex].As<Function>());
     } else {
-        resolver = v8::Promise::Resolver::New(info.GetIsolate());
+        resolver = v8::Promise::Resolver::New(Nan::GetCurrentContext()).ToLocalChecked();
         persistent = new Nan::Persistent<v8::Promise::Resolver>(resolver);
     }
 

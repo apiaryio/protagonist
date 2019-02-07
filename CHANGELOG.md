@@ -1,5 +1,11 @@
 # Protagonist Changelog
 
+## 2.0.0-pre.4
+
+### Enhancements
+
+* Added support for node 11.
+
 ## 2.0.0-pre.3
 
 ### Bug Fixes

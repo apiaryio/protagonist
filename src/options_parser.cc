@@ -9,7 +9,7 @@ static const std::string RequireBlueprintNameOptionKey = "requireBlueprintName";
 static const std::string ExportSourcemapOptionKey = "exportSourcemap";
 static const std::string GenerateSourceMapOptionKey = "generateSourceMap";
 
-static char* AllocErrorMessageForUnrecognisedOption(const String::Utf8Value& key, const bool forValidate) {
+static char* AllocErrorMessageForUnrecognisedOption(const Nan::Utf8String& key, const bool forValidate) {
 
     std::stringstream ss;
     ss << "unrecognized option '" << *key << "', expected: ";
@@ -35,7 +35,7 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, boo
 
     for (uint32_t i = 0 ; i < length ; ++i) {
         const Local<Value> key = properties->Get(i);
-        const String::Utf8Value strKey(key);
+        const Nan::Utf8String strKey(key);
 
         v8::MaybeLocal<v8::Value> maybeValue = optionsObject->Get(Nan::GetCurrentContext(), key);
 
@@ -74,4 +74,3 @@ void protagonist::FreeOptionsResult(OptionsResult** optionsResult) {
     *optionsResult = NULL;
 
 }
-
