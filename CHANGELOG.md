@@ -2,7 +2,7 @@
 
 ## 2.0.0-pre.4
 
-### Enchancements
+### Enhancements
 
 * Added support for node 11.
 
