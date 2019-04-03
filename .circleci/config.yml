@@ -15,15 +15,9 @@ jobs:
   test:
     <<: *defaults
     steps:
-      - run:
-          name: Installing Compiler
-          command: |
-            sudo sh -c 'echo "deb http://ftp.us.debian.org/debian unstable main contrib non-free" > /etc/apt/sources.list.d/unstable.list'
-            sudo apt-get update
-            sudo apt-get install -y -t unstable gcc-7 g++-7
       - checkout
       - run: git submodule update --init --recursive
-      - run: env CC="gcc-7" CXX="g++-7" npm install
+      - run: npm install
       - run: npm test
       - persist_to_workspace:
           root: ~/repo
