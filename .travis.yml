@@ -6,14 +6,6 @@ node_js:
 - '8'
 - '6'
 - '4'
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - gcc-5
-    - g++-5
-env: CXX="g++-5" CC="gcc-5"
 before_install:
 - git submodule update --init --recursive
 notifications:
