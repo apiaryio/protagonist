@@ -1,5 +1,11 @@
 # Protagonist Changelog
 
+## 2.0.0-pre.6 (2019-04-26)
+
+This update now uses Drafter 4.0.0-pre.4. Please see [Drafter
+4.0.0-pre.4](https://github.com/apiaryio/drafter/releases/tag/v4.0.0-pre.4) for
+the list of changes.
+
 ## 2.0.0-pre.5 (2019-04-08)
 
 This update now uses Drafter 4.0.0-pre.3. Please see [Drafter
