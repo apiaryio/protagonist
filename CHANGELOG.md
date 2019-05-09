@@ -1,6 +1,11 @@
 # Protagonist Changelog
 
-## 2.0.0-pre.6 (2019-05-07)
+## 2.0.0-pre.8 (2019-05-09)
+
+This is a re-release of Protagonist 2.0.0-pre.7 due to problems with NPM
+preventing the release of 2.0.0-pre.7.
+
+## 2.0.0-pre.7 (2019-05-07)
 
 This update now uses Drafter 4.0.0-pre.5. Please see [Drafter
 4.0.0-pre.5](https://github.com/apiaryio/drafter/releases/tag/v4.0.0-pre.5) for
