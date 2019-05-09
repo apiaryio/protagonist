@@ -17,7 +17,7 @@ namespace protagonist {
       char *error;
     };
 
-    OptionsResult* ParseOptionsObject(v8::Handle<v8::Object>, bool);
+    OptionsResult* ParseOptionsObject(v8::Local<v8::Object>, bool);
     void FreeOptionsResult(OptionsResult** optionsResult);
 
     //

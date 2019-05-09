@@ -178,7 +178,7 @@ NAN_METHOD(protagonist::Parse)
     drafter_serialize_options serializeOptions = { false, DRAFTER_SERIALIZE_JSON };
 
     if (optionIndex) {
-        OptionsResult* optionsResult = ParseOptionsObject(Handle<Object>::Cast(info[optionIndex]), false);
+        OptionsResult* optionsResult = ParseOptionsObject(Local<Object>::Cast(info[optionIndex]), false);
 
         if (optionsResult->error != NULL) {
             Nan::ThrowTypeError(optionsResult->error);

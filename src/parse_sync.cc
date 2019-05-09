@@ -9,6 +9,7 @@ using namespace protagonist;
 
 NAN_METHOD(protagonist::ParseSync) {
     Nan::HandleScope scope;
+    Local<Context> context = Nan::GetCurrentContext();
 
     // Check arguments
     if (info.Length() != 1 && info.Length() != 2) {
@@ -27,14 +28,14 @@ NAN_METHOD(protagonist::ParseSync) {
     }
 
     // Get source data
-    Nan::Utf8String sourceData(info[0]->ToString());
+    Nan::Utf8String sourceData(info[0]->ToString(context).ToLocalChecked());
 
     // Prepare options
     drafter_parse_options parseOptions = {false};
     drafter_serialize_options serializeOptions = {false, DRAFTER_SERIALIZE_JSON};
 
     if (info.Length() == 2) {
-        OptionsResult *optionsResult = ParseOptionsObject(Handle<Object>::Cast(info[1]), false);
+        OptionsResult *optionsResult = ParseOptionsObject(info[1]->ToObject(context).ToLocalChecked(), false);
 
         if (optionsResult->error != NULL) {
             Nan::ThrowTypeError(optionsResult->error);

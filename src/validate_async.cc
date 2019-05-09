@@ -162,7 +162,7 @@ NAN_METHOD(protagonist::Validate)
     drafter_parse_options parseOptions = { false };
 
     if (optionIndex) {
-        OptionsResult* optionsResult = ParseOptionsObject(Handle<Object>::Cast(info[optionIndex]), true);
+        OptionsResult* optionsResult = ParseOptionsObject(Local<Object>::Cast(info[optionIndex]), true);
 
         if (optionsResult->error != NULL) {
             Nan::ThrowTypeError(optionsResult->error);
