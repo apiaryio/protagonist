@@ -22,7 +22,9 @@ static char* AllocErrorMessageForUnrecognisedOption(const Nan::Utf8String& key, 
     return strdup(ss.str().c_str());
 }
 
-OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, bool forValidate) {
+OptionsResult* protagonist::ParseOptionsObject(Local<Object> optionsObject, bool forValidate) {
+    Local<Context> context = Nan::GetCurrentContext();
+    Isolate *isolate = context->GetIsolate();
     OptionsResult *optionsResult = (OptionsResult *) malloc(sizeof(OptionsResult));
 
     optionsResult->serializeOptions.format = DRAFTER_SERIALIZE_JSON;
@@ -30,17 +32,17 @@ OptionsResult* protagonist::ParseOptionsObject(Handle<Object> optionsObject, boo
     optionsResult->parseOptions.requireBlueprintName = false;
     optionsResult->error = NULL;
 
-    const Local<Array> properties = optionsObject->GetPropertyNames();
+    const Local<Array> properties = optionsObject->GetPropertyNames(context).ToLocalChecked();
     const uint32_t length = properties->Length();
 
     for (uint32_t i = 0 ; i < length ; ++i) {
-        const Local<Value> key = properties->Get(i);
+        Local<Value> key = properties->Get(context, i).ToLocalChecked();
         const Nan::Utf8String strKey(key);
 
-        v8::MaybeLocal<v8::Value> maybeValue = optionsObject->Get(Nan::GetCurrentContext(), key);
+        v8::MaybeLocal<v8::Value> maybeValue = optionsObject->Get(context, key);
 
         // all options are boolean w/ false value default
-        const Local<Value> value = maybeValue.FromMaybe(Local<Value>(False(Isolate::GetCurrent())));
+        const Local<Value> value = maybeValue.FromMaybe(Local<Value>(False(isolate)));
 
         if (RequireBlueprintNameOptionKey == *strKey) {
             optionsResult->parseOptions.requireBlueprintName = value->IsTrue();

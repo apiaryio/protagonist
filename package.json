@@ -12,7 +12,7 @@
     "node": ">=4"
   },
   "dependencies": {
-    "nan": "^2.12.1"
+    "nan": "^2.13.2"
   },
   "devDependencies": {
     "async": "^2.6.1",
