@@ -1,5 +1,11 @@
 # Protagonist Changelog
 
+## Master
+
+### Enhancements
+
+- Added support for Node 12.
+
 ## 2.0.0-pre.8 (2019-05-09)
 
 This is a re-release of Protagonist 2.0.0-pre.7 due to problems with NPM
