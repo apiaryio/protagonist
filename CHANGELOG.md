@@ -2,6 +2,10 @@
 
 ## Master
 
+This update now uses Drafter 4.0.0-pre.6. Please see [Drafter
+4.0.0-pre.6](https://github.com/apiaryio/drafter/releases/tag/v4.0.0-pre.6) for
+the list of changes.
+
 ### Enhancements
 
 - Added support for Node 12.
