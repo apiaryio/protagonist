@@ -23,15 +23,16 @@
   },
   "scripts": {
     "build": "node-gyp build",
+    "prepack": "cp drafter/THIRD_PARTY_LICENSES.txt THIRD_PARTY_LICENSES.txt",
     "test:exclude-await": "mocha --exclude test/await-test.js",
     "test:await": "mocha",
     "test": "node --version | grep -q -E \"v(4|6)\" && npm run test:exclude-await || npm run test:await"
   },
   "files": [
+    "THIRD_PARTY_LICENSES.txt",
     "binding.gyp",
     "src/*.cc",
     "src/*.h",
-    "drafter/LICENSE",
     "drafter/common.gypi",
     "drafter/drafter.gyp",
     "drafter/src/*.cc",
@@ -46,7 +47,6 @@
     "drafter/src/refract/*.h",
     "drafter/src/refract/dsd/*.cc",
     "drafter/src/refract/dsd/*.h",
-    "drafter/ext/boost/LICENSE_1_0.txt",
     "drafter/ext/boost/boost",
     "drafter/ext/snowcrash/src/*.cc",
     "drafter/ext/snowcrash/src/*.h",
@@ -54,12 +54,10 @@
     "drafter/ext/snowcrash/src/win/RegexMatch.cc",
     "drafter/ext/snowcrash/ext/markdown-parser/src/*.cc",
     "drafter/ext/snowcrash/ext/markdown-parser/src/*.h",
-    "drafter/ext/snowcrash/ext/markdown-parser/ext/sundown/README.md",
     "drafter/ext/snowcrash/ext/markdown-parser/ext/sundown/src/*.c",
     "drafter/ext/snowcrash/ext/markdown-parser/ext/sundown/src/*.h",
     "drafter/ext/snowcrash/ext/markdown-parser/ext/sundown/html/*.c",
     "drafter/ext/snowcrash/ext/markdown-parser/ext/sundown/html/*.h",
-    "drafter/ext/variant/LICENSE.md",
     "drafter/ext/variant/include/mpark/*.hpp"
   ],
   "license": "MIT"
