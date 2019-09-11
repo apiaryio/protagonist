@@ -362,226 +362,6 @@
               },
               "content": [
                 {
-                  "element": "dataStructure",
-                  "content": {
-                    "element": "object",
-                    "meta": {
-                      "id": {
-                        "element": "string",
-                        "attributes": {
-                          "sourceMap": {
-                            "element": "array",
-                            "content": [
-                              {
-                                "element": "sourceMap",
-                                "content": [
-                                  {
-                                    "element": "array",
-                                    "content": [
-                                      {
-                                        "element": "number",
-                                        "content": 30
-                                      },
-                                      {
-                                        "element": "number",
-                                        "content": 28
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        },
-                        "content": "Message"
-                      }
-                    },
-                    "attributes": {
-                      "sourceMap": {
-                        "element": "array",
-                        "content": [
-                          {
-                            "element": "sourceMap",
-                            "content": [
-                              {
-                                "element": "array",
-                                "content": [
-                                  {
-                                    "element": "number",
-                                    "content": 174
-                                  },
-                                  {
-                                    "element": "number",
-                                    "content": 11
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    },
-                    "content": [
-                      {
-                        "element": "member",
-                        "content": {
-                          "key": {
-                            "element": "string",
-                            "attributes": {
-                              "sourceMap": {
-                                "element": "array",
-                                "content": [
-                                  {
-                                    "element": "sourceMap",
-                                    "content": [
-                                      {
-                                        "element": "array",
-                                        "content": [
-                                          {
-                                            "element": "number",
-                                            "content": 191
-                                          },
-                                          {
-                                            "element": "number",
-                                            "content": 12
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            },
-                            "content": "id"
-                          },
-                          "value": {
-                            "element": "number",
-                            "attributes": {
-                              "sourceMap": {
-                                "element": "array",
-                                "content": [
-                                  {
-                                    "element": "sourceMap",
-                                    "content": [
-                                      {
-                                        "element": "array",
-                                        "content": [
-                                          {
-                                            "element": "number",
-                                            "content": 191
-                                          },
-                                          {
-                                            "element": "number",
-                                            "content": 12
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            }
-                          }
-                        }
-                      },
-                      {
-                        "element": "member",
-                        "meta": {
-                          "description": {
-                            "element": "string",
-                            "attributes": {
-                              "sourceMap": {
-                                "element": "array",
-                                "content": [
-                                  {
-                                    "element": "sourceMap",
-                                    "content": [
-                                      {
-                                        "element": "array",
-                                        "content": [
-                                          {
-                                            "element": "number",
-                                            "content": 209
-                                          },
-                                          {
-                                            "element": "number",
-                                            "content": 45
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            },
-                            "content": "The Message"
-                          }
-                        },
-                        "content": {
-                          "key": {
-                            "element": "string",
-                            "attributes": {
-                              "sourceMap": {
-                                "element": "array",
-                                "content": [
-                                  {
-                                    "element": "sourceMap",
-                                    "content": [
-                                      {
-                                        "element": "array",
-                                        "content": [
-                                          {
-                                            "element": "number",
-                                            "content": 209
-                                          },
-                                          {
-                                            "element": "number",
-                                            "content": 45
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            },
-                            "content": "message"
-                          },
-                          "value": {
-                            "element": "string",
-                            "attributes": {
-                              "sourceMap": {
-                                "element": "array",
-                                "content": [
-                                  {
-                                    "element": "sourceMap",
-                                    "content": [
-                                      {
-                                        "element": "array",
-                                        "content": [
-                                          {
-                                            "element": "number",
-                                            "content": 209
-                                          },
-                                          {
-                                            "element": "number",
-                                            "content": 45
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            },
-                            "content": "Hello World!"
-                          }
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
                   "element": "transition",
                   "meta": {
                     "title": {
@@ -598,7 +378,7 @@
                                   "content": [
                                     {
                                       "element": "number",
-                                      "content": 255
+                                      "content": 172
                                     },
                                     {
                                       "element": "number",
@@ -635,7 +415,7 @@
                                           "content": [
                                             {
                                               "element": "number",
-                                              "content": 255
+                                              "content": 172
                                             },
                                             {
                                               "element": "number",
@@ -670,11 +450,11 @@
                                           "content": [
                                             {
                                               "element": "number",
-                                              "content": 283
+                                              "content": 200
                                             },
                                             {
                                               "element": "number",
-                                              "content": 32
+                                              "content": 33
                                             }
                                           ]
                                         }
@@ -696,11 +476,11 @@
                                       "content": [
                                         {
                                           "element": "number",
-                                          "content": 283
+                                          "content": 200
                                         },
                                         {
                                           "element": "number",
-                                          "content": 32
+                                          "content": 33
                                         }
                                       ]
                                     }
@@ -725,11 +505,11 @@
                                               "content": [
                                                 {
                                                   "element": "number",
-                                                  "content": 283
+                                                  "content": 200
                                                 },
                                                 {
                                                   "element": "number",
-                                                  "content": 32
+                                                  "content": 33
                                                 }
                                               ]
                                             }
@@ -754,37 +534,6 @@
                           },
                           "content": [
                             {
-                              "element": "dataStructure",
-                              "content": {
-                                "element": "Message",
-                                "attributes": {
-                                  "sourceMap": {
-                                    "element": "array",
-                                    "content": [
-                                      {
-                                        "element": "sourceMap",
-                                        "content": [
-                                          {
-                                            "element": "array",
-                                            "content": [
-                                              {
-                                                "element": "number",
-                                                "content": 321
-                                              },
-                                              {
-                                                "element": "number",
-                                                "content": 21
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                }
-                              }
-                            },
-                            {
                               "element": "asset",
                               "meta": {
                                 "classes": {
@@ -798,33 +547,35 @@
                                 }
                               },
                               "attributes": {
+                                "sourceMap": {
+                                  "element": "array",
+                                  "content": [
+                                    {
+                                      "element": "sourceMap",
+                                      "content": [
+                                        {
+                                          "element": "array",
+                                          "content": [
+                                            {
+                                              "element": "number",
+                                              "content": 237
+                                            },
+                                            {
+                                              "element": "number",
+                                              "content": 7
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
                                 "contentType": {
                                   "element": "string",
                                   "content": "application/json"
                                 }
                               },
-                              "content": "{\n  \"id\": 0,\n  \"message\": \"Hello World!\"\n}"
-                            },
-                            {
-                              "element": "asset",
-                              "meta": {
-                                "classes": {
-                                  "element": "array",
-                                  "content": [
-                                    {
-                                      "element": "string",
-                                      "content": "messageBodySchema"
-                                    }
-                                  ]
-                                }
-                              },
-                              "attributes": {
-                                "contentType": {
-                                  "element": "string",
-                                  "content": "application/schema+json"
-                                }
-                              },
-                              "content": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": {\n      \"type\": \"number\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    }\n  }\n}"
+                              "content": "{}\n"
                             }
                           ]
                         }
@@ -849,7 +600,7 @@
                                   "content": [
                                     {
                                       "element": "number",
-                                      "content": 343
+                                      "content": 245
                                     },
                                     {
                                       "element": "number",
@@ -886,7 +637,7 @@
                                           "content": [
                                             {
                                               "element": "number",
-                                              "content": 343
+                                              "content": 245
                                             },
                                             {
                                               "element": "number",
@@ -921,7 +672,7 @@
                                           "content": [
                                             {
                                               "element": "number",
-                                              "content": 372
+                                              "content": 274
                                             },
                                             {
                                               "element": "number",
@@ -947,7 +698,7 @@
                                       "content": [
                                         {
                                           "element": "number",
-                                          "content": 372
+                                          "content": 274
                                         },
                                         {
                                           "element": "number",
@@ -974,4 +725,3 @@
     }
   ]
 }
-

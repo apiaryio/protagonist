@@ -31,8 +31,8 @@ NAN_METHOD(protagonist::ParseSync) {
     Nan::Utf8String sourceData(info[0]->ToString(context).ToLocalChecked());
 
     // Prepare options
-    drafter_parse_options parseOptions = {false};
-    drafter_serialize_options serializeOptions = {false, DRAFTER_SERIALIZE_JSON};
+    drafter_parse_options parseOptions = { false, false, false };
+    drafter_serialize_options serializeOptions = { false, DRAFTER_SERIALIZE_JSON };
 
     if (info.Length() == 2) {
         OptionsResult *optionsResult = ParseOptionsObject(info[1]->ToObject(context).ToLocalChecked(), false);

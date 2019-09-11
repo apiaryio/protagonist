@@ -22,13 +22,13 @@ describe('Parsing Drafter Test Fixtures', () => {
       const source = fs.readFileSync(fixture, 'utf-8');
 
       if (result) {
-        const parseResult = protagonist.parseSync(source);
+        const parseResult = protagonist.parseSync(source, { generateMessageBody: true, generateMessageBodySchema: true });
         const expected = JSON.parse(fs.readFileSync(result, 'utf-8'));
         expect(parseResult).to.deep.equal(expected);
       }
 
       if (sourceMapResult) {
-        const sourceMapParseResult = protagonist.parseSync(source, {generateSourceMap: true});
+        const sourceMapParseResult = protagonist.parseSync(source, { generateSourceMap: true, generateMessageBody: true, generateMessageBodySchema: true });
         const sourceMapExpected = JSON.parse(fs.readFileSync(sourceMapResult, 'utf-8'));
         expect(sourceMapParseResult).to.deep.equal(sourceMapExpected);
       }

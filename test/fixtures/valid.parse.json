@@ -137,51 +137,6 @@
               },
               "content": [
                 {
-                  "element": "dataStructure",
-                  "content": {
-                    "element": "object",
-                    "meta": {
-                      "id": {
-                        "element": "string",
-                        "content": "Message"
-                      }
-                    },
-                    "content": [
-                      {
-                        "element": "member",
-                        "content": {
-                          "key": {
-                            "element": "string",
-                            "content": "id"
-                          },
-                          "value": {
-                            "element": "number"
-                          }
-                        }
-                      },
-                      {
-                        "element": "member",
-                        "meta": {
-                          "description": {
-                            "element": "string",
-                            "content": "The Message"
-                          }
-                        },
-                        "content": {
-                          "key": {
-                            "element": "string",
-                            "content": "message"
-                          },
-                          "value": {
-                            "element": "string",
-                            "content": "Hello World!"
-                          }
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
                   "element": "transition",
                   "meta": {
                     "title": {
@@ -231,12 +186,6 @@
                           },
                           "content": [
                             {
-                              "element": "dataStructure",
-                              "content": {
-                                "element": "Message"
-                              }
-                            },
-                            {
                               "element": "asset",
                               "meta": {
                                 "classes": {
@@ -255,28 +204,7 @@
                                   "content": "application/json"
                                 }
                               },
-                              "content": "{\n  \"id\": 0,\n  \"message\": \"Hello World!\"\n}"
-                            },
-                            {
-                              "element": "asset",
-                              "meta": {
-                                "classes": {
-                                  "element": "array",
-                                  "content": [
-                                    {
-                                      "element": "string",
-                                      "content": "messageBodySchema"
-                                    }
-                                  ]
-                                }
-                              },
-                              "attributes": {
-                                "contentType": {
-                                  "element": "string",
-                                  "content": "application/schema+json"
-                                }
-                              },
-                              "content": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": {\n      \"type\": \"number\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    }\n  }\n}"
+                              "content": "{}\n"
                             }
                           ]
                         }
@@ -328,4 +256,3 @@
     }
   ]
 }
-

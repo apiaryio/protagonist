@@ -8,6 +8,8 @@ using namespace protagonist;
 static const std::string RequireBlueprintNameOptionKey = "requireBlueprintName";
 static const std::string ExportSourcemapOptionKey = "exportSourcemap";
 static const std::string GenerateSourceMapOptionKey = "generateSourceMap";
+static const std::string GenerateMessageBodyOptionKey = "generateMessageBody";
+static const std::string GenerateMessageBodySchemaOptionKey = "generateMessageBodySchema";
 
 static char* AllocErrorMessageForUnrecognisedOption(const Nan::Utf8String& key, const bool forValidate) {
 
@@ -30,6 +32,8 @@ OptionsResult* protagonist::ParseOptionsObject(Local<Object> optionsObject, bool
     optionsResult->serializeOptions.format = DRAFTER_SERIALIZE_JSON;
     optionsResult->serializeOptions.sourcemap = false;
     optionsResult->parseOptions.requireBlueprintName = false;
+    optionsResult->parseOptions.generateMessageBody = false;
+    optionsResult->parseOptions.generateMessageBodySchema = false;
     optionsResult->error = NULL;
 
     const Local<Array> properties = optionsObject->GetPropertyNames(context).ToLocalChecked();
@@ -50,6 +54,12 @@ OptionsResult* protagonist::ParseOptionsObject(Local<Object> optionsObject, bool
         else if (!forValidate) {
             if (ExportSourcemapOptionKey == *strKey || GenerateSourceMapOptionKey == *strKey) {
                 optionsResult->serializeOptions.sourcemap = value->IsTrue();
+            }
+            else if (GenerateMessageBodyOptionKey == *strKey) {
+                optionsResult->parseOptions.generateMessageBody = value->IsTrue();
+            }
+            else if (GenerateMessageBodySchemaOptionKey == *strKey) {
+                optionsResult->parseOptions.generateMessageBodySchema = value->IsTrue();
             }
             else {
                 optionsResult->error = AllocErrorMessageForUnrecognisedOption(strKey, forValidate);

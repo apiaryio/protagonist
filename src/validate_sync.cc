@@ -31,7 +31,7 @@ NAN_METHOD(protagonist::ValidateSync) {
     Nan::Utf8String sourceData(info[0]->ToString(context).ToLocalChecked());
 
     // Prepare options
-    drafter_parse_options parseOptions = {false};
+    drafter_parse_options parseOptions = { false, false, false };
 
     if (info.Length() == 2) {
         OptionsResult *optionsResult = ParseOptionsObject(Local<Object>::Cast(info[1]), true);

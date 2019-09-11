@@ -174,7 +174,7 @@ NAN_METHOD(protagonist::Parse)
     }
 
     // Prepare options
-    drafter_parse_options parseOptions = { false };
+    drafter_parse_options parseOptions = { false, false, false };
     drafter_serialize_options serializeOptions = { false, DRAFTER_SERIALIZE_JSON };
 
     if (optionIndex) {
