@@ -1,0 +1,18 @@
+on: push
+jobs:
+  test:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, macos-latest]
+        node: ['12', '10', '8']
+    name: Node ${{ matrix.node }} on ${{ matrix.platform }}
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: recursive
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install
+      - run: npm test
