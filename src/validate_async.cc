@@ -1,6 +1,7 @@
 #include <string>
 #include "protagonist.h"
 #include "refractToV8.h"
+#include "options.h"
 
 #include <assert.h>
 
@@ -18,7 +19,7 @@ namespace
 
     class ValidateWorker : public AsyncWorker
     {
-        drafter_parse_options parseOptions;
+        parse_options_ptr parseOptions;
         Nan::Utf8String* sourceData;
         Nan::Persistent<v8::Promise::Resolver>* persistent;
 
@@ -26,13 +27,13 @@ namespace
         drafter_result* result;
         int parse_err_code;
 
-    public:
+       public:
         ValidateWorker(Callback* callback,
             Nan::Persistent<v8::Promise::Resolver>* persistent,
-            drafter_parse_options parseOptions,
+            parse_options_ptr parseOptions,
             Nan::Utf8String* sourceData)
             : AsyncWorker(callback)
-            , parseOptions(parseOptions)
+            , parseOptions(std::move(parseOptions))
             , sourceData(sourceData)
             , persistent(persistent)
             , result(nullptr)
@@ -42,7 +43,7 @@ namespace
 
         void Execute()
         {
-            parse_err_code = drafter_check_blueprint(*(*sourceData), &result, parseOptions);
+            parse_err_code = drafter_check_blueprint(*(*sourceData), &result, parseOptions.get());
         }
 
         void HandleOKCallback()
@@ -67,7 +68,7 @@ namespace
             }
 
             if (result) {
-                v8refract = refract2v8(result, { true, DRAFTER_SERIALIZE_JSON });
+                v8refract = refract2v8(result, true);
             }
 
             if (persistent) {
@@ -159,18 +160,15 @@ NAN_METHOD(protagonist::Validate)
         return;
     }
 
-    drafter_parse_options parseOptions = { false };
+    Options parseOptions;
 
     if (optionIndex) {
-        OptionsResult* optionsResult = ParseOptionsObject(Local<Object>::Cast(info[optionIndex]), true);
+        ErrorMessage err = ParseOptionsObject( parseOptions, Local<Object>::Cast(info[optionIndex]), true);
 
-        if (optionsResult->error != NULL) {
-            Nan::ThrowTypeError(optionsResult->error);
+        if (!err.empty()) {
+            Nan::ThrowTypeError(err.c_str());
             return;
         }
-
-        parseOptions = optionsResult->parseOptions;
-        FreeOptionsResult(&optionsResult);
     }
 
     if (callbackIndex) {
@@ -180,7 +178,7 @@ NAN_METHOD(protagonist::Validate)
         persistent = new Nan::Persistent<v8::Promise::Resolver>(resolver);
     }
 
-    AsyncQueueWorker(new ValidateWorker(callback, persistent, parseOptions, new Nan::Utf8String(info[0])));
+    AsyncQueueWorker(new ValidateWorker(callback, persistent, parseOptions.claimParseOptions(), new Nan::Utf8String(info[0])));
 
     if (!callbackIndex) {
         info.GetReturnValue().Set(resolver->GetPromise());

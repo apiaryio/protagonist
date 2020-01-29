@@ -10,6 +10,8 @@
         "<!(node -e \"require('nan')\")"
       ],
       "sources": [
+        "src/options.cc",
+        "src/options.h",
         "src/options_parser.cc",
         "src/parse_async.cc",
         "src/parse_sync.cc",

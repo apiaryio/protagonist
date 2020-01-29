@@ -1,9 +1,9 @@
-#include <string>
 #include "protagonist.h"
+
 #include "drafter.h"
 #include "refractToV8.h"
+#include "options.h"
 
-using std::string;
 using namespace v8;
 using namespace protagonist;
 
@@ -31,26 +31,21 @@ NAN_METHOD(protagonist::ParseSync) {
     Nan::Utf8String sourceData(info[0]->ToString(context).ToLocalChecked());
 
     // Prepare options
-    drafter_parse_options parseOptions = {false};
-    drafter_serialize_options serializeOptions = {false, DRAFTER_SERIALIZE_JSON};
+    Options options;
 
     if (info.Length() == 2) {
-        OptionsResult *optionsResult = ParseOptionsObject(info[1]->ToObject(context).ToLocalChecked(), false);
+        ErrorMessage err = ParseOptionsObject(options, info[1]->ToObject(context).ToLocalChecked(), false);
 
-        if (optionsResult->error != NULL) {
-            Nan::ThrowTypeError(optionsResult->error);
+        if (!err.empty()) {
+            Nan::ThrowTypeError(err.c_str());
         }
-
-        parseOptions = optionsResult->parseOptions;
-        serializeOptions = optionsResult->serializeOptions;
-        FreeOptionsResult(&optionsResult);
     }
 
     // Parse the source data
     drafter_result *result;
     int err_code = drafter_parse_blueprint(*sourceData,
                                            &result,
-                                           parseOptions);
+                                           options.parseOptions());
     switch (err_code) {
     case DRAFTER_EUNKNOWN:
         Nan::ThrowError("Parser: Unknown Error");
@@ -65,7 +60,7 @@ NAN_METHOD(protagonist::ParseSync) {
         break;
     }
 
-    Local<Value> v8result = refract2v8(result, serializeOptions);
+    Local<Value> v8result = refract2v8(result, options.serializeSourcemaps());
     drafter_free_result(result);
     info.GetReturnValue().Set(v8result);
 }

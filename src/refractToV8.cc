@@ -284,11 +284,11 @@ void v8Wrapper::operator()(const ObjectElement& e)
 }
 
 Local<Value> refract2v8(const IElement* res,
-                        drafter_serialize_options serializeOptions)
+                        bool sourceMaps)
 {
     assert(res);
 
-    v8Wrapper f(serializeOptions.sourcemap);
+    v8Wrapper f(sourceMaps);
     Visitor v(f);
     res->content(v);
 

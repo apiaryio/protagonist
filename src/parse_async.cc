@@ -2,6 +2,7 @@
 #include "drafter.h"
 #include "protagonist.h"
 #include "refractToV8.h"
+#include "options.h"
 
 #include <assert.h>
 
@@ -16,11 +17,9 @@ using Nan::HandleScope;
 
 namespace
 {
-
     class ParseWorker : public AsyncWorker
     {
-        drafter_parse_options parseOptions;
-        drafter_serialize_options serializeOptions;
+        Options options;
         Nan::Utf8String* sourceData;
 
         Nan::Persistent<v8::Promise::Resolver>* persistent;
@@ -29,15 +28,13 @@ namespace
         drafter_result* result;
         int parse_err_code;
 
-    public:
+     public:
         ParseWorker(Callback* callback,
             Nan::Persistent<v8::Promise::Resolver>* persistent,
-            drafter_parse_options parseOptions,
-            drafter_serialize_options serializeOptions,
+            Options opts,
             Nan::Utf8String* sourceData)
             : AsyncWorker(callback)
-            , parseOptions(parseOptions)
-            , serializeOptions(serializeOptions)
+            , options(std::move(opts))
             , sourceData(sourceData)
             , persistent(persistent)
             , result(nullptr)
@@ -47,7 +44,7 @@ namespace
 
         void Execute()
         {
-            parse_err_code = drafter_parse_blueprint(*(*sourceData), &result, parseOptions);
+            parse_err_code = drafter_parse_blueprint(*(*sourceData), &result, options.parseOptions());
         }
 
         void HandleOKCallback()
@@ -72,7 +69,7 @@ namespace
             }
 
             if (result) {
-                v8refract = refract2v8(result, serializeOptions);
+                v8refract = refract2v8(result, options.serializeSourcemaps());
             }
 
             if (persistent) {
@@ -174,20 +171,15 @@ NAN_METHOD(protagonist::Parse)
     }
 
     // Prepare options
-    drafter_parse_options parseOptions = { false };
-    drafter_serialize_options serializeOptions = { false, DRAFTER_SERIALIZE_JSON };
+    Options options{};
 
     if (optionIndex) {
-        OptionsResult* optionsResult = ParseOptionsObject(Local<Object>::Cast(info[optionIndex]), false);
+        ErrorMessage msg = ParseOptionsObject(options, Local<Object>::Cast(info[optionIndex]), false);
 
-        if (optionsResult->error != NULL) {
-            Nan::ThrowTypeError(optionsResult->error);
+        if (!msg.empty()) {
+            Nan::ThrowTypeError(msg.c_str());
             return;
         }
-
-        parseOptions = optionsResult->parseOptions;
-        serializeOptions = optionsResult->serializeOptions;
-        FreeOptionsResult(&optionsResult);
     }
 
     if (callbackIndex) {
@@ -198,7 +190,7 @@ NAN_METHOD(protagonist::Parse)
     }
 
     AsyncQueueWorker(
-        new ParseWorker(callback, persistent, parseOptions, serializeOptions, new Nan::Utf8String(info[0])));
+        new ParseWorker(callback, persistent, std::move(options), new Nan::Utf8String(info[0])));
 
     if (!callbackIndex) {
         info.GetReturnValue().Set(resolver->GetPromise());

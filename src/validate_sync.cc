@@ -1,6 +1,7 @@
 #include <string>
 #include "protagonist.h"
 #include "drafter.h"
+#include "options.h"
 #include "refractToV8.h"
 
 using std::string;
@@ -31,31 +32,28 @@ NAN_METHOD(protagonist::ValidateSync) {
     Nan::Utf8String sourceData(info[0]->ToString(context).ToLocalChecked());
 
     // Prepare options
-    drafter_parse_options parseOptions = {false};
+    Options options;
 
     if (info.Length() == 2) {
-        OptionsResult *optionsResult = ParseOptionsObject(Local<Object>::Cast(info[1]), true);
+        ErrorMessage err = ParseOptionsObject(options, Local<Object>::Cast(info[1]), true);
 
-        if (optionsResult->error != NULL) {
-            Nan::ThrowTypeError(optionsResult->error);
+        if(!err.empty()) {
+            Nan::ThrowTypeError(err.c_str());
         }
-
-        parseOptions = optionsResult->parseOptions;
-        FreeOptionsResult(&optionsResult);
     }
 
     // Parse the source data
     drafter_result *result;
     int err_code = drafter_check_blueprint(*sourceData,
                                            &result,
-                                           parseOptions);
+                                           options.parseOptions());
     if (err_code < 0) {
         Nan::ThrowError("Parsing failed");
         return;
     }
 
     if (result) {
-        Local<Value> v8result = refract2v8(result, {true, DRAFTER_SERIALIZE_JSON});
+        Local<Value> v8result = refract2v8(result, true);
         drafter_free_result(result);
         info.GetReturnValue().Set(v8result);
     }
