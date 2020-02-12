@@ -1,24 +1,18 @@
 #ifndef PROTAGONIST_H
 #define PROTAGONIST_H
 
+#include <string>
+
 #include <node.h>
 #include <v8.h>
 #include "nan.h"
-#include "drafter.h"
 
 namespace protagonist {
 
-    //
-    // Options parsing
-    ///
-    struct OptionsResult {
-      drafter_parse_options parseOptions;
-      drafter_serialize_options serializeOptions;
-      char *error;
-    };
+    using ErrorMessage = std::string;
+    class Options;
 
-    OptionsResult* ParseOptionsObject(v8::Local<v8::Object>, bool);
-    void FreeOptionsResult(OptionsResult** optionsResult);
+    ErrorMessage ParseOptionsObject(Options&, v8::Local<v8::Object>, bool);
 
     //
     // Parse functions
