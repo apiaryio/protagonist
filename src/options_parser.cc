@@ -42,16 +42,14 @@ ErrorMessage protagonist::ParseOptionsObject(Options& options, Local<Object> opt
 
         if (RequireBlueprintNameOptionKey == *strKey) {
             if (value->IsTrue()) options.setNameRequired();
-        }
-        else if (!forValidate) {
-            if (ExportSourcemapOptionKey == *strKey || GenerateSourceMapOptionKey == *strKey) {
+        } else if (!forValidate) {
+            if (ExportSourcemapOptionKey == *strKey ||
+                GenerateSourceMapOptionKey == *strKey) {
                 if (value->IsTrue()) options.setSerializeSourcemaps();
-            }
-            else {
+            } else {
                 return ErrorMessageForUnrecognisedOption(strKey, forValidate);
             }
-        }
-        else {
+        } else {
             return ErrorMessageForUnrecognisedOption(strKey, forValidate);
         }
     }
