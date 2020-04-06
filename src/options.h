@@ -24,6 +24,8 @@ namespace protagonist
 
         const drafter_parse_options* parseOptions() const noexcept;
         void setNameRequired() noexcept;
+        void setSkipGenBodies() noexcept;
+        void setSkipGenBodySchemas() noexcept;
 
         bool serializeSourcemaps() const noexcept;
         void setSerializeSourcemaps() noexcept;

@@ -10,12 +10,16 @@ using namespace protagonist;
 static const std::string RequireBlueprintNameOptionKey = "requireBlueprintName";
 static const std::string ExportSourcemapOptionKey = "exportSourcemap";
 static const std::string GenerateSourceMapOptionKey = "generateSourceMap";
+static const std::string GenerateMessageBodyOptionKey = "generateMessageBody";
+static const std::string GenerateMessageBodySchemaOptionKey = "generateMessageBodySchema";
 
 static ErrorMessage ErrorMessageForUnrecognisedOption(const Nan::Utf8String& key, const bool forValidate)
 {
     std::stringstream ss;
     ss << "unrecognized option '" << *key << "', expected: ";
     ss << "'" << RequireBlueprintNameOptionKey << "'";
+    ss << ", '" << GenerateMessageBodyOptionKey<< "'";
+    ss << ", '" << GenerateMessageBodySchemaOptionKey<< "'";
 
     if (!forValidate) {
         ss << ", '" << GenerateSourceMapOptionKey << "'";
@@ -42,6 +46,10 @@ ErrorMessage protagonist::ParseOptionsObject(Options& options, Local<Object> opt
 
         if (RequireBlueprintNameOptionKey == *strKey) {
             if (value->IsTrue()) options.setNameRequired();
+        } else if (GenerateMessageBodyOptionKey == *strKey) {
+            if (value->IsFalse()) options.setSkipGenBodies();
+        } else if (GenerateMessageBodySchemaOptionKey == *strKey) {
+            if (value->IsFalse()) options.setSkipGenBodySchemas();
         } else if (!forValidate) {
             if (ExportSourcemapOptionKey == *strKey ||
                 GenerateSourceMapOptionKey == *strKey) {
