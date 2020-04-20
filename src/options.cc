@@ -51,3 +51,15 @@ void Options::setNameRequired() noexcept
     ensure_parse_options(parse_options_);
     drafter_set_name_required(parse_options_.get());
 }
+
+void Options::setSkipGenBodies() noexcept
+{
+    ensure_parse_options(parse_options_);
+    drafter_set_skip_gen_bodies(parse_options_.get());
+}
+
+void Options::setSkipGenBodySchemas() noexcept
+{
+    ensure_parse_options(parse_options_);
+    drafter_set_skip_gen_body_schemas(parse_options_.get());
+}
