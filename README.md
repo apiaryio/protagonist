@@ -148,16 +148,20 @@ Options can be passed to the parser as an optional second argument to both the a
 ```js
 const options = {
   generateSourceMap: true,
+  generateMessageBody: true,
+  generateMessageBodySchema: true,
 };
 const parseResult = await protagonist.parse('# My API', options);
 ```
 
 The available options are:
 
-Name                   | Description
----------------------- | ----------------------------------------------------------
-`requireBlueprintName` | Require parsed blueprints have a title (default: false)
-`generateSourceMap`    | Enable sourcemap generation (default: false)
+Name                        | Description
+--------------------------- | ----------------------------------------------------------
+`requireBlueprintName`      | Require parsed blueprints have a title (default: false)
+`generateSourceMap`         | Enable sourcemap generation (default: false)
+`generateMessageBody`       | Enable generation of messageBody from MSON (default: true)
+`generateMessageBodySchema` | Enable generation of messageBodySchema from MSON (default: true)
 
 <a name="parse-result"></a>
 ### Parse Result
