@@ -37,6 +37,8 @@
     "drafter/drafter.gyp",
     "drafter/src/*.cc",
     "drafter/src/*.h",
+    "drafter/src/backend/*.cc",
+    "drafter/src/backend/*.h",
     "drafter/src/parser/*.cc",
     "drafter/src/parser/*.h",
     "drafter/src/utils/*.cc",
