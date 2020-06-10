@@ -79,7 +79,7 @@ Local<Object> v8ElementCollection(const InfoElements& collection,
             value = ElementToObject(el.second.get(), sourcemap);
         }
 
-        result->Set(key, value);
+        Nan::Set(result, key, value);
     }
 
     return result;
@@ -88,9 +88,9 @@ Local<Object> v8ElementCollection(const InfoElements& collection,
 Local<Object> v8Element(const IElement& e, bool sourcemap)
 {
     Local<Object> res = Nan::New<Object>();
-    res->Set(v8_string("element"), v8_string(e.element()));
+    Nan::Set(res, v8_string("element"), v8_string(e.element()));
     if (e.meta().size() > 0) {
-        res->Set(v8_string("meta"), v8ElementCollection(e.meta(), sourcemap));
+        Nan::Set(res, v8_string("meta"), v8ElementCollection(e.meta(), sourcemap));
     }
 
     if (e.element() == "annotation") {
@@ -103,7 +103,7 @@ Local<Object> v8Element(const IElement& e, bool sourcemap)
         if (!maybeProps.IsEmpty()) {
             Local<Array> props = maybeProps.ToLocalChecked();
             if (props->Length() > 0) {
-                res->Set(v8_string("attributes"), attrs);
+                Nan::Set(res, v8_string("attributes"), attrs);
             }
         }
     }
@@ -120,11 +120,11 @@ Local<Object> v8ValueList(const T& e, bool sourcemap)
         Local<Array> array = Nan::New<Array>();
 
         for (const auto& el : e.get()) {
-            array->Set(i, ElementToObject(el.get(), sourcemap));
+            Nan::Set(array, i, ElementToObject(el.get(), sourcemap));
             ++i;
         }
 
-        obj->Set(v8_string("content"), array);
+        Nan::Set(obj, v8_string("content"), array);
     }
 
     return obj;
@@ -134,7 +134,7 @@ Local<Value> v8RefElement(const RefElement& e, bool sourcemap)
 {
     Local<Object> obj = v8Element(e, sourcemap);
 
-    obj->Set(v8_string("content"), v8_string(e.get().symbol()));
+    Nan::Set(obj, v8_string("content"), v8_string(e.get().symbol()));
 
     return obj;
 }
@@ -142,7 +142,7 @@ Local<Value> v8RefElement(const RefElement& e, bool sourcemap)
 void v8Wrapper::operator()(const NullElement& e)
 {
     Local<Object> obj = v8Element(e, sourcemap);
-    obj->Set(v8_string("content"), Nan::Null());
+    Nan::Set(obj, v8_string("content"), Nan::Null());
     v8_value = obj;
 }
 
@@ -150,7 +150,7 @@ void v8Wrapper::operator()(const StringElement& e)
 {
     Local<Object> obj = v8Element(e, sourcemap);
     if (!e.empty()) {
-        obj->Set(v8_string("content"), v8_string(e.get().get()));
+        Nan::Set(obj, v8_string("content"), v8_string(e.get().get()));
     }
     v8_value = obj;
 }
@@ -160,7 +160,7 @@ void v8Wrapper::operator()(const NumberElement& e)
     Local<Object> obj = v8Element(e, sourcemap);
     if (!e.empty()) {
         Nan::JSON NanJSON;
-        obj->Set(v8_string("content"),
+        Nan::Set(obj, v8_string("content"),
                  NanJSON.Parse(v8_string(e.get().get())).ToLocalChecked());
     }
     v8_value = obj;
@@ -170,7 +170,7 @@ void v8Wrapper::operator()(const BooleanElement& e)
 {
     Local<Object> obj = v8Element(e, sourcemap);
     if (!e.empty()) {
-        obj->Set(v8_string("content"), Nan::New<Boolean>(e.get()));
+        Nan::Set(obj, v8_string("content"), Nan::New<Boolean>(e.get()));
     }
     v8_value = obj;
 }
@@ -190,9 +190,9 @@ void v8Wrapper::operator()(const MemberElement& e)
     }
 
     Local<Object> obj = v8Element(e, sourcemap);
-    content->Set(v8_string("key"), key);
-    content->Set(v8_string("value"), value);
-    obj->Set(v8_string("content"), content);
+    Nan::Set(content, v8_string("key"), key);
+    Nan::Set(content, v8_string("value"), value);
+    Nan::Set(obj, v8_string("content"), content);
     v8_value = obj;
 }
 
@@ -207,7 +207,7 @@ void v8Wrapper::operator()(const ArrayElement& e)
         size_t i = 0;
         for (const auto& el : val->get()) {
             if (el) {
-                array->Set(i, ElementToObject(el.get(), sourcemap));
+                Nan::Set(array, i, ElementToObject(el.get(), sourcemap));
             }
             ++i;
         }
@@ -215,7 +215,7 @@ void v8Wrapper::operator()(const ArrayElement& e)
 
     Local<Object> res = v8Element(e, sourcemap);
     if (!e.empty()) {
-        res->Set(v8_string("content"), array);
+        Nan::Set(res, v8_string("content"), array);
     }
     v8_value = res;
 }
@@ -225,7 +225,7 @@ void v8Wrapper::operator()(const EnumElement& e)
     Local<Object> obj = v8Element(e, sourcemap);
 
     if (!e.empty()) {
-        obj->Set(v8_string("content"),
+        Nan::Set(obj, v8_string("content"),
                  ElementToObject(e.get().value(), sourcemap));
     }
 
@@ -257,7 +257,7 @@ void v8Wrapper::operator()(const HolderElement& e)
     Local<Object> obj = v8Element(e, sourcemap);
 
     if (!e.empty()) {
-        obj->Set(v8_string("content"),
+        Nan::Set(obj, v8_string("content"),
                  ElementToObject(e.get().data(), sourcemap));
     }
 
@@ -273,11 +273,11 @@ void v8Wrapper::operator()(const ObjectElement& e)
         size_t i = 0;
 
         for (const auto& el : e.get()) {
-            array->Set(i, ElementToObject(el.get(), sourcemap));
+            Nan::Set(array, i, ElementToObject(el.get(), sourcemap));
             ++i;
         }
 
-        obj->Set(v8_string("content"), array);
+        Nan::Set(obj, v8_string("content"), array);
     }
 
     v8_value = obj;
@@ -310,14 +310,14 @@ Local<Value> annotations2v8(const IElement* res)
         for (std::vector<const IElement*>::const_iterator it = elements.begin();
              it != elements.end(); ++i, ++it) {
             if (*it) {
-                array->Set(i, ElementToObject(*it, true));
+                Nan::Set(array, i, ElementToObject(*it, true));
             }
         }
 
         Local<Object> annotations = Nan::New<Object>();
-        annotations->Set(v8_string("element"),
+        Nan::Set(annotations, v8_string("element"),
                          v8_string(drafter::SerializeKey::ParseResult));
-        annotations->Set(v8_string("content"), array);
+        Nan::Set(annotations, v8_string("content"), array);
         return annotations;
     }
 
