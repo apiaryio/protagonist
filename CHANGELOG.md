@@ -1,5 +1,11 @@
 # Protagonist Changelog
 
+## 2.2.1 (2020-06-10)
+
+### Enhancements
+
+* Added support for building Protagonist with Node 13/14.
+
 ## 2.2.0 (2020-04-20)
 
 ### Enhancements
