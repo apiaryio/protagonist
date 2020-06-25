@@ -96,7 +96,7 @@ namespace
                     argv[0] = error;
                 }
 
-                callback->Call(2, argv);
+                callback->Call(2, argv, async_resource);
                 return;
             }
 
