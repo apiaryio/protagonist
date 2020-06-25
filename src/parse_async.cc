@@ -81,7 +81,12 @@ namespace
                     resolver->Reject(Nan::GetCurrentContext(), error);
                 }
 
+#if NODE_MODULE_VERSION >= NODE_14_0_MODULE_VERSION
+                v8::Isolate::GetCurrent()->PerformMicrotaskCheckpoint();
+#else
                 v8::Isolate::GetCurrent()->RunMicrotasks();
+#endif
+
                 return;
             } else if (callback) {
                 Local<Value> argv[] = { Nan::Null(), Nan::Null() };
