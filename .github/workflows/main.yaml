@@ -8,7 +8,7 @@ jobs:
     name: Node ${{ matrix.node }} on ${{ matrix.platform }}
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
         with:
           submodules: recursive
       - uses: actions/setup-node@v1
