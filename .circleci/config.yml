@@ -19,25 +19,6 @@ jobs:
       - run: git submodule update --init --recursive
       - run: npm install
       - run: npm test
-      - persist_to_workspace:
-          root: ~/repo
-          paths: .
-
-  test-smoke:
-    <<: *defaults
-    working_directory: ~/
-    steps:
-      - attach_workspace:
-          at: ~/repo
-      - run:
-          working_directory: ~/repo
-          command: npm pack
-      - run:
-          name: Test Protagonist can be installed
-          command: npm install ./repo/protagonist-*.tgz
-      - run:
-          name: Test Protagonist can be used
-          command: node -e "assert(require('protagonist').parseSync('# My API').element === 'parseResult')"
 
   test-macos:
     working_directory: ~/repo
@@ -67,10 +48,6 @@ workflows:
   test-publish:
     jobs:
       - test: *tag-filter
-      - test-smoke:
-          <<: *tag-filter
-          requires:
-            - test
       - test-macos: *tag-filter
       - publish:
           requires:
