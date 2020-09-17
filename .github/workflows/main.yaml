@@ -16,3 +16,18 @@ jobs:
           node-version: ${{ matrix.node }}
       - run: npm install
       - run: npm test
+
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          path: protagonist
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm pack
+        working-directory: protagonist
+      - run: npm install ./protagonist/protagonist-*.tgz
+      - run: node -e "assert(require('protagonist').parseSync('# My API').element === 'parseResult')"
