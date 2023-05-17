@@ -1,5 +1,15 @@
 # Protagonist Changelog
 
+## TBD
+
+### Breaking
+
+- Drop support for node.js versions < 10.
+
+### Enhancements
+
+* Added support for building Protagonist with Node 16, and 18.
+
 ## 2.2.1 (2020-06-10)
 
 ### Enhancements

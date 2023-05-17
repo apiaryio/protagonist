@@ -4,7 +4,7 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest, macos-latest]
-        node: ['14', '12', '10', '8', '4']
+        node: ['18', '16', '14', '12', '10']
     name: Node ${{ matrix.node }} on ${{ matrix.platform }}
     runs-on: ${{ matrix.platform }}
     steps:
@@ -26,7 +26,7 @@ jobs:
           path: protagonist
       - uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 18
       - run: npm pack
         working-directory: protagonist
       - run: npm install ./protagonist/protagonist-*.tgz

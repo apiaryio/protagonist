@@ -9,7 +9,7 @@
     "url": "https://github.com/apiaryio/protagonist.git"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=10"
   },
   "dependencies": {
     "nan": "^2.13.2"
@@ -19,14 +19,14 @@
     "chai": "^4.1.2",
     "glob": "^7.1.2",
     "mocha": "^5.2.0",
-    "node-gyp": "^4.0.0"
+    "node-gyp": "^9.3.0"
   },
   "scripts": {
     "build": "node-gyp build",
     "prepack": "cp drafter/THIRD_PARTY_LICENSES.txt THIRD_PARTY_LICENSES.txt",
     "test:exclude-await": "mocha --exclude test/await-test.js",
     "test:await": "mocha",
-    "test": "node --version | grep -q -E \"v(4|6)\" && npm run test:exclude-await || npm run test:await"
+    "test": "npm run test:await"
   },
   "files": [
     "THIRD_PARTY_LICENSES.txt",
