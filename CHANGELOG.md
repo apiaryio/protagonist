@@ -2,6 +2,10 @@
 
 ## TBD
 
+This update now uses Drafter 5.1.0. Please see [Drafter
+5.1.0](https://github.com/apiaryio/drafter/releases/tag/v5.1.0) for
+the list of changes.
+
 ### Breaking
 
 - Drop support for node.js versions < 10.
