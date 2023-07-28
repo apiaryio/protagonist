@@ -8,7 +8,7 @@ the list of changes.
 
 ### Breaking
 
-- Drop support for node.js versions < 10.
+- Drop support for node.js versions < 12.
 
 ### Enhancements
 
