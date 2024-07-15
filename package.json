@@ -19,7 +19,7 @@
     "chai": "^4.3.7",
     "glob": "^7.1.2",
     "mocha": "^10.2.0",
-    "node-gyp": "^9.3.0"
+    "node-gyp": "^10.0.0"
   },
   "scripts": {
     "build": "node-gyp build",
